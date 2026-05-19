@@ -14,10 +14,20 @@ html{
 }
 
 body{
+    min-height:100%;
+}
+
+body{
+
+    min-height:100vh;
+
     background-image:url('../img/Fondo.jpg');
     background-size:cover;
     background-position:center;
+    background-repeat:no-repeat;
     background-attachment:fixed;
+
+    color:white;
 }
 
 /* BACKGROUND */
