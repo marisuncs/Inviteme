@@ -14,10 +14,9 @@ html{
 }
 
 body{
-  background:#156d79;
-  color:#f3f3f3;
-  font-family:'Felix', serif;
-  overflow-x:hidden;
+    color:white;
+    font-family:'Felix', serif;
+    overflow-x:hidden;
 }
 
 /* BACKGROUND */
