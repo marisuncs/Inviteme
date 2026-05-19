@@ -26,7 +26,8 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background-image:url('../img/Fondo.jpg');
+/*  background-image:url('../img/Fondo.jpg');*/
+  background-image:red;
   background-size:cover;
   background-position:center;
   opacity:.25;
