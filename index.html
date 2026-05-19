@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-:root{--teal:#3a7d8c;--teal-dark:#2c6070;--teal-darker:#1e4a57;--white:#ffffff;--linen-bg:#3d7d8d;--cream:#f5f0e8;}
+:root{--teal:#3a7d8c;--teal-dark:#2c6070;--teal-darker:#1e4a57;--white:#ffffff;--linen-bg:#3d7d8d;}
 body{font-family:'Cormorant Garamond',serif;background:#f0ede8;min-height:100vh;}
 .view{display:none;}.view.active{display:block;}
 
@@ -160,14 +160,13 @@ tbody tr:hover td{background:#faf8f5;}
 <div id="view-invitation" class="view active">
   <div class="linen-texture"></div>
   <svg class="floral-corner tr" width="140" height="160" viewBox="0 0 140 160">
-    <g fill="white"><ellipse cx="100" cy="20" rx="12" ry="28" transform="rotate(-30 100 20)"/><ellipse cx="120" cy="45" rx="10" ry="22" transform="rotate(15 120 45)"/><ellipse cx="80" cy="50" rx="9" ry="20" transform="rotate(-60 80 50)"/><ellipse cx="110" cy="70" rx="8" ry="18" transform="rotate(45 110 70)"/><ellipse cx="70" cy="30" rx="7" ry="16" transform="rotate(-15 70 30)"/><circle cx="95" cy="55" r="7"/><circle cx="115" cy="35" r="5"/><path d="M60,10 Q80,30 100,10" stroke="white" stroke-width="1.5" fill="none"/><path d="M105,15 Q115,40 130,25" stroke="white" stroke-width="1.5" fill="none"/><path d="M75,55 Q90,75 115,65" stroke="white" stroke-width="1.5" fill="none"/></g>
+    <g fill="white"><ellipse cx="100" cy="20" rx="12" ry="28" transform="rotate(-30 100 20)"/><ellipse cx="120" cy="45" rx="10" ry="22" transform="rotate(15 120 45)"/><ellipse cx="80" cy="50" rx="9" ry="20" transform="rotate(-60 80 50)"/><ellipse cx="110" cy="70" rx="8" ry="18" transform="rotate(45 110 70)"/><ellipse cx="70" cy="30" rx="7" ry="16" transform="rotate(-15 70 30)"/><circle cx="95" cy="55" r="7"/><circle cx="115" cy="35" r="5"/><path d="M60,10 Q80,30 100,10" stroke="white" stroke-width="1.5" fill="none"/><path d="M105,15 Q115,40 130,25" stroke="white" stroke-width="1.5" fill="none"/></g>
   </svg>
   <svg class="floral-corner bl" width="120" height="140" viewBox="0 0 120 140">
-    <g fill="white"><ellipse cx="30" cy="120" rx="10" ry="24" transform="rotate(20 30 120)"/><ellipse cx="55" cy="110" rx="9" ry="20" transform="rotate(-40 55 110)"/><ellipse cx="15" cy="90" rx="8" ry="18" transform="rotate(60 15 90)"/><ellipse cx="45" cy="85" rx="7" ry="16" transform="rotate(-10 45 85)"/><circle cx="30" cy="95" r="6"/><path d="M10,130 Q30,110 50,125" stroke="white" stroke-width="1.5" fill="none"/><path d="M55,115 Q70,95 85,110" stroke="white" stroke-width="1.5" fill="none"/></g>
+    <g fill="white"><ellipse cx="30" cy="120" rx="10" ry="24" transform="rotate(20 30 120)"/><ellipse cx="55" cy="110" rx="9" ry="20" transform="rotate(-40 55 110)"/><ellipse cx="15" cy="90" rx="8" ry="18" transform="rotate(60 15 90)"/><ellipse cx="45" cy="85" rx="7" ry="16" transform="rotate(-10 45 85)"/><circle cx="30" cy="95" r="6"/><path d="M10,130 Q30,110 50,125" stroke="white" stroke-width="1.5" fill="none"/></g>
   </svg>
 
   <div class="inv-inner">
-    <!-- Page 1 -->
     <div class="inv-page active" id="ipage-0">
       <div class="inv-names"><span class="n1">Gabo</span><span class="amp">&amp;</span><span class="n2">Miya</span></div>
       <p class="inv-tagline">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
@@ -183,7 +182,7 @@ tbody tr:hover td{background:#faf8f5;}
         <p class="gseats" id="inv-gseats"></p>
       </div>
     </div>
-    <!-- Page 2 -->
+
     <div class="inv-page" id="ipage-1">
       <div class="inv-names" style="margin-bottom:1.5rem"><span class="n1" style="font-size:clamp(42px,10vw,58px)">Gabo</span><span class="amp" style="font-size:clamp(22px,5vw,30px)">&amp;</span><span class="n2" style="font-size:clamp(42px,10vw,58px)">Miya</span></div>
       <div style="width:100%">
@@ -196,12 +195,12 @@ tbody tr:hover td{background:#faf8f5;}
         <div class="itinerary-item"><div class="it-l"><span class="it-name">Despedida</span><br><span class="it-time">02:30</span></div><div class="it-icon"><i class="ti ti-car"></i></div><div class="it-r"></div></div>
       </div>
     </div>
-    <!-- Page 3 -->
+
     <div class="inv-page" id="ipage-2">
       <div class="inv-names" style="margin-bottom:1.5rem"><span class="n1" style="font-size:clamp(42px,10vw,58px)">Gabo</span><span class="amp" style="font-size:clamp(22px,5vw,30px)">&amp;</span><span class="n2" style="font-size:clamp(42px,10vw,58px)">Miya</span></div>
       <div class="dress-section"><p class="dress-title">Código de Vestimenta</p><p class="dress-subtitle">Formal Casual</p><div class="dress-icons"><i class="ti ti-dress"></i><i class="ti ti-tie"></i></div><p class="dress-note">Celebración solo para adultos</p></div>
     </div>
-    <!-- Page 4: RSVP -->
+
     <div class="inv-page" id="ipage-3">
       <div class="inv-names" style="margin-bottom:1rem"><span class="n1" style="font-size:clamp(42px,10vw,58px)">Gabo</span><span class="amp" style="font-size:clamp(22px,5vw,30px)">&amp;</span><span class="n2" style="font-size:clamp(42px,10vw,58px)">Miya</span></div>
       <p class="rsvp-title">Confirmar Asistencia</p>
@@ -225,7 +224,7 @@ tbody tr:hover td{background:#faf8f5;}
         <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
       </div>
     </div>
-    <!-- Page 5: Thank you -->
+
     <div class="inv-page" id="ipage-4">
       <div style="text-align:center;padding:2rem 0">
         <div class="success-icon"><i class="ti ti-circle-check"></i></div>
@@ -274,7 +273,6 @@ tbody tr:hover td{background:#faf8f5;}
       <button class="admin-tab" onclick="switchTab('settings')">Configuración</button>
     </div>
 
-    <!-- OVERVIEW -->
     <div class="tab-content active" id="tab-overview">
       <div class="metrics" id="metrics-grid"></div>
       <div class="cap-wrap">
@@ -287,7 +285,6 @@ tbody tr:hover td{background:#faf8f5;}
       </div>
     </div>
 
-    <!-- GUESTS -->
     <div class="tab-content" id="tab-guests">
       <div class="g-hdr">
         <span class="g-title">Lista de invitados</span>
@@ -303,7 +300,6 @@ tbody tr:hover td{background:#faf8f5;}
       </div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="tab-content" id="tab-settings">
       <div class="set-card">
         <p class="set-title">Cupo máximo del evento</p>
@@ -317,15 +313,15 @@ tbody tr:hover td{background:#faf8f5;}
       </div>
       <div class="set-card">
         <p class="set-title">Plantilla de mensaje WhatsApp</p>
-        <p class="set-note">Usa {ID} donde quieres que aparezca el identificador del invitado.</p>
-        <textarea style="width:100%;font-size:13px;min-height:90px;padding:0.6rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-family:inherit;resize:vertical" id="wa-tpl">¡Hola! 💍 Gabo y Miya te invitan a su boda el viernes 7 de agosto 2026 a las 19:30 hrs. Confirma tu asistencia aquí: https://inviteme.vercel.app/?id={ID}</textarea>
+        <p class="set-note">Usa {ID} donde quieres que aparezca el identificador único del invitado.</p>
+        <textarea style="width:100%;font-size:13px;min-height:90px;padding:0.6rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-family:inherit;resize:vertical" id="wa-tpl"></textarea>
         <button class="g-btn primary" style="margin-top:0.6rem" onclick="saveWATpl()"><i class="ti ti-check"></i> Guardar plantilla</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ADD MODAL -->
+<!-- MODAL -->
 <div class="modal-overlay" id="add-modal">
   <div class="modal-card">
     <p class="modal-title"><i class="ti ti-user-plus"></i> Agregar invitado</p>
@@ -347,18 +343,14 @@ tbody tr:hover td{background:#faf8f5;}
 <script>
 const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
 const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
-const PASS = '20M4risun26';
+const PASS    = '20M4risun26';
+const ID_EVENT = 1; // idEvent para esta boda
 
-let guests = [];
-let maxCap = 150;
-let waTemplate = '';
-let currentPage = 0;
-let attendChoice = null;
-let guestCount = 1;
-let maxSeats = 2;
-let activeGuest = null;
-let filterStr = '';
+let guests = [], maxCap = 150, waTemplate = '';
+let currentPage = 0, attendChoice = null, guestCount = 1, maxSeats = 2;
+let activeGuest = null, filterStr = '';
 
+/* ── Supabase helper ── */
 async function api(path, opts = {}) {
   const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
     headers: {
@@ -375,31 +367,41 @@ async function api(path, opts = {}) {
   return t ? JSON.parse(t) : null;
 }
 
+/* ── Data ── */
 async function loadGuests() {
-  try { guests = await api('guests?order=created_at.asc') || []; }
-  catch(e) { guests = []; showToast('Error cargando invitados'); }
+  try {
+    guests = await api('guests?idEvent=eq.' + ID_EVENT + '&order=created_at.asc') || [];
+  } catch(e) { guests = []; showToast('Error cargando invitados: ' + e.message); }
 }
 
 async function loadConfig() {
   try {
-    const c = await api('event_config?id=eq.1');
+    const c = await api('event_config?idEvent=eq.' + ID_EVENT);
     if (c && c[0]) {
-      maxCap = c[0].max_capacity || 150;
-      waTemplate = c[0].wa_template || '';
+      maxCap     = c[0].max_capacity || 150;
+      waTemplate = c[0].wa_template  || defaultTemplate();
+    } else {
+      waTemplate = defaultTemplate();
     }
-  } catch(e) {}
+  } catch(e) { waTemplate = defaultTemplate(); }
+}
+
+function defaultTemplate() {
+  return '¡Hola! 💍 Gabo y Miya te invitan a su boda el viernes 7 de agosto 2026 a las 19:30 hrs.\nConfirma tu asistencia aquí: https://inviteme-topaz.vercel.app/?id={ID}';
 }
 
 async function saveConfig(obj) {
-  try { await api('event_config?id=eq.1', { method: 'PATCH', body: JSON.stringify(obj) }); }
-  catch(e) { showToast('Error al guardar configuración'); }
+  try {
+    await api('event_config?idEvent=eq.' + ID_EVENT, { method: 'PATCH', body: JSON.stringify(obj) });
+  } catch(e) { showToast('Error al guardar: ' + e.message); }
 }
 
+/* ── UI helpers ── */
 function showToast(msg, dur = 2800) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.style.display = 'block';
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.style.display = 'none'; }, dur);
+  clearTimeout(t._t);
+  t._t = setTimeout(() => { t.style.display = 'none'; }, dur);
 }
 
 function showView(v) {
@@ -407,8 +409,9 @@ function showView(v) {
   document.getElementById('view-' + v).classList.add('active');
 }
 
+/* ── Auth ── */
 function doLogin() {
-  const v = document.getElementById('login-pass').value;
+  const v   = document.getElementById('login-pass').value;
   const err = document.getElementById('login-err');
   if (v === PASS) {
     err.style.display = 'none';
@@ -420,17 +423,19 @@ function doLogin() {
   }
 }
 
+/* ── Admin ── */
 async function initAdmin() {
   await loadConfig();
   await loadGuests();
   renderAll();
   document.getElementById('cap-inp').value = maxCap;
-  if (waTemplate) document.getElementById('wa-tpl').value = waTemplate;
+  document.getElementById('wa-tpl').value  = waTemplate;
 }
 
 function switchTab(t) {
-  const tabs = ['overview', 'guests', 'settings'];
-  document.querySelectorAll('.admin-tab').forEach((el, i) => el.classList.toggle('active', tabs[i] === t));
+  ['overview','guests','settings'].forEach((n, i) => {
+    document.querySelectorAll('.admin-tab')[i].classList.toggle('active', n === t);
+  });
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.getElementById('tab-' + t).classList.add('active');
   if (t !== 'settings') renderAll();
@@ -439,10 +444,10 @@ function switchTab(t) {
 function renderAll() { renderMetrics(); renderOverview(); renderGuests(filterStr); }
 
 function getStats() {
-  const confirmed = guests.filter(g => g.status === 'confirmed').reduce((s, g) => s + (g.confirmed || 0), 0);
-  const pending = guests.filter(g => g.status === 'pending').length;
-  const declined = guests.filter(g => g.status === 'declined').length;
-  const totalSeats = guests.reduce((s, g) => s + (g.seats || 0), 0);
+  const confirmed  = guests.filter(g => g.status === 'confirmed').reduce((s,g) => s + (g.confirmed||0), 0);
+  const pending    = guests.filter(g => g.status === 'pending').length;
+  const declined   = guests.filter(g => g.status === 'declined').length;
+  const totalSeats = guests.reduce((s,g) => s + (g.seats||0), 0);
   return { confirmed, pending, declined, totalSeats, total: guests.length };
 }
 
@@ -455,20 +460,20 @@ function renderMetrics() {
     <div class="metric m-pend"><span class="metric-val">${s.pending}</span><span class="metric-lbl">Pendientes</span></div>
     <div class="metric m-dec"><span class="metric-val">${s.declined}</span><span class="metric-lbl">Declinaron</span></div>`;
   const pct = maxCap > 0 ? Math.round((s.confirmed / maxCap) * 100) : 0;
-  document.getElementById('cap-lbl').textContent = s.confirmed + ' / ' + maxCap;
+  document.getElementById('cap-lbl').textContent  = s.confirmed + ' / ' + maxCap;
   document.getElementById('cap-fill').style.width = Math.min(pct, 100) + '%';
 }
 
 function sbadge(s) {
   if (s === 'confirmed') return '<span class="sbadge s-confirmed">Confirmado</span>';
-  if (s === 'declined') return '<span class="sbadge s-declined">Declinó</span>';
+  if (s === 'declined')  return '<span class="sbadge s-declined">Declinó</span>';
   return '<span class="sbadge s-pending">Pendiente</span>';
 }
 
 function renderOverview() {
   document.getElementById('overview-tbody').innerHTML = guests.length
-    ? guests.map(g => `<tr><td>${g.name}</td><td>${g.seats}</td><td>${g.status === 'confirmed' ? g.confirmed : '—'}</td><td>${sbadge(g.status)}</td></tr>`).join('')
-    : '<tr class="empty-row"><td colspan="4">Sin invitados aún. Agrégalos en la pestaña Invitados.</td></tr>';
+    ? guests.map(g => `<tr><td>${g.name}</td><td>${g.seats}</td><td>${g.status==='confirmed'?g.confirmed:'—'}</td><td>${sbadge(g.status)}</td></tr>`).join('')
+    : '<tr class="empty-row"><td colspan="4">Sin invitados. Agrégalos en la pestaña Invitados.</td></tr>';
 }
 
 function renderGuests(f = '') {
@@ -476,34 +481,36 @@ function renderGuests(f = '') {
   document.getElementById('guests-tbody').innerHTML = list.length
     ? list.map(g => `<tr>
         <td><strong>${g.name}</strong></td>
-        <td style="font-size:12px;color:#888">${g.phone || '—'}</td>
+        <td style="font-size:12px;color:#888">${g.phone||'—'}</td>
         <td>${g.seats}</td>
-        <td>${g.status === 'confirmed' ? g.confirmed : '—'}</td>
+        <td>${g.status==='confirmed'?g.confirmed:'—'}</td>
         <td>${sbadge(g.status)}</td>
-        <td style="font-size:12px;color:#888;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${g.msg || ''}">${g.msg || '—'}</td>
+        <td style="font-size:12px;color:#888;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${g.msg||''}">${g.msg||'—'}</td>
         <td><div class="row-acts">
-          <button class="rbtn wa" onclick="sendWA('${g.id}')" title="Enviar por WhatsApp"><i class="ti ti-brand-whatsapp"></i></button>
+          <button class="rbtn wa" onclick="sendWA('${g.id}')" title="WhatsApp"><i class="ti ti-brand-whatsapp"></i></button>
           <button class="rbtn" onclick="previewInvite('${g.id}')" title="Ver invitación"><i class="ti ti-eye"></i></button>
           <button class="rbtn del" onclick="deleteGuest('${g.id}')" title="Eliminar"><i class="ti ti-trash"></i></button>
-        </div></td>
-      </tr>`).join('')
+        </div></td></tr>`).join('')
     : '<tr class="empty-row"><td colspan="7">Sin resultados</td></tr>';
 }
 
 function filterGuests(v) { filterStr = v; renderGuests(v); }
-function openModal() { document.getElementById('add-modal').classList.add('open'); }
+function openModal()  { document.getElementById('add-modal').classList.add('open'); }
 function closeModal() { document.getElementById('add-modal').classList.remove('open'); }
 
 async function addGuest() {
-  const name = document.getElementById('new-name').value.trim();
+  const name  = document.getElementById('new-name').value.trim();
   const phone = document.getElementById('new-phone').value.trim();
   const seats = parseInt(document.getElementById('new-seats').value) || 2;
   if (!name) { showToast('Escribe el nombre de la familia'); return; }
   try {
-    const res = await api('guests', { method: 'POST', body: JSON.stringify({ name, phone, seats, confirmed: 0, status: 'pending', msg: '' }) });
+    const res = await api('guests', {
+      method: 'POST',
+      body: JSON.stringify({ name, phone, seats, confirmed: 0, status: 'pending', msg: '', idEvent: ID_EVENT })
+    });
     if (res && res[0]) guests.push(res[0]);
     closeModal();
-    document.getElementById('new-name').value = '';
+    document.getElementById('new-name').value  = '';
     document.getElementById('new-phone').value = '';
     document.getElementById('new-seats').value = '2';
     renderAll();
@@ -514,7 +521,7 @@ async function addGuest() {
 async function deleteGuest(id) {
   if (!confirm('¿Eliminar este invitado?')) return;
   try {
-    await api('guests?id=eq.' + id, { method: 'DELETE' });
+    await api('guests?id=eq.' + id + '&idEvent=eq.' + ID_EVENT, { method: 'DELETE' });
     guests = guests.filter(g => g.id !== id);
     renderAll();
     showToast('Invitado eliminado');
@@ -536,11 +543,11 @@ function previewInvite(id) {
   setGuestUI(g);
   attendChoice = null; guestCount = 1;
   document.getElementById('btn-yes').className = 'attend-btn';
-  document.getElementById('btn-no').className = 'attend-btn';
+  document.getElementById('btn-no').className  = 'attend-btn';
   document.getElementById('count-section').style.display = 'block';
   document.getElementById('cnt-val').textContent = 1;
   document.getElementById('rsvp-msg').value = '';
-  document.getElementById('rsvp-btn').disabled = false;
+  document.getElementById('rsvp-btn').disabled    = false;
   document.getElementById('rsvp-btn').textContent = 'Confirmar asistencia';
   document.getElementById('inv-nav').style.display = 'flex';
   document.getElementById('arr-next').disabled = false;
@@ -549,29 +556,28 @@ function previewInvite(id) {
 }
 
 function setGuestUI(g) {
-  document.getElementById('inv-gname').textContent = g.name;
+  document.getElementById('inv-gname').textContent  = g.name;
   document.getElementById('inv-gseats').textContent = 'Lugares asignados: ' + g.seats;
-  document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats !== 1 ? 'es' : '') + ' asignado' + (g.seats !== 1 ? 's' : '');
+  document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats!==1?'es':'') + ' asignado' + (g.seats!==1?'s':'');
   document.getElementById('max-lbl').textContent = g.seats;
   maxSeats = g.seats;
 }
 
 async function saveCap() {
   const v = parseInt(document.getElementById('cap-inp').value);
-  if (v > 0) { maxCap = v; await saveConfig({ max_capacity: v }); renderMetrics(); showToast('✓ Cupo actualizado a ' + v + ' personas'); }
+  if (v > 0) { maxCap = v; await saveConfig({ max_capacity: v }); renderMetrics(); showToast('✓ Cupo actualizado a ' + v); }
 }
 
 async function saveWATpl() {
-  const tpl = document.getElementById('wa-tpl').value;
-  waTemplate = tpl;
-  await saveConfig({ wa_template: tpl });
+  waTemplate = document.getElementById('wa-tpl').value;
+  await saveConfig({ wa_template: waTemplate });
   showToast('✓ Plantilla guardada');
 }
 
 function exportCSV() {
-  const rows = [['Familia', 'Teléfono', 'Asignados', 'Confirmados', 'Estado', 'Mensaje']];
-  guests.forEach(g => rows.push([g.name, g.phone || '', g.seats, g.confirmed || 0, g.status, g.msg || '']));
-  const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+  const rows = [['Familia','Teléfono','Asignados','Confirmados','Estado','Mensaje']];
+  guests.forEach(g => rows.push([g.name, g.phone||'', g.seats, g.confirmed||0, g.status, g.msg||'']));
+  const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
   const a = document.createElement('a');
   a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
   a.download = 'invitados-gabo-miya.csv';
@@ -579,70 +585,70 @@ function exportCSV() {
   showToast('✓ CSV descargado');
 }
 
-/* ── Invitation navigation ── */
+/* ── Invitation nav ── */
 function goPage(n) {
-  document.querySelectorAll('.inv-page').forEach((p, i) => p.classList.toggle('active', i === n));
-  document.querySelectorAll('.inv-dot').forEach((d, i) => d.classList.toggle('active', i === n));
+  document.querySelectorAll('.inv-page').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.inv-dot').forEach((d,i) => d.classList.toggle('active', i===n));
   currentPage = n;
-  document.getElementById('arr-prev').disabled = n === 0;
-  document.getElementById('arr-next').disabled = n >= 3;
+  document.getElementById('arr-prev').disabled = n===0;
+  document.getElementById('arr-next').disabled = n>=3;
 }
-function navPage(d) { const n = currentPage + d; if (n >= 0 && n <= 3) goPage(n); }
+function navPage(d) { const n = currentPage+d; if(n>=0&&n<=3) goPage(n); }
 
 function selectAttend(c) {
   attendChoice = c;
-  document.getElementById('btn-yes').className = 'attend-btn' + (c === 'yes' ? ' sel-yes' : '');
-  document.getElementById('btn-no').className = 'attend-btn' + (c === 'no' ? ' sel-no' : '');
-  document.getElementById('count-section').style.display = c === 'yes' ? 'block' : 'none';
+  document.getElementById('btn-yes').className = 'attend-btn'+(c==='yes'?' sel-yes':'');
+  document.getElementById('btn-no').className  = 'attend-btn'+(c==='no'?' sel-no':'');
+  document.getElementById('count-section').style.display = c==='yes'?'block':'none';
 }
 
 function chgCount(d) {
-  guestCount = Math.max(1, Math.min(maxSeats, guestCount + d));
+  guestCount = Math.max(1, Math.min(maxSeats, guestCount+d));
   document.getElementById('cnt-val').textContent = guestCount;
 }
 
 async function submitRSVP() {
   if (!attendChoice) { showToast('Por favor indica si asistirás'); return; }
-  if (!activeGuest) { showToast('No se pudo identificar al invitado'); return; }
+  if (!activeGuest)  { showToast('No se pudo identificar al invitado'); return; }
   const btn = document.getElementById('rsvp-btn');
   btn.disabled = true; btn.textContent = 'Guardando...';
-  const msg = document.getElementById('rsvp-msg').value;
   const update = {
-    status: attendChoice === 'yes' ? 'confirmed' : 'declined',
-    confirmed: attendChoice === 'yes' ? guestCount : 0,
-    msg
+    status:    attendChoice==='yes' ? 'confirmed' : 'declined',
+    confirmed: attendChoice==='yes' ? guestCount  : 0,
+    msg:       document.getElementById('rsvp-msg').value
   };
   try {
-    await api('guests?id=eq.' + activeGuest.id, { method: 'PATCH', body: JSON.stringify(update) });
+    await api('guests?id=eq.' + activeGuest.id + '&idEvent=eq.' + ID_EVENT, {
+      method: 'PATCH', body: JSON.stringify(update)
+    });
     const idx = guests.findIndex(g => g.id === activeGuest.id);
     if (idx > -1) Object.assign(guests[idx], update);
-    document.getElementById('thanks-txt').innerHTML = attendChoice === 'yes'
+    document.getElementById('thanks-txt').innerHTML = attendChoice==='yes'
       ? '¡Tu confirmación ha sido registrada!<br>Te esperamos el <strong>7 de agosto</strong> 🥂'
       : 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
-    document.querySelectorAll('.inv-page').forEach((p, i) => p.classList.toggle('active', i === 4));
+    document.querySelectorAll('.inv-page').forEach((p,i) => p.classList.toggle('active', i===4));
     document.getElementById('inv-nav').style.display = 'none';
     document.getElementById('arr-prev').disabled = true;
     document.getElementById('arr-next').disabled = true;
   } catch(e) {
-    btn.disabled = false;
-    btn.textContent = 'Confirmar asistencia';
+    btn.disabled = false; btn.textContent = 'Confirmar asistencia';
     showToast('Error al guardar: ' + e.message);
   }
 }
 
-/* ── Init: load guest from URL param ── */
+/* ── Init: carga invitado desde URL ?id=UUID ── */
 (async () => {
   await loadConfig();
   const params = new URLSearchParams(window.location.search);
   const gid = params.get('id');
   if (gid) {
     try {
-      const res = await api('guests?id=eq.' + gid);
+      const res = await api('guests?id=eq.' + gid + '&idEvent=eq.' + ID_EVENT);
       if (res && res[0]) { activeGuest = res[0]; setGuestUI(res[0]); }
       else { document.getElementById('inv-gname').textContent = 'Invitado no encontrado'; }
     } catch(e) { document.getElementById('inv-gname').textContent = 'Error al cargar'; }
   } else {
-    document.getElementById('inv-gname').textContent = 'Bienvenido';
+    document.getElementById('inv-gname').textContent  = 'Bienvenido';
     document.getElementById('inv-gseats').textContent = '';
     document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
   }
