@@ -23,14 +23,14 @@ body{
 /* BACKGROUND */
 
 body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background-image:url('../img/Fondo.jpg');
-  background-size:cover;
-  background-position:center;
-  opacity:.25;
-  z-index:-2;
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:url('../img/fondo.jpg');
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    z-index:-1;
 }
 
 /* GENERAL */
