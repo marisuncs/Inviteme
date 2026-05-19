@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Gabo & Miya</title>
 
@@ -14,6 +15,7 @@
 <body>
 
   <!-- HERO -->
+
   <section class="hero fade-up">
 
     <div class="hero-content">
@@ -26,18 +28,20 @@
       </h1>
 
       <p class="phrase">
-        En compañía de nuestras familias,<br>
+        En compañía de nuestras familias,
+        <br>
         unimos nuestros destinos
       </p>
 
-      <!-- INVITADO -->
       <div class="guest-box">
 
-        <h2 id="guest-name">
-          Bienvenido
+        <h2>
+          Familia Martínez
         </h2>
 
-        <p id="guest-seats"></p>
+        <p>
+          2 lugares asignados
+        </p>
 
       </div>
 
@@ -46,6 +50,7 @@
   </section>
 
   <!-- FECHA -->
+
   <section class="date-section fade-up">
 
     <div class="date-grid">
@@ -69,7 +74,8 @@
 
   </section>
 
-  <!-- UBICACIÓN -->
+  <!-- LUGAR -->
+
   <section class="location fade-up">
 
     <h2>
@@ -77,20 +83,23 @@
     </h2>
 
     <p>
-      Av. Miguel Ángel de Quevedo 687,<br>
-      San Francisco, Coyoacán,<br>
-      04320, Ciudad de México
+      Av. Miguel Ángel de Quevedo 687
+      <br>
+      San Francisco, Coyoacán
+      <br>
+      Ciudad de México
     </p>
 
   </section>
 
   <!-- TIMELINE -->
+
   <section class="timeline fade-up">
 
     <div class="line"></div>
 
     <div class="event left">
-      <img src="img/Recepcion.png" alt="">
+      <img src="img/Recepcion.png">
       <div>
         <h3>Recepción</h3>
         <p>19:30</p>
@@ -98,7 +107,7 @@
     </div>
 
     <div class="event right">
-      <img src="img/Recepcion.png" alt="">
+      <img src="img/Recepcion.png">
       <div>
         <h3>Ceremonia Civil</h3>
         <p>20:00</p>
@@ -106,7 +115,7 @@
     </div>
 
     <div class="event left">
-      <img src="img/Recepcion.png" alt="">
+      <img src="img/Recepcion.png">
       <div>
         <h3>Cena</h3>
         <p>21:00</p>
@@ -114,359 +123,53 @@
     </div>
 
     <div class="event right">
-      <img src="img/Recepcion.png" alt="">
+      <img src="img/Recepcion.png">
       <div>
-        <h3>Primer Baile</h3>
+        <h3>Baile</h3>
         <p>22:00</p>
-      </div>
-    </div>
-
-    <div class="event left">
-      <img src="img/Recepcion.png" alt="">
-      <div>
-        <h3>Brindis y Pastel</h3>
-        <p>22:30</p>
-      </div>
-    </div>
-
-    <div class="event right">
-      <img src="img/Recepcion.png" alt="">
-      <div>
-        <h3>Despedida</h3>
-        <p>02:30</p>
       </div>
     </div>
 
   </section>
 
   <!-- DRESS CODE -->
+
   <section class="dresscode fade-up">
 
-    <h2>Código de Vestimenta</h2>
+    <h2>
+      Código de Vestimenta
+    </h2>
 
-    <h3>Formal Casual</h3>
+    <h3>
+      Formal Casual
+    </h3>
 
-    <p class="adults">
+    <p>
       Celebración solo para adultos
     </p>
 
   </section>
 
   <!-- RSVP -->
+
   <section class="rsvp fade-up">
 
-    <h2>Confirmar asistencia</h2>
-
-    <p class="rsvp-text">
-      Esperamos compartir este momento contigo
-    </p>
-
-    <!-- BOTONES -->
-    <div class="attendance-buttons">
-
-      <button
-        class="attend-btn"
-        onclick="selectAttend('yes')"
-        id="btn-yes"
-      >
-        Sí asistiré
-      </button>
-
-      <button
-        class="attend-btn"
-        onclick="selectAttend('no')"
-        id="btn-no"
-      >
-        No podré asistir
-      </button>
-
-    </div>
-
-    <!-- CONTADOR -->
-    <div class="counter-section" id="counter-section">
-
-      <p>
-        Número de asistentes
-      </p>
-
-      <div class="counter">
-
-        <button onclick="changeCount(-1)">
-          −
-        </button>
-
-        <span id="count-value">
-          1
-        </span>
-
-        <button onclick="changeCount(1)">
-          +
-        </button>
-
-      </div>
-
-    </div>
-
-    <!-- MENSAJE -->
-    <textarea
-      id="message"
-      placeholder="Mensaje para los novios..."
-    ></textarea>
-
-    <!-- ENVIAR -->
-    <button
-      class="submit-btn"
-      onclick="submitRSVP()"
-    >
-      Confirmar asistencia
-    </button>
-
-  </section>
-
-  <!-- THANK YOU -->
-  <section class="thanks hidden" id="thanks-section">
-
     <h2>
-      ¡Gracias!
+      Confirma tu asistencia
     </h2>
 
-    <p id="thanks-message"></p>
+    <a
+      href="https://wa.me/5215512345678"
+      target="_blank"
+      class="btn"
+    >
+      RSVP
+    </a>
 
   </section>
 
-  <!-- ADMIN -->
-  <p
-    class="admin-link"
-    onclick="location.href='admin.html'"
-  >
-    · Admin ·
-  </p>
-
-  <!-- JAVASCRIPT -->
-  <script>
-
-    /* CONFIG */
-
-    const SUPA_URL = 'TU_SUPABASE_URL';
-    const SUPA_KEY = 'TU_SUPABASE_KEY';
-    const ID_EVENT = 1;
-
-    let activeGuest = null;
-    let attendChoice = null;
-    let guestCount = 1;
-    let maxSeats = 1;
-
-    /* API */
-
-    async function api(path, opts = {}) {
-
-      const res = await fetch(
-        SUPA_URL + '/rest/v1/' + path,
-        {
-          headers: {
-            'apikey': SUPA_KEY,
-            'Authorization': 'Bearer ' + SUPA_KEY,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
-          },
-          ...opts
-        }
-      );
-
-      const txt = await res.text();
-
-      return txt ? JSON.parse(txt) : null;
-
-    }
-
-    /* LOAD GUEST */
-
-    async function loadGuest() {
-
-      const params = new URLSearchParams(
-        window.location.search
-      );
-
-      const gid = params.get('id');
-
-      if (!gid) return;
-
-      try {
-
-        const res = await api(
-          'guests?id=eq.' + gid +
-          '&idEvent=eq.' + ID_EVENT
-        );
-
-        if (res && res[0]) {
-
-          activeGuest = res[0];
-
-          document.getElementById(
-            'guest-name'
-          ).textContent = activeGuest.name;
-
-          document.getElementById(
-            'guest-seats'
-          ).textContent =
-            activeGuest.seats +
-            ' lugares asignados';
-
-          maxSeats = activeGuest.seats;
-
-        }
-
-      } catch(e) {
-
-        console.log(e);
-
-      }
-
-    }
-
-    /* RSVP */
-
-    function selectAttend(choice){
-
-      attendChoice = choice;
-
-      document.getElementById('btn-yes')
-        .classList.remove('selected');
-
-      document.getElementById('btn-no')
-        .classList.remove('selected');
-
-      if(choice === 'yes'){
-
-        document.getElementById('btn-yes')
-          .classList.add('selected');
-
-        document.getElementById(
-          'counter-section'
-        ).style.display = 'block';
-
-      } else {
-
-        document.getElementById('btn-no')
-          .classList.add('selected');
-
-        document.getElementById(
-          'counter-section'
-        ).style.display = 'none';
-
-      }
-
-    }
-
-    function changeCount(v){
-
-      guestCount += v;
-
-      if(guestCount < 1)
-        guestCount = 1;
-
-      if(guestCount > maxSeats)
-        guestCount = maxSeats;
-
-      document.getElementById(
-        'count-value'
-      ).textContent = guestCount;
-
-    }
-
-    async function submitRSVP(){
-
-      if(!activeGuest){
-        alert('Invitado no encontrado');
-        return;
-      }
-
-      if(!attendChoice){
-        alert('Selecciona una opción');
-        return;
-      }
-
-      const update = {
-
-        status:
-          attendChoice === 'yes'
-          ? 'confirmed'
-          : 'declined',
-
-        confirmed:
-          attendChoice === 'yes'
-          ? guestCount
-          : 0,
-
-        msg:
-          document.getElementById(
-            'message'
-          ).value
-
-      };
-
-      try {
-
-        await api(
-          'guests?id=eq.' + activeGuest.id +
-          '&idEvent=eq.' + ID_EVENT,
-          {
-            method:'PATCH',
-            body:JSON.stringify(update)
-          }
-        );
-
-        document.querySelector('.rsvp')
-          .style.display = 'none';
-
-        document.getElementById(
-          'thanks-section'
-        ).classList.remove('hidden');
-
-        document.getElementById(
-          'thanks-message'
-        ).innerHTML =
-          attendChoice === 'yes'
-          ? 'Tu asistencia ha sido confirmada 🥂'
-          : 'Gracias por avisarnos';
-
-      } catch(e){
-
-        console.log(e);
-
-      }
-
-    }
-
-    /* ANIMATIONS */
-
-    const elements =
-      document.querySelectorAll('.fade-up');
-
-    const observer =
-      new IntersectionObserver(entries=>{
-
-        entries.forEach(entry=>{
-
-          if(entry.isIntersecting){
-
-            entry.target.classList.add('show');
-
-          }
-
-        });
-
-      },{
-        threshold:0.15
-      });
-
-    elements.forEach(el=>observer.observe(el));
-
-    /* INIT */
-
-    loadGuest();
-
-  </script>
+  <script src="js/app.js"></script>
 
 </body>
+
 </html>
