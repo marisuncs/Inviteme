@@ -1,658 +1,472 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gabo &amp; Miya · Boda 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Cormorant+SC:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{--teal:#3a7d8c;--teal-dark:#2c6070;--teal-darker:#1e4a57;--white:#ffffff;--linen-bg:#3d7d8d;}
-body{font-family:'Cormorant Garamond',serif;background:#f0ede8;min-height:100vh;}
-.view{display:none;}.view.active{display:block;}
 
-/* ── INVITATION ── */
-#view-invitation{background:var(--linen-bg);min-height:100vh;position:relative;overflow:hidden;}
-.linen-texture{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.03) 0px,rgba(255,255,255,0.03) 1px,transparent 1px,transparent 4px),repeating-linear-gradient(90deg,rgba(0,0,0,0.02) 0px,rgba(0,0,0,0.02) 1px,transparent 1px,transparent 4px);pointer-events:none;}
-.floral-corner{position:absolute;opacity:0.18;pointer-events:none;}
-.floral-corner.tr{top:-10px;right:-10px;transform:scaleX(-1);}
-.floral-corner.bl{bottom:-10px;left:-10px;transform:scaleY(-1);}
-.inv-inner{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;min-height:100vh;}
-.inv-page{display:none;width:100%;}.inv-page.active{display:flex;flex-direction:column;align-items:center;}
-.inv-names{font-family:'Cormorant SC',serif;color:var(--white);line-height:1;margin-bottom:1.8rem;align-self:flex-start;}
-.inv-names .n1{font-size:clamp(56px,14vw,80px);font-weight:400;display:block;}
-.inv-names .amp{font-size:clamp(28px,7vw,40px);font-weight:400;display:block;margin:-8px 0;}
-.inv-names .n2{font-size:clamp(56px,14vw,80px);font-weight:400;display:block;}
-.inv-tagline{font-family:'Cormorant SC',serif;font-size:clamp(13px,3.2vw,16px);color:rgba(255,255,255,0.88);text-align:center;letter-spacing:0.06em;line-height:1.6;margin-bottom:2rem;max-width:320px;}
-.inv-date-row{display:flex;gap:2rem;margin-bottom:2rem;justify-content:center;}
-.inv-date-col{text-align:center;}
-.inv-date-col .lbl{font-family:'Cormorant SC',serif;font-size:12px;color:rgba(255,255,255,0.7);letter-spacing:0.12em;display:block;}
-.inv-date-col .val{font-family:'Cormorant SC',serif;font-size:clamp(22px,5.5vw,32px);color:var(--white);font-weight:500;display:block;line-height:1.1;}
-.inv-venue{font-family:'Cormorant SC',serif;color:var(--white);text-align:center;margin-bottom:0.4rem;font-size:clamp(14px,3.5vw,18px);letter-spacing:0.04em;}
-.inv-address{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.75);text-align:center;font-size:clamp(12px,2.8vw,14px);letter-spacing:0.03em;line-height:1.7;margin-bottom:2rem;}
-.inv-guest-box{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.25);border-radius:12px;padding:1.2rem 1.5rem;width:100%;margin-bottom:1.5rem;text-align:center;}
-.inv-guest-box .gname{font-family:'Cormorant SC',serif;color:var(--white);font-size:22px;margin-bottom:0.25rem;}
-.inv-guest-box .gseats{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.75);font-size:13px;letter-spacing:0.06em;}
-.itinerary-item{display:flex;align-items:center;gap:1rem;margin-bottom:1.3rem;position:relative;width:100%;}
-.itinerary-item:not(:last-child)::after{content:'';position:absolute;left:20px;top:42px;width:1px;height:calc(100% + 0.5rem);border-left:1px dashed rgba(255,255,255,0.3);}
-.it-icon{width:40px;height:40px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.9);font-size:22px;}
-.it-l{text-align:right;flex:1;}.it-r{flex:1;}
-.it-name{font-family:'Cormorant SC',serif;color:var(--white);font-size:16px;letter-spacing:0.05em;}
-.it-time{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.65);font-size:14px;}
-.dress-section{text-align:center;margin-top:2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;}
-.dress-title{font-family:'Cormorant SC',serif;color:var(--white);font-size:20px;margin-bottom:0.4rem;}
-.dress-subtitle{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.85);font-size:28px;margin-bottom:1rem;}
-.dress-icons{font-size:36px;color:rgba(255,255,255,0.85);margin-bottom:1.2rem;display:flex;gap:1rem;justify-content:center;}
-.dress-note{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.7);font-size:15px;letter-spacing:0.06em;}
-.rsvp-title{font-family:'Cormorant SC',serif;color:var(--white);font-size:26px;text-align:center;margin-bottom:0.4rem;}
-.rsvp-sub{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.7);font-size:13px;text-align:center;letter-spacing:0.06em;margin-bottom:1.8rem;}
-.rsvp-lbl{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.85);font-size:13px;letter-spacing:0.08em;display:block;margin-bottom:0.4rem;}
-.rsvp-input{width:100%;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:0.7rem 1rem;color:var(--white);font-family:'Cormorant Garamond',serif;font-size:16px;margin-bottom:1.2rem;outline:none;}
-.rsvp-input::placeholder{color:rgba(255,255,255,0.35);}
-.rsvp-input:focus{border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.18);}
-.rsvp-counter{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.3);border-radius:8px;padding:0.5rem 1rem;margin-bottom:1.2rem;}
-.rsvp-counter-val{font-family:'Cormorant SC',serif;color:var(--white);font-size:24px;font-weight:500;}
-.rsvp-cbtn{background:rgba(255,255,255,0.2);border:none;color:var(--white);width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;}
-.rsvp-cbtn:hover{background:rgba(255,255,255,0.35);}
-.attend-btns{display:flex;gap:0.8rem;margin-bottom:1.2rem;}
-.attend-btn{flex:1;padding:0.75rem;font-family:'Cormorant SC',serif;font-size:15px;letter-spacing:0.08em;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,0.4);background:transparent;color:rgba(255,255,255,0.85);transition:all 0.2s;}
-.attend-btn.sel-yes{background:rgba(255,255,255,0.88);color:var(--teal-darker);border-color:transparent;}
-.attend-btn.sel-no{background:rgba(255,100,100,0.5);color:var(--white);border-color:transparent;}
-.rsvp-submit{width:100%;padding:0.9rem;font-family:'Cormorant SC',serif;font-size:17px;letter-spacing:0.1em;background:rgba(255,255,255,0.88);color:var(--teal-darker);border:none;border-radius:8px;cursor:pointer;transition:background 0.2s;}
-.rsvp-submit:hover{background:var(--white);}
-.rsvp-submit:disabled{opacity:0.6;cursor:default;}
-.success-icon{font-size:52px;color:rgba(255,255,255,0.9);margin-bottom:1rem;}
-.success-title{font-family:'Cormorant SC',serif;color:var(--white);font-size:28px;margin-bottom:0.5rem;}
-.success-text{font-family:'Cormorant SC',serif;color:rgba(255,255,255,0.8);font-size:16px;line-height:1.6;text-align:center;}
-.inv-nav{display:flex;gap:8px;margin-top:2rem;}
-.inv-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.2s;}
-.inv-dot.active{background:var(--white);width:24px;border-radius:4px;}
-.inv-arrows{display:flex;gap:1rem;margin-top:1.2rem;}
-.inv-arrow{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:18px;cursor:pointer;transition:background 0.2s;}
-.inv-arrow:hover{background:rgba(255,255,255,0.25);}
-.inv-arrow:disabled{opacity:0.3;cursor:default;}
-.admin-link{font-size:12px;color:rgba(255,255,255,0.3);margin-top:1.5rem;font-family:'Cormorant SC',serif;cursor:pointer;user-select:none;padding:0.5rem;}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-/* ── LOGIN ── */
-#view-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0ede8;}
-.login-card{background:#fff;border:1px solid #e0dbd2;border-radius:16px;padding:2.5rem 2rem;width:360px;text-align:center;box-shadow:0 2px 20px rgba(0,0,0,0.06);}
-.login-logo{font-size:32px;margin-bottom:0.5rem;color:var(--teal);}
-.login-title{font-size:20px;font-weight:500;color:#1a1a1a;margin-bottom:0.25rem;}
-.login-sub{font-size:14px;color:#888;margin-bottom:2rem;}
-.login-inp{width:100%;padding:0.65rem 1rem;font-size:15px;border:1px solid #ddd;border-radius:8px;margin-bottom:0.6rem;outline:none;font-family:inherit;}
-.login-inp:focus{border-color:var(--teal);}
-.login-err{font-size:13px;color:#c0392b;margin-top:-0.4rem;margin-bottom:0.8rem;display:none;}
-.login-btn{width:100%;padding:0.7rem;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:15px;cursor:pointer;font-family:inherit;transition:background 0.2s;}
-.login-btn:hover{background:var(--teal-dark);}
-.login-back{font-size:13px;color:#888;margin-top:1rem;cursor:pointer;}
-.login-back:hover{color:var(--teal);}
+  <title>Gabo & Miya</title>
 
-/* ── ADMIN ── */
-#view-admin{min-height:100vh;background:#f0ede8;}
-.admin-header{background:#fff;border-bottom:1px solid #e0dbd2;padding:0.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
-.admin-brand{font-size:16px;font-weight:500;color:#1a1a1a;display:flex;align-items:center;gap:8px;}
-.admin-badge{font-size:11px;background:#e1f5ee;color:#0f6e56;padding:3px 10px;border-radius:20px;}
-.admin-logout{font-size:13px;color:#888;cursor:pointer;display:flex;align-items:center;gap:4px;}
-.admin-logout:hover{color:#1a1a1a;}
-.admin-body{padding:1.5rem;max-width:1100px;margin:0 auto;}
-.admin-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;}
-.admin-tab{padding:0.5rem 1.1rem;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;background:transparent;border:1px solid #ddd;color:#888;transition:all 0.2s;font-family:inherit;}
-.admin-tab.active{background:var(--teal);color:#fff;border-color:var(--teal);}
-.tab-content{display:none;}.tab-content.active{display:block;}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:1.5rem;}
-.metric{background:#fff;border:1px solid #e0dbd2;border-radius:12px;padding:1rem;text-align:center;}
-.metric-val{font-size:28px;font-weight:500;color:#1a1a1a;display:block;}
-.metric-lbl{font-size:12px;color:#888;display:block;margin-top:3px;}
-.m-conf .metric-val{color:#0f6e56;}.m-pend .metric-val{color:#854f0b;}.m-dec .metric-val{color:#a32d2d;}
-.cap-wrap{background:#fff;border:1px solid #e0dbd2;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;}
-.cap-hdr{display:flex;justify-content:space-between;font-size:13px;color:#888;margin-bottom:0.6rem;}
-.cap-bar{height:10px;background:#f0ede8;border-radius:99px;overflow:hidden;}
-.cap-fill{height:100%;background:var(--teal);border-radius:99px;transition:width 0.5s;}
-.g-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.8rem;}
-.g-title{font-size:15px;font-weight:500;color:#1a1a1a;}
-.g-actions{display:flex;gap:0.5rem;flex-wrap:wrap;}
-.g-btn{font-size:13px;padding:0.45rem 0.9rem;border-radius:8px;cursor:pointer;border:1px solid #ddd;background:#fff;color:#555;transition:all 0.2s;display:flex;align-items:center;gap:5px;font-family:inherit;}
-.g-btn:hover{background:#f0ede8;}
-.g-btn.primary{background:var(--teal);color:#fff;border-color:var(--teal);}
-.g-btn.primary:hover{background:var(--teal-dark);}
-.g-search{width:100%;margin-bottom:1rem;}
-.g-search input{width:100%;padding:0.55rem 1rem;font-size:14px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;outline:none;font-family:inherit;}
-.g-search input:focus{border-color:var(--teal);}
-.tbl-wrap{background:#fff;border:1px solid #e0dbd2;border-radius:12px;overflow:auto;}
-table{width:100%;border-collapse:collapse;font-size:14px;}
-thead tr{background:#f7f5f0;}
-th{padding:0.7rem 1rem;text-align:left;font-size:12px;font-weight:500;color:#888;letter-spacing:0.04em;border-bottom:1px solid #e0dbd2;white-space:nowrap;}
-td{padding:0.75rem 1rem;border-bottom:1px solid #f0ede8;color:#1a1a1a;vertical-align:middle;}
-tbody tr:last-child td{border-bottom:none;}
-tbody tr:hover td{background:#faf8f5;}
-.sbadge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;white-space:nowrap;}
-.s-confirmed{background:#e1f5ee;color:#0f6e56;}
-.s-pending{background:#faeeda;color:#854f0b;}
-.s-declined{background:#fcebeb;color:#a32d2d;}
-.row-acts{display:flex;gap:5px;}
-.rbtn{font-size:12px;padding:4px 9px;border-radius:6px;cursor:pointer;border:1px solid #ddd;background:transparent;color:#555;transition:all 0.2s;display:flex;align-items:center;gap:3px;}
-.rbtn:hover{background:#f0ede8;}
-.rbtn.wa{color:#0f6e56;border-color:#9fe1cb;}.rbtn.wa:hover{background:#e1f5ee;}
-.rbtn.del{color:#a32d2d;border-color:#f7c1c1;}.rbtn.del:hover{background:#fcebeb;}
-.empty-row td{text-align:center;color:#aaa;font-style:italic;padding:2.5rem;}
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:100;}
-.modal-overlay.open{display:flex;}
-.modal-card{background:#fff;border-radius:16px;padding:1.75rem;width:400px;max-width:95vw;}
-.modal-title{font-size:17px;font-weight:500;margin-bottom:1.2rem;color:#1a1a1a;}
-.modal-lbl{font-size:13px;color:#888;display:block;margin-bottom:0.35rem;}
-.modal-input{width:100%;font-size:14px;padding:0.6rem 0.9rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;margin-bottom:1rem;outline:none;font-family:inherit;}
-.modal-input:focus{border-color:var(--teal);}
-.modal-footer{display:flex;gap:0.6rem;justify-content:flex-end;margin-top:0.5rem;}
-.set-card{background:#fff;border:1px solid #e0dbd2;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem;}
-.set-title{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:0.9rem;}
-.set-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap;}
-.set-lbl{font-size:13px;color:#888;}
-.set-note{font-size:12px;color:#aaa;margin-bottom:0.8rem;}
-.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:#1a1a1a;color:#fff;border-radius:10px;padding:0.75rem 1.25rem;font-size:14px;z-index:200;display:none;font-family:'Cormorant Garamond',serif;}
-</style>
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
+
 <body>
-<div id="app">
 
-<!-- ═══ INVITATION ═══ -->
-<div id="view-invitation" class="view active">
-  <div class="linen-texture"></div>
-  <svg class="floral-corner tr" width="140" height="160" viewBox="0 0 140 160">
-    <g fill="white"><ellipse cx="100" cy="20" rx="12" ry="28" transform="rotate(-30 100 20)"/><ellipse cx="120" cy="45" rx="10" ry="22" transform="rotate(15 120 45)"/><ellipse cx="80" cy="50" rx="9" ry="20" transform="rotate(-60 80 50)"/><ellipse cx="110" cy="70" rx="8" ry="18" transform="rotate(45 110 70)"/><ellipse cx="70" cy="30" rx="7" ry="16" transform="rotate(-15 70 30)"/><circle cx="95" cy="55" r="7"/><circle cx="115" cy="35" r="5"/><path d="M60,10 Q80,30 100,10" stroke="white" stroke-width="1.5" fill="none"/><path d="M105,15 Q115,40 130,25" stroke="white" stroke-width="1.5" fill="none"/></g>
-  </svg>
-  <svg class="floral-corner bl" width="120" height="140" viewBox="0 0 120 140">
-    <g fill="white"><ellipse cx="30" cy="120" rx="10" ry="24" transform="rotate(20 30 120)"/><ellipse cx="55" cy="110" rx="9" ry="20" transform="rotate(-40 55 110)"/><ellipse cx="15" cy="90" rx="8" ry="18" transform="rotate(60 15 90)"/><ellipse cx="45" cy="85" rx="7" ry="16" transform="rotate(-10 45 85)"/><circle cx="30" cy="95" r="6"/><path d="M10,130 Q30,110 50,125" stroke="white" stroke-width="1.5" fill="none"/></g>
-  </svg>
+  <!-- HERO -->
+  <section class="hero fade-up">
 
-  <div class="inv-inner">
-    <div class="inv-page active" id="ipage-0">
-      <div class="inv-names"><span class="n1">Gabo</span><span class="amp">&amp;</span><span class="n2">Miya</span></div>
-      <p class="inv-tagline">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
-      <div class="inv-date-row">
-        <div class="inv-date-col"><span class="lbl">Viernes</span><span class="val">7</span></div>
-        <div class="inv-date-col"><span class="lbl">Agosto</span><span class="val">2026</span></div>
-        <div class="inv-date-col"><span class="lbl">Hora</span><span class="val">19:30</span></div>
+    <div class="hero-content">
+
+      <h1 class="names">
+        Gabo
+        <span>&</span>
+        <br>
+        Miya
+      </h1>
+
+      <p class="phrase">
+        En compañía de nuestras familias,<br>
+        unimos nuestros destinos
+      </p>
+
+      <!-- INVITADO -->
+      <div class="guest-box">
+
+        <h2 id="guest-name">
+          Bienvenido
+        </h2>
+
+        <p id="guest-seats"></p>
+
       </div>
-      <p class="inv-venue">Centro Cultural y Social Veracruzano</p>
-      <p class="inv-address">Av. Miguel Ángel de Quevedo 687,<br>San Francisco, Coyoacán,<br>04320, Ciudad de México</p>
-      <div class="inv-guest-box">
-        <p class="gname" id="inv-gname">Cargando...</p>
-        <p class="gseats" id="inv-gseats"></p>
+
+    </div>
+
+  </section>
+
+  <!-- FECHA -->
+  <section class="date-section fade-up">
+
+    <div class="date-grid">
+
+      <div>
+        <h3>Viernes</h3>
+        <p>7</p>
       </div>
-    </div>
 
-    <div class="inv-page" id="ipage-1">
-      <div class="inv-names" style="margin-bottom:1.5rem"><span class="n1" style="font-size:clamp(42px,10vw,58px)">Gabo</span><span class="amp" style="font-size:clamp(22px,5vw,30px)">&amp;</span><span class="n2" style="font-size:clamp(42px,10vw,58px)">Miya</span></div>
-      <div style="width:100%">
-        <div class="itinerary-item"><div class="it-l"><span class="it-name">Recepción</span><br><span class="it-time">19:30</span></div><div class="it-icon"><i class="ti ti-arch"></i></div><div class="it-r"></div></div>
-        <div class="itinerary-item"><div class="it-l"></div><div class="it-icon"><i class="ti ti-heart-handshake"></i></div><div class="it-r"><span class="it-name">Ceremonia Civil</span><br><span class="it-time">20:00</span></div></div>
-        <div class="itinerary-item"><div class="it-l"><span class="it-name">Cena</span><br><span class="it-time">21:00</span></div><div class="it-icon"><i class="ti ti-tools-kitchen-2"></i></div><div class="it-r"></div></div>
-        <div class="itinerary-item"><div class="it-l"></div><div class="it-icon"><i class="ti ti-users"></i></div><div class="it-r"><span class="it-name">Primer Baile</span><br><span class="it-time">22:00</span></div></div>
-        <div class="itinerary-item"><div class="it-l"><span class="it-name">Brindis y Pastel</span><br><span class="it-time">22:30</span></div><div class="it-icon"><i class="ti ti-glass-champagne"></i></div><div class="it-r"></div></div>
-        <div class="itinerary-item"><div class="it-l"></div><div class="it-icon"><i class="ti ti-music"></i></div><div class="it-r"><span class="it-name">Baile</span></div></div>
-        <div class="itinerary-item"><div class="it-l"><span class="it-name">Despedida</span><br><span class="it-time">02:30</span></div><div class="it-icon"><i class="ti ti-car"></i></div><div class="it-r"></div></div>
+      <div>
+        <h3>Agosto</h3>
+        <p>2026</p>
       </div>
-    </div>
 
-    <div class="inv-page" id="ipage-2">
-      <div class="inv-names" style="margin-bottom:1.5rem"><span class="n1" style="font-size:clamp(42px,10vw,58px)">Gabo</span><span class="amp" style="font-size:clamp(22px,5vw,30px)">&amp;</span><span class="n2" style="font-size:clamp(42px,10vw,58px)">Miya</span></div>
-      <div class="dress-section"><p class="dress-title">Código de Vestimenta</p><p class="dress-subtitle">Formal Casual</p><div class="dress-icons"><i class="ti ti-dress"></i><i class="ti ti-tie"></i></div><p class="dress-note">Celebración solo para adultos</p></div>
-    </div>
-
-    <div class="inv-page" id="ipage-3">
-      <div class="inv-names" style="margin-bottom:1rem"><span class="n1" style="font-size:clamp(42px,10vw,58px)">Gabo</span><span class="amp" style="font-size:clamp(22px,5vw,30px)">&amp;</span><span class="n2" style="font-size:clamp(42px,10vw,58px)">Miya</span></div>
-      <p class="rsvp-title">Confirmar Asistencia</p>
-      <p class="rsvp-sub" id="rsvp-sub-lbl"></p>
-      <div style="width:100%">
-        <label class="rsvp-lbl">¿Asistirás?</label>
-        <div class="attend-btns">
-          <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
-          <button class="attend-btn" id="btn-no" onclick="selectAttend('no')">No podré ir</button>
-        </div>
-        <div id="count-section">
-          <label class="rsvp-lbl">¿Cuántos asistirán? (máx. <span id="max-lbl">0</span>)</label>
-          <div class="rsvp-counter">
-            <button class="rsvp-cbtn" onclick="chgCount(-1)">−</button>
-            <span class="rsvp-counter-val" id="cnt-val">1</span>
-            <button class="rsvp-cbtn" onclick="chgCount(1)">+</button>
-          </div>
-        </div>
-        <label class="rsvp-lbl">Mensaje para los novios (opcional)</label>
-        <textarea class="rsvp-input" rows="3" id="rsvp-msg" placeholder="Un mensaje de felicitación..."></textarea>
-        <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
+      <div>
+        <h3>19:30</h3>
+        <p>HRS</p>
       </div>
+
     </div>
 
-    <div class="inv-page" id="ipage-4">
-      <div style="text-align:center;padding:2rem 0">
-        <div class="success-icon"><i class="ti ti-circle-check"></i></div>
-        <p class="success-title">¡Gracias!</p>
-        <p class="success-text" id="thanks-txt"></p>
-      </div>
-    </div>
+  </section>
 
-    <div class="inv-nav" id="inv-nav">
-      <div class="inv-dot active" onclick="goPage(0)"></div>
-      <div class="inv-dot" onclick="goPage(1)"></div>
-      <div class="inv-dot" onclick="goPage(2)"></div>
-      <div class="inv-dot" onclick="goPage(3)"></div>
-    </div>
-    <div class="inv-arrows">
-      <button class="inv-arrow" id="arr-prev" onclick="navPage(-1)" disabled><i class="ti ti-chevron-left"></i></button>
-      <button class="inv-arrow" id="arr-next" onclick="navPage(1)"><i class="ti ti-chevron-right"></i></button>
-    </div>
-    <p class="admin-link" onclick="showView('login')">· Admin ·</p>
-  </div>
-</div>
+  <!-- UBICACIÓN -->
+  <section class="location fade-up">
 
-<!-- ═══ LOGIN ═══ -->
-<div id="view-login" class="view">
-  <div class="login-card">
-    <div class="login-logo"><i class="ti ti-lock"></i></div>
-    <p class="login-title">Panel de Administración</p>
-    <p class="login-sub">Gabo &amp; Miya · Boda 2026</p>
-    <input type="password" class="login-inp" id="login-pass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doLogin()">
-    <p class="login-err" id="login-err">Contraseña incorrecta</p>
-    <button class="login-btn" onclick="doLogin()">Entrar</button>
-    <p class="login-back" onclick="showView('invitation')">← Volver a la invitación</p>
-  </div>
-</div>
+    <h2>
+      Centro Cultural y Social Veracruzano
+    </h2>
 
-<!-- ═══ ADMIN ═══ -->
-<div id="view-admin" class="view">
-  <div class="admin-header">
-    <div class="admin-brand"><i class="ti ti-heart" style="color:var(--teal)"></i> Gabo &amp; Miya <span class="admin-badge">Admin</span></div>
-    <span class="admin-logout" onclick="showView('login')"><i class="ti ti-logout"></i> Salir</span>
-  </div>
-  <div class="admin-body">
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('overview')">Resumen</button>
-      <button class="admin-tab" onclick="switchTab('guests')">Invitados</button>
-      <button class="admin-tab" onclick="switchTab('settings')">Configuración</button>
-    </div>
+    <p>
+      Av. Miguel Ángel de Quevedo 687,<br>
+      San Francisco, Coyoacán,<br>
+      04320, Ciudad de México
+    </p>
 
-    <div class="tab-content active" id="tab-overview">
-      <div class="metrics" id="metrics-grid"></div>
-      <div class="cap-wrap">
-        <div class="cap-hdr"><span>Ocupación del evento</span><span id="cap-lbl">0 / 150</span></div>
-        <div class="cap-bar"><div class="cap-fill" id="cap-fill" style="width:0%"></div></div>
-      </div>
-      <div class="tbl-wrap">
-        <table><thead><tr><th>Familia</th><th>Asignados</th><th>Confirmados</th><th>Estado</th></tr></thead>
-        <tbody id="overview-tbody"><tr class="empty-row"><td colspan="4">Cargando...</td></tr></tbody></table>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline fade-up">
+
+    <div class="line"></div>
+
+    <div class="event left">
+      <img src="img/Recepcion.png" alt="">
+      <div>
+        <h3>Recepción</h3>
+        <p>19:30</p>
       </div>
     </div>
 
-    <div class="tab-content" id="tab-guests">
-      <div class="g-hdr">
-        <span class="g-title">Lista de invitados</span>
-        <div class="g-actions">
-          <button class="g-btn" onclick="exportCSV()"><i class="ti ti-download"></i> Exportar CSV</button>
-          <button class="g-btn primary" onclick="openModal()"><i class="ti ti-plus"></i> Agregar</button>
-        </div>
-      </div>
-      <div class="g-search"><input placeholder="Buscar familia..." oninput="filterGuests(this.value)" id="search-inp"></div>
-      <div class="tbl-wrap">
-        <table><thead><tr><th>Familia</th><th>Teléfono</th><th>Asignados</th><th>Confirmados</th><th>Estado</th><th>Mensaje</th><th>Acciones</th></tr></thead>
-        <tbody id="guests-tbody"><tr class="empty-row"><td colspan="7">Cargando...</td></tr></tbody></table>
+    <div class="event right">
+      <img src="img/Recepcion.png" alt="">
+      <div>
+        <h3>Ceremonia Civil</h3>
+        <p>20:00</p>
       </div>
     </div>
 
-    <div class="tab-content" id="tab-settings">
-      <div class="set-card">
-        <p class="set-title">Cupo máximo del evento</p>
-        <div class="set-row">
-          <span class="set-lbl">Total de personas permitidas</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <input type="number" id="cap-inp" value="150" min="1" style="width:80px;text-align:center;padding:0.4rem;border:1px solid #ddd;border-radius:6px;font-family:inherit">
-            <button class="g-btn primary" onclick="saveCap()">Guardar</button>
-          </div>
-        </div>
-      </div>
-      <div class="set-card">
-        <p class="set-title">Plantilla de mensaje WhatsApp</p>
-        <p class="set-note">Usa {ID} donde quieres que aparezca el identificador único del invitado.</p>
-        <textarea style="width:100%;font-size:13px;min-height:90px;padding:0.6rem;border:1px solid #ddd;border-radius:8px;background:#fff;color:#1a1a1a;font-family:inherit;resize:vertical" id="wa-tpl"></textarea>
-        <button class="g-btn primary" style="margin-top:0.6rem" onclick="saveWATpl()"><i class="ti ti-check"></i> Guardar plantilla</button>
+    <div class="event left">
+      <img src="img/Recepcion.png" alt="">
+      <div>
+        <h3>Cena</h3>
+        <p>21:00</p>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="add-modal">
-  <div class="modal-card">
-    <p class="modal-title"><i class="ti ti-user-plus"></i> Agregar invitado</p>
-    <label class="modal-lbl">Nombre de familia</label>
-    <input class="modal-input" id="new-name" placeholder="Ej: Familia Martínez">
-    <label class="modal-lbl">Teléfono WhatsApp (con código de país)</label>
-    <input class="modal-input" id="new-phone" placeholder="521XXXXXXXXXX">
-    <label class="modal-lbl">Lugares asignados</label>
-    <input class="modal-input" type="number" id="new-seats" value="2" min="1" max="30">
-    <div class="modal-footer">
-      <button class="g-btn" onclick="closeModal()">Cancelar</button>
-      <button class="g-btn primary" onclick="addGuest()">Agregar</button>
+    <div class="event right">
+      <img src="img/Recepcion.png" alt="">
+      <div>
+        <h3>Primer Baile</h3>
+        <p>22:00</p>
+      </div>
     </div>
-  </div>
-</div>
 
-<div class="toast" id="toast"></div>
+    <div class="event left">
+      <img src="img/Recepcion.png" alt="">
+      <div>
+        <h3>Brindis y Pastel</h3>
+        <p>22:30</p>
+      </div>
+    </div>
 
-<script>
-const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
-const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
-const PASS    = '20M4risun26';
-const ID_EVENT = 1; // idEvent para esta boda
+    <div class="event right">
+      <img src="img/Recepcion.png" alt="">
+      <div>
+        <h3>Despedida</h3>
+        <p>02:30</p>
+      </div>
+    </div>
 
-let guests = [], maxCap = 150, waTemplate = '';
-let currentPage = 0, attendChoice = null, guestCount = 1, maxSeats = 2;
-let activeGuest = null, filterStr = '';
+  </section>
 
-/* ── Supabase helper ── */
-async function api(path, opts = {}) {
-  const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
-    headers: {
-      'apikey': SUPA_KEY,
-      'Authorization': 'Bearer ' + SUPA_KEY,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation',
-      ...(opts.headers || {})
-    },
-    ...opts
-  });
-  if (!res.ok) { const e = await res.text(); throw new Error(e); }
-  const t = await res.text();
-  return t ? JSON.parse(t) : null;
-}
+  <!-- DRESS CODE -->
+  <section class="dresscode fade-up">
 
-/* ── Data ── */
-async function loadGuests() {
-  try {
-    guests = await api('guests?idEvent=eq.' + ID_EVENT + '&order=created_at.asc') || [];
-  } catch(e) { guests = []; showToast('Error cargando invitados: ' + e.message); }
-}
+    <h2>Código de Vestimenta</h2>
 
-async function loadConfig() {
-  try {
-    const c = await api('event_config?idEvent=eq.' + ID_EVENT);
-    if (c && c[0]) {
-      maxCap     = c[0].max_capacity || 150;
-      waTemplate = c[0].wa_template  || defaultTemplate();
-    } else {
-      waTemplate = defaultTemplate();
+    <h3>Formal Casual</h3>
+
+    <p class="adults">
+      Celebración solo para adultos
+    </p>
+
+  </section>
+
+  <!-- RSVP -->
+  <section class="rsvp fade-up">
+
+    <h2>Confirmar asistencia</h2>
+
+    <p class="rsvp-text">
+      Esperamos compartir este momento contigo
+    </p>
+
+    <!-- BOTONES -->
+    <div class="attendance-buttons">
+
+      <button
+        class="attend-btn"
+        onclick="selectAttend('yes')"
+        id="btn-yes"
+      >
+        Sí asistiré
+      </button>
+
+      <button
+        class="attend-btn"
+        onclick="selectAttend('no')"
+        id="btn-no"
+      >
+        No podré asistir
+      </button>
+
+    </div>
+
+    <!-- CONTADOR -->
+    <div class="counter-section" id="counter-section">
+
+      <p>
+        Número de asistentes
+      </p>
+
+      <div class="counter">
+
+        <button onclick="changeCount(-1)">
+          −
+        </button>
+
+        <span id="count-value">
+          1
+        </span>
+
+        <button onclick="changeCount(1)">
+          +
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- MENSAJE -->
+    <textarea
+      id="message"
+      placeholder="Mensaje para los novios..."
+    ></textarea>
+
+    <!-- ENVIAR -->
+    <button
+      class="submit-btn"
+      onclick="submitRSVP()"
+    >
+      Confirmar asistencia
+    </button>
+
+  </section>
+
+  <!-- THANK YOU -->
+  <section class="thanks hidden" id="thanks-section">
+
+    <h2>
+      ¡Gracias!
+    </h2>
+
+    <p id="thanks-message"></p>
+
+  </section>
+
+  <!-- ADMIN -->
+  <p
+    class="admin-link"
+    onclick="location.href='admin.html'"
+  >
+    · Admin ·
+  </p>
+
+  <!-- JAVASCRIPT -->
+  <script>
+
+    /* CONFIG */
+
+    const SUPA_URL = 'TU_SUPABASE_URL';
+    const SUPA_KEY = 'TU_SUPABASE_KEY';
+    const ID_EVENT = 1;
+
+    let activeGuest = null;
+    let attendChoice = null;
+    let guestCount = 1;
+    let maxSeats = 1;
+
+    /* API */
+
+    async function api(path, opts = {}) {
+
+      const res = await fetch(
+        SUPA_URL + '/rest/v1/' + path,
+        {
+          headers: {
+            'apikey': SUPA_KEY,
+            'Authorization': 'Bearer ' + SUPA_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          ...opts
+        }
+      );
+
+      const txt = await res.text();
+
+      return txt ? JSON.parse(txt) : null;
+
     }
-  } catch(e) { waTemplate = defaultTemplate(); }
-}
 
-function defaultTemplate() {
-  return '¡Hola! 💍 Gabo y Miya te invitan a su boda el viernes 7 de agosto 2026 a las 19:30 hrs.\nConfirma tu asistencia aquí: https://inviteme-topaz.vercel.app/?id={ID}';
-}
+    /* LOAD GUEST */
 
-async function saveConfig(obj) {
-  try {
-    await api('event_config?idEvent=eq.' + ID_EVENT, { method: 'PATCH', body: JSON.stringify(obj) });
-  } catch(e) { showToast('Error al guardar: ' + e.message); }
-}
+    async function loadGuest() {
 
-/* ── UI helpers ── */
-function showToast(msg, dur = 2800) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.display = 'block';
-  clearTimeout(t._t);
-  t._t = setTimeout(() => { t.style.display = 'none'; }, dur);
-}
+      const params = new URLSearchParams(
+        window.location.search
+      );
 
-function showView(v) {
-  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-  document.getElementById('view-' + v).classList.add('active');
-}
+      const gid = params.get('id');
 
-/* ── Auth ── */
-function doLogin() {
-  const v   = document.getElementById('login-pass').value;
-  const err = document.getElementById('login-err');
-  if (v === PASS) {
-    err.style.display = 'none';
-    document.getElementById('login-pass').value = '';
-    showView('admin');
-    initAdmin();
-  } else {
-    err.style.display = 'block';
-  }
-}
+      if (!gid) return;
 
-/* ── Admin ── */
-async function initAdmin() {
-  await loadConfig();
-  await loadGuests();
-  renderAll();
-  document.getElementById('cap-inp').value = maxCap;
-  document.getElementById('wa-tpl').value  = waTemplate;
-}
+      try {
 
-function switchTab(t) {
-  ['overview','guests','settings'].forEach((n, i) => {
-    document.querySelectorAll('.admin-tab')[i].classList.toggle('active', n === t);
-  });
-  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-  document.getElementById('tab-' + t).classList.add('active');
-  if (t !== 'settings') renderAll();
-}
+        const res = await api(
+          'guests?id=eq.' + gid +
+          '&idEvent=eq.' + ID_EVENT
+        );
 
-function renderAll() { renderMetrics(); renderOverview(); renderGuests(filterStr); }
+        if (res && res[0]) {
 
-function getStats() {
-  const confirmed  = guests.filter(g => g.status === 'confirmed').reduce((s,g) => s + (g.confirmed||0), 0);
-  const pending    = guests.filter(g => g.status === 'pending').length;
-  const declined   = guests.filter(g => g.status === 'declined').length;
-  const totalSeats = guests.reduce((s,g) => s + (g.seats||0), 0);
-  return { confirmed, pending, declined, totalSeats, total: guests.length };
-}
+          activeGuest = res[0];
 
-function renderMetrics() {
-  const s = getStats();
-  document.getElementById('metrics-grid').innerHTML = `
-    <div class="metric"><span class="metric-val">${s.total}</span><span class="metric-lbl">Familias</span></div>
-    <div class="metric"><span class="metric-val">${s.totalSeats}</span><span class="metric-lbl">Lugares asignados</span></div>
-    <div class="metric m-conf"><span class="metric-val">${s.confirmed}</span><span class="metric-lbl">Confirmados</span></div>
-    <div class="metric m-pend"><span class="metric-val">${s.pending}</span><span class="metric-lbl">Pendientes</span></div>
-    <div class="metric m-dec"><span class="metric-val">${s.declined}</span><span class="metric-lbl">Declinaron</span></div>`;
-  const pct = maxCap > 0 ? Math.round((s.confirmed / maxCap) * 100) : 0;
-  document.getElementById('cap-lbl').textContent  = s.confirmed + ' / ' + maxCap;
-  document.getElementById('cap-fill').style.width = Math.min(pct, 100) + '%';
-}
+          document.getElementById(
+            'guest-name'
+          ).textContent = activeGuest.name;
 
-function sbadge(s) {
-  if (s === 'confirmed') return '<span class="sbadge s-confirmed">Confirmado</span>';
-  if (s === 'declined')  return '<span class="sbadge s-declined">Declinó</span>';
-  return '<span class="sbadge s-pending">Pendiente</span>';
-}
+          document.getElementById(
+            'guest-seats'
+          ).textContent =
+            activeGuest.seats +
+            ' lugares asignados';
 
-function renderOverview() {
-  document.getElementById('overview-tbody').innerHTML = guests.length
-    ? guests.map(g => `<tr><td>${g.name}</td><td>${g.seats}</td><td>${g.status==='confirmed'?g.confirmed:'—'}</td><td>${sbadge(g.status)}</td></tr>`).join('')
-    : '<tr class="empty-row"><td colspan="4">Sin invitados. Agrégalos en la pestaña Invitados.</td></tr>';
-}
+          maxSeats = activeGuest.seats;
 
-function renderGuests(f = '') {
-  const list = f ? guests.filter(g => g.name.toLowerCase().includes(f.toLowerCase())) : guests;
-  document.getElementById('guests-tbody').innerHTML = list.length
-    ? list.map(g => `<tr>
-        <td><strong>${g.name}</strong></td>
-        <td style="font-size:12px;color:#888">${g.phone||'—'}</td>
-        <td>${g.seats}</td>
-        <td>${g.status==='confirmed'?g.confirmed:'—'}</td>
-        <td>${sbadge(g.status)}</td>
-        <td style="font-size:12px;color:#888;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${g.msg||''}">${g.msg||'—'}</td>
-        <td><div class="row-acts">
-          <button class="rbtn wa" onclick="sendWA('${g.id}')" title="WhatsApp"><i class="ti ti-brand-whatsapp"></i></button>
-          <button class="rbtn" onclick="previewInvite('${g.id}')" title="Ver invitación"><i class="ti ti-eye"></i></button>
-          <button class="rbtn del" onclick="deleteGuest('${g.id}')" title="Eliminar"><i class="ti ti-trash"></i></button>
-        </div></td></tr>`).join('')
-    : '<tr class="empty-row"><td colspan="7">Sin resultados</td></tr>';
-}
+        }
 
-function filterGuests(v) { filterStr = v; renderGuests(v); }
-function openModal()  { document.getElementById('add-modal').classList.add('open'); }
-function closeModal() { document.getElementById('add-modal').classList.remove('open'); }
+      } catch(e) {
 
-async function addGuest() {
-  const name  = document.getElementById('new-name').value.trim();
-  const phone = document.getElementById('new-phone').value.trim();
-  const seats = parseInt(document.getElementById('new-seats').value) || 2;
-  if (!name) { showToast('Escribe el nombre de la familia'); return; }
-  try {
-    const res = await api('guests', {
-      method: 'POST',
-      body: JSON.stringify({ name, phone, seats, confirmed: 0, status: 'pending', msg: '', idEvent: ID_EVENT })
-    });
-    if (res && res[0]) guests.push(res[0]);
-    closeModal();
-    document.getElementById('new-name').value  = '';
-    document.getElementById('new-phone').value = '';
-    document.getElementById('new-seats').value = '2';
-    renderAll();
-    showToast('✓ ' + name + ' agregado');
-  } catch(e) { showToast('Error: ' + e.message); }
-}
+        console.log(e);
 
-async function deleteGuest(id) {
-  if (!confirm('¿Eliminar este invitado?')) return;
-  try {
-    await api('guests?id=eq.' + id + '&idEvent=eq.' + ID_EVENT, { method: 'DELETE' });
-    guests = guests.filter(g => g.id !== id);
-    renderAll();
-    showToast('Invitado eliminado');
-  } catch(e) { showToast('Error: ' + e.message); }
-}
+      }
 
-function sendWA(id) {
-  const g = guests.find(x => x.id === id);
-  if (!g || !g.phone) { showToast('Este invitado no tiene teléfono registrado'); return; }
-  const tpl = document.getElementById('wa-tpl').value || waTemplate;
-  const msg = tpl.replace('{ID}', id);
-  window.open('https://wa.me/' + g.phone + '?text=' + encodeURIComponent(msg), '_blank');
-}
+    }
 
-function previewInvite(id) {
-  const g = guests.find(x => x.id === id);
-  if (!g) return;
-  activeGuest = g;
-  setGuestUI(g);
-  attendChoice = null; guestCount = 1;
-  document.getElementById('btn-yes').className = 'attend-btn';
-  document.getElementById('btn-no').className  = 'attend-btn';
-  document.getElementById('count-section').style.display = 'block';
-  document.getElementById('cnt-val').textContent = 1;
-  document.getElementById('rsvp-msg').value = '';
-  document.getElementById('rsvp-btn').disabled    = false;
-  document.getElementById('rsvp-btn').textContent = 'Confirmar asistencia';
-  document.getElementById('inv-nav').style.display = 'flex';
-  document.getElementById('arr-next').disabled = false;
-  goPage(0);
-  showView('invitation');
-}
+    /* RSVP */
 
-function setGuestUI(g) {
-  document.getElementById('inv-gname').textContent  = g.name;
-  document.getElementById('inv-gseats').textContent = 'Lugares asignados: ' + g.seats;
-  document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats!==1?'es':'') + ' asignado' + (g.seats!==1?'s':'');
-  document.getElementById('max-lbl').textContent = g.seats;
-  maxSeats = g.seats;
-}
+    function selectAttend(choice){
 
-async function saveCap() {
-  const v = parseInt(document.getElementById('cap-inp').value);
-  if (v > 0) { maxCap = v; await saveConfig({ max_capacity: v }); renderMetrics(); showToast('✓ Cupo actualizado a ' + v); }
-}
+      attendChoice = choice;
 
-async function saveWATpl() {
-  waTemplate = document.getElementById('wa-tpl').value;
-  await saveConfig({ wa_template: waTemplate });
-  showToast('✓ Plantilla guardada');
-}
+      document.getElementById('btn-yes')
+        .classList.remove('selected');
 
-function exportCSV() {
-  const rows = [['Familia','Teléfono','Asignados','Confirmados','Estado','Mensaje']];
-  guests.forEach(g => rows.push([g.name, g.phone||'', g.seats, g.confirmed||0, g.status, g.msg||'']));
-  const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
-  const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
-  a.download = 'invitados-gabo-miya.csv';
-  a.click();
-  showToast('✓ CSV descargado');
-}
+      document.getElementById('btn-no')
+        .classList.remove('selected');
 
-/* ── Invitation nav ── */
-function goPage(n) {
-  document.querySelectorAll('.inv-page').forEach((p,i) => p.classList.toggle('active', i===n));
-  document.querySelectorAll('.inv-dot').forEach((d,i) => d.classList.toggle('active', i===n));
-  currentPage = n;
-  document.getElementById('arr-prev').disabled = n===0;
-  document.getElementById('arr-next').disabled = n>=3;
-}
-function navPage(d) { const n = currentPage+d; if(n>=0&&n<=3) goPage(n); }
+      if(choice === 'yes'){
 
-function selectAttend(c) {
-  attendChoice = c;
-  document.getElementById('btn-yes').className = 'attend-btn'+(c==='yes'?' sel-yes':'');
-  document.getElementById('btn-no').className  = 'attend-btn'+(c==='no'?' sel-no':'');
-  document.getElementById('count-section').style.display = c==='yes'?'block':'none';
-}
+        document.getElementById('btn-yes')
+          .classList.add('selected');
 
-function chgCount(d) {
-  guestCount = Math.max(1, Math.min(maxSeats, guestCount+d));
-  document.getElementById('cnt-val').textContent = guestCount;
-}
+        document.getElementById(
+          'counter-section'
+        ).style.display = 'block';
 
-async function submitRSVP() {
-  if (!attendChoice) { showToast('Por favor indica si asistirás'); return; }
-  if (!activeGuest)  { showToast('No se pudo identificar al invitado'); return; }
-  const btn = document.getElementById('rsvp-btn');
-  btn.disabled = true; btn.textContent = 'Guardando...';
-  const update = {
-    status:    attendChoice==='yes' ? 'confirmed' : 'declined',
-    confirmed: attendChoice==='yes' ? guestCount  : 0,
-    msg:       document.getElementById('rsvp-msg').value
-  };
-  try {
-    await api('guests?id=eq.' + activeGuest.id + '&idEvent=eq.' + ID_EVENT, {
-      method: 'PATCH', body: JSON.stringify(update)
-    });
-    const idx = guests.findIndex(g => g.id === activeGuest.id);
-    if (idx > -1) Object.assign(guests[idx], update);
-    document.getElementById('thanks-txt').innerHTML = attendChoice==='yes'
-      ? '¡Tu confirmación ha sido registrada!<br>Te esperamos el <strong>7 de agosto</strong> 🥂'
-      : 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
-    document.querySelectorAll('.inv-page').forEach((p,i) => p.classList.toggle('active', i===4));
-    document.getElementById('inv-nav').style.display = 'none';
-    document.getElementById('arr-prev').disabled = true;
-    document.getElementById('arr-next').disabled = true;
-  } catch(e) {
-    btn.disabled = false; btn.textContent = 'Confirmar asistencia';
-    showToast('Error al guardar: ' + e.message);
-  }
-}
+      } else {
 
-/* ── Init: carga invitado desde URL ?id=UUID ── */
-(async () => {
-  await loadConfig();
-  const params = new URLSearchParams(window.location.search);
-  const gid = params.get('id');
-  if (gid) {
-    try {
-      const res = await api('guests?id=eq.' + gid + '&idEvent=eq.' + ID_EVENT);
-      if (res && res[0]) { activeGuest = res[0]; setGuestUI(res[0]); }
-      else { document.getElementById('inv-gname').textContent = 'Invitado no encontrado'; }
-    } catch(e) { document.getElementById('inv-gname').textContent = 'Error al cargar'; }
-  } else {
-    document.getElementById('inv-gname').textContent  = 'Bienvenido';
-    document.getElementById('inv-gseats').textContent = '';
-    document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
-  }
-})();
-</script>
+        document.getElementById('btn-no')
+          .classList.add('selected');
+
+        document.getElementById(
+          'counter-section'
+        ).style.display = 'none';
+
+      }
+
+    }
+
+    function changeCount(v){
+
+      guestCount += v;
+
+      if(guestCount < 1)
+        guestCount = 1;
+
+      if(guestCount > maxSeats)
+        guestCount = maxSeats;
+
+      document.getElementById(
+        'count-value'
+      ).textContent = guestCount;
+
+    }
+
+    async function submitRSVP(){
+
+      if(!activeGuest){
+        alert('Invitado no encontrado');
+        return;
+      }
+
+      if(!attendChoice){
+        alert('Selecciona una opción');
+        return;
+      }
+
+      const update = {
+
+        status:
+          attendChoice === 'yes'
+          ? 'confirmed'
+          : 'declined',
+
+        confirmed:
+          attendChoice === 'yes'
+          ? guestCount
+          : 0,
+
+        msg:
+          document.getElementById(
+            'message'
+          ).value
+
+      };
+
+      try {
+
+        await api(
+          'guests?id=eq.' + activeGuest.id +
+          '&idEvent=eq.' + ID_EVENT,
+          {
+            method:'PATCH',
+            body:JSON.stringify(update)
+          }
+        );
+
+        document.querySelector('.rsvp')
+          .style.display = 'none';
+
+        document.getElementById(
+          'thanks-section'
+        ).classList.remove('hidden');
+
+        document.getElementById(
+          'thanks-message'
+        ).innerHTML =
+          attendChoice === 'yes'
+          ? 'Tu asistencia ha sido confirmada 🥂'
+          : 'Gracias por avisarnos';
+
+      } catch(e){
+
+        console.log(e);
+
+      }
+
+    }
+
+    /* ANIMATIONS */
+
+    const elements =
+      document.querySelectorAll('.fade-up');
+
+    const observer =
+      new IntersectionObserver(entries=>{
+
+        entries.forEach(entry=>{
+
+          if(entry.isIntersecting){
+
+            entry.target.classList.add('show');
+
+          }
+
+        });
+
+      },{
+        threshold:0.15
+      });
+
+    elements.forEach(el=>observer.observe(el));
+
+    /* INIT */
+
+    loadGuest();
+
+  </script>
+
 </body>
 </html>
