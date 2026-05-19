@@ -22,7 +22,7 @@ body{
 
 /* BACKGROUND */
 
-/*body::before{
+body::before{
     content:'';
     position:fixed;
     inset:0;
@@ -31,7 +31,7 @@ body{
     background-position:center;
     background-repeat:no-repeat;
     z-index:-1;
-}*/
+}
 
 /* GENERAL */
 
