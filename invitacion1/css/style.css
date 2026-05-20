@@ -1,274 +1,269 @@
-@font-face {
-  font-family: 'Felix';
-  src: url('../fonts/FelixTitling.ttf');
+@font-face{
+
+    font-family:'Felix';
+
+    src:url('../fonts/FELIXTI.TTF');
 }
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
 
-    margin:0;
-    color:white;
     background:#156d79;
-}
-/* BACKGROUND */
 
-/*body::before{
-    content:'';
-    position:fixed;
-    inset:0;
-    background-image:url('../img/fondo.jpg');
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    z-index:-1;
-}*/
+    overflow-x:hidden;
 
-/* GENERAL */
-
-section{
-  position:relative;
-  padding:120px 25px;
+    font-family:'Felix', serif;
 }
 
-h1,h2,h3,p{
-  font-weight:300;
-  letter-spacing:2px;
-}
+.invitation{
 
-.invite-bg{
-    max-width:768px;
-    margin:auto;
+    position:relative;
+
     width:100%;
-    min-height:100vh;
-    padding-bottom:200px;
 
-    background-image:url('../img/fondo.jpg');
-    background-size:100% auto;
-    background-position:top center;
-    background-repeat:no-repeat;
+    max-width:768px;
+
+    margin:auto;
 }
 
-.fade-up{
-  opacity:0;
-  transform:translateY(50px);
-  transition:1.4s ease;
+/* IMAGEN */
+
+.bg{
+
+    width:100%;
+
+    display:block;
 }
 
-.fade-up.show{
-  opacity:1;
-  transform:translateY(0);
+/* CAPA SUPERIOR */
+
+.overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
 }
 
 /* HERO */
 
 .hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+
+    position:absolute;
+
+    top:6%;
+
+    width:100%;
+
+    text-align:center;
+
+    color:white;
 }
 
-.hero-content{
-  max-width:900px;
+.hero h1{
+
+    font-size:clamp(4rem,10vw,7rem);
+
+    line-height:.9;
+
+    font-weight:normal;
 }
 
-.names{
-  font-size:clamp(4rem, 12vw, 10rem);
-  line-height:.95;
+.hero span{
+
+    font-size:3rem;
 }
 
-.names span{
-  font-size:3rem;
+.hero p{
+
+    margin-top:50px;
+
+    font-size:1.2rem;
+
+    line-height:1.8;
+
+    letter-spacing:1px;
 }
 
-.phrase{
-  margin-top:90px;
-  font-size:clamp(1rem, 2vw, 1.7rem);
-  line-height:1.8;
+/* INVITADO */
+
+.guest-box{
+
+    position:absolute;
+
+    top:24%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:75%;
+
+    padding:25px;
+
+    border:1px solid rgba(255,255,255,.35);
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(4px);
+
+    border-radius:14px;
+
+    text-align:center;
+
+    color:white;
 }
 
-/* DATE */
+.guest-box h2{
+
+    font-size:2rem;
+
+    margin-bottom:10px;
+
+    font-weight:normal;
+}
+
+.guest-box p{
+
+    font-size:1rem;
+
+    letter-spacing:1px;
+}
+
+/* FECHA */
 
 .date-section{
-  text-align:center;
+
+    position:absolute;
+
+    top:38%;
+
+    width:100%;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:40px;
+
+    color:white;
+
+    text-align:center;
 }
 
-.date-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:30px;
-  max-width:900px;
-  margin:auto;
+.date-section h3{
+
+    font-size:1.2rem;
+
+    margin-bottom:10px;
+
+    font-weight:normal;
 }
 
-.date-grid h3{
-  font-size:2rem;
-  margin-bottom:10px;
-}
+.date-section p{
 
-.date-grid p{
-  font-size:3rem;
-}
-
-/* LOCATION */
-
-.location{
-  text-align:center;
-}
-
-.location h2{
-  font-size:clamp(2rem,4vw,3rem);
-  margin-bottom:40px;
-}
-
-.location p{
-  font-size:clamp(1rem,2vw,1.7rem);
-  line-height:1.8;
-}
-
-/* TIMELINE */
-
-.timeline{
-  max-width:1000px;
-  margin:auto;
-  position:relative;
-}
-
-.line{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translateX(-50%);
-  width:2px;
-  height:100%;
-  background:rgba(255,255,255,.4);
-}
-
-.event{
-  width:50%;
-  padding:40px;
-  position:relative;
-}
-
-.event img{
-  width:70px;
-  margin-bottom:20px;
-  filter:brightness(0) invert(1);
-}
-
-.event h3{
-  font-size:2rem;
-  margin-bottom:10px;
-}
-
-.event p{
-  font-size:2rem;
-}
-
-.left{
-  text-align:right;
-  left:0;
-}
-
-.right{
-  left:50%;
-}
-
-/* DRESS CODE */
-
-.dresscode{
-  text-align:center;
-}
-
-.dresscode h2{
-  font-size:2.5rem;
-  margin-bottom:30px;
-}
-
-.dresscode h3{
-  font-size:3.5rem;
-  margin-bottom:50px;
-}
-
-.adults{
-  font-size:1.5rem;
+    font-size:2rem;
 }
 
 /* RSVP */
 
-.rsvp{
-  text-align:center;
-  padding-bottom:180px;
+.rsvp-btn{
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:8%;
+
+    transform:translateX(-50%);
+
+    text-decoration:none;
+
+    color:white;
+
+    border:1px solid white;
+
+    padding:18px 42px;
+
+    font-size:1rem;
+
+    letter-spacing:1px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(4px);
+
+    transition:.3s;
+
+    border-radius:10px;
 }
 
-.rsvp h2{
-  font-size:2.5rem;
-  margin-bottom:50px;
-}
+.rsvp-btn:hover{
 
-.btn{
-  display:inline-block;
-  padding:18px 50px;
-  border:1px solid white;
-  color:white;
-  text-decoration:none;
-  font-size:1.2rem;
-  transition:.4s ease;
-}
+    background:white;
 
-.btn:hover{
-  background:white;
-  color:#156d79;
+    color:#156d79;
 }
 
 /* MOBILE */
 
 @media(max-width:768px){
 
-  section{
-    padding:90px 20px;
-  }
+    .hero{
 
-  .date-grid{
-    grid-template-columns:1fr;
-    gap:50px;
-  }
+        top:5%;
+    }
 
-  .line{
-    left:20px;
-  }
+    .hero p{
 
-  .event{
-    width:100%;
-    left:0 !important;
-    padding-left:70px;
-    text-align:left;
-  }
+        font-size:1rem;
 
-  .event img{
-    width:55px;
-  }
+        padding:0 20px;
+    }
 
-  .event h3{
-    font-size:1.5rem;
-  }
+    .guest-box{
 
-  .event p{
-    font-size:1.4rem;
-  }
+        top:23%;
 
-  .dresscode h3{
-    font-size:2.5rem;
-  }
+        width:82%;
+    }
+
+    .guest-box h2{
+
+        font-size:1.5rem;
+    }
+
+    .date-section{
+
+        top:37%;
+
+        gap:20px;
+    }
+
+    .date-section h3{
+
+        font-size:.9rem;
+    }
+
+    .date-section p{
+
+        font-size:1.4rem;
+    }
+
+    .rsvp-btn{
+
+        width:80%;
+
+        text-align:center;
+
+        bottom:6%;
+    }
 
 }
