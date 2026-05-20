@@ -60,12 +60,19 @@ body {
   margin-top:8px;
 }
 
-.top-name,
+.top-name{
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight:300;
+  letter-spacing:0.08em;
+  color:var(--white);
+}
+  
 .bottom-name{
   font-size: clamp(30px, 6vw, 42px);
   font-weight:300;
   letter-spacing:0.08em;
   color:var(--white);
+   align-items:right;
 }
 
 .amp{
@@ -357,8 +364,10 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   <div class="line1">
     <span class="top-name">GABO</span>
     <span class="amp">&amp;</span>
+    <br>
   </div>
   <div class="line2">
+    <br>
     <span class="bottom-name">MIYA</span>
   </div>
 </p>
