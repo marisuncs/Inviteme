@@ -409,11 +409,10 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
       <div class="thanks-icon">💍</div>
       <p class="thanks-title">¡Gracias!</p>
       <p class="thanks-text" id="thanks-txt"></p>
-/* CONTADOR */
-       <!-- Contador -->
-  <div id="countdown"></div>
-
-  <script>
+  
+      <!-- Contador -->
+      <div id="countdown"></div>
+      <script>
     // Contador
     const targetDate = new Date("Aug 7, 2026 19:30:00").getTime();
     setInterval(() => {
@@ -430,7 +429,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("countdown").innerHTML =
+      document.getElementById("thanks-title").innerHTML =
         `${days}d ${hours}h ${minutes}m ${seconds}s `;
     }, 1000);
   </script>
