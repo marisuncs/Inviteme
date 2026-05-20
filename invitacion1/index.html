@@ -14,7 +14,7 @@
   --white-55: rgba(255,255,255,0.55);
   --white-10: rgba(255,255,255,0.10);
   --teal-darker: #1e4a57;
-  --header-h: 60px;
+  --header-h: 70px;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -39,7 +39,7 @@ body {
 
 /* ── HEADER FIJO ── */
 .fixed-header {
-  position: fixed; top: 0; left: 0; right: 1;
+  position: fixed; top: 0; left: 0; right: 0;
   height: var(--header-h);
   display: flex; /* ── align-items: center; justify-content: center;── */
   justify-content: flex-start; /* Alinear al inicio horizontal */
@@ -366,7 +366,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 <header class="fixed-header">
 <p class="header-names">
   <div class="line1">
-    <span class="top-name">GABO</span>
+    <span class="top-name">      GABO</span>
     <span class="amp">&amp;</span>
     <br> <br> <br>
   </div>
