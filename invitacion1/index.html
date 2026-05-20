@@ -14,7 +14,7 @@
   --white-55: rgba(255,255,255,0.55);
   --white-10: rgba(255,255,255,0.10);
   --teal-darker: #1e4a57;
-  --header-h: 140px;
+  --: 140px;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -47,16 +47,31 @@ body {
   backdrop-filter: blur(1px);
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.header-names {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white);
-  font-size: clamp(60px, 6vw, 36px);
-  font-weight: 300;
-  letter-spacing: 0.06em;
-  text-align: center;
-}
-.header-names .amp { font-size: 0.7em; opacity: 0.0; margin: 0 0.3em; }
+.header-names{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  line-height:1;
+
+  margin-top:8px;
+}
+
+.top-name,
+.bottom-name{
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight:300;
+  letter-spacing:0.08em;
+}
+
+.amp{
+  font-size:18px;
+  opacity:0.8;
+  margin:2px 0;
+}
 /* ── PROGRESS DOTS ── */
 .progress-dots {
   position: fixed; right: 1.1rem; top: 50%; transform: translateY(-50%);
@@ -74,7 +89,7 @@ body {
   position: relative; z-index: 1;
   max-width: 480px; margin: 0 auto;
   padding: 0 1.75rem;
-  padding-top: var(--header-h);
+  padding-top: var(--);
 }
 
 /* ── SECCIONES ── */
@@ -336,9 +351,11 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 
 <!-- HEADER FIJO -->
 <header class="fixed-header">
-  <p class="header-names">Gabo</p> 
-  <p <span class="amp"> &amp;</span></p>
-  <p class="header-names"> Miya </p>
+  <p class="header-names">
+  <span class="top-name">Gabo</span>
+  <span class="amp">&amp;</span>
+  <span class="bottom-name">Miya</span>
+</p>
 </header>
 
   
