@@ -420,7 +420,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
       const distance = targetDate - now;
 
       if (distance <= 0) {
-        document.getElementById("thanks-title").innerHTML = "🎉 ¡Llegó el gran día! 🎉";
+        <p class="thanks-title"> 🎉 ¡Llegó el gran día! 🎉</p>
         return;
       }
 
@@ -429,8 +429,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("thanks-title").innerHTML =
-        `${days}d ${hours}h ${minutes}m ${seconds}s `;
+      <p class="thanks-title">`${days}d ${hours}h ${minutes}m ${seconds}s `</p>
     }, 1000);
   </script>
 
