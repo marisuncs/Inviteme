@@ -145,14 +145,14 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 }
 .it-icon-wrap {
   width: 72px; height: 72px;
-  display: block; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50%; backdrop-filter: blur(4px);
   margin-bottom: 0.6rem;
 }
 .it-icon-wrap img {
-  width: 40px; height: 40px; object-fit: contain;
+  width: 30px; height: 30px; object-fit: contain;
   filter: brightness(0) invert(1); opacity: 0.9;
 }
 .it-name {
@@ -325,16 +325,13 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   <section id="s1">
     <div class="itinerary fade-in">
          <div class="it-icon-wrap">
-        <img src="img/Recepcion.png" alt="Recepción">
-    </div>
-    <div class="it-info">
-        <span class="it-name">
-            Recepción
-        </span>
-        <span class="it-time">
-            19:30
-        </span>
-    </div> </div>
+            <img src="img/Recepcion.png" alt="Recepción">
+        </div>
+        <div class="it-info">
+          <span class="it-name">Recepción</span>
+        <span class="it-time">19:30</span>
+        </div> 
+    
       <div class="it-item">
         <div class="it-icon-wrap"><img src="img/Ceremonia.png" alt="Ceremonia"></div>
         <span class="it-name">Ceremonia Civil</span><span class="it-time">20:00</span>
