@@ -1,10 +1,3 @@
-@font-face{
-
-    font-family:'Felix';
-
-    src:url('../fonts/FELIXTI.TTF');
-}
-
 *{
     margin:0;
     padding:0;
@@ -13,12 +6,12 @@
 
 body{
 
-    background:#156d79;
-
     overflow-x:hidden;
 
-    font-family:'Felix', serif;
+    background:black;
 }
+
+/* CONTENEDOR */
 
 .invitation{
 
@@ -40,31 +33,28 @@ body{
     display:block;
 }
 
-/* CAPA SUPERIOR */
+/* CAPA */
 
-.overlay{
+.content{
 
     position:absolute;
 
     inset:0;
 
-    width:100%;
-    height:100%;
+    color:white;
 }
 
-/* HERO */
+/* NOMBRES */
 
 .hero{
 
     position:absolute;
 
-    top:6%;
+    top:4%;
 
     width:100%;
 
     text-align:center;
-
-    color:white;
 }
 
 .hero h1{
@@ -74,6 +64,8 @@ body{
     line-height:.9;
 
     font-weight:normal;
+
+    letter-spacing:2px;
 }
 
 .hero span{
@@ -81,58 +73,21 @@ body{
     font-size:3rem;
 }
 
-.hero p{
+/* FRASE */
 
-    margin-top:50px;
-
-    font-size:1.2rem;
-
-    line-height:1.8;
-
-    letter-spacing:1px;
-}
-
-/* INVITADO */
-
-.guest-box{
+.phrase{
 
     position:absolute;
 
-    top:24%;
+    top:14%;
 
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:75%;
-
-    padding:25px;
-
-    border:1px solid rgba(255,255,255,.35);
-
-    background:rgba(255,255,255,.08);
-
-    backdrop-filter:blur(4px);
-
-    border-radius:14px;
+    width:100%;
 
     text-align:center;
 
-    color:white;
-}
+    font-size:1.1rem;
 
-.guest-box h2{
-
-    font-size:2rem;
-
-    margin-bottom:10px;
-
-    font-weight:normal;
-}
-
-.guest-box p{
-
-    font-size:1rem;
+    line-height:1.8;
 
     letter-spacing:1px;
 }
@@ -143,7 +98,7 @@ body{
 
     position:absolute;
 
-    top:38%;
+    top:24%;
 
     width:100%;
 
@@ -153,14 +108,12 @@ body{
 
     gap:40px;
 
-    color:white;
-
     text-align:center;
 }
 
 .date-section h3{
 
-    font-size:1.2rem;
+    font-size:1rem;
 
     margin-bottom:10px;
 
@@ -172,15 +125,48 @@ body{
     font-size:2rem;
 }
 
+/* MOMENTOS */
+
+.timeline{
+
+    position:absolute;
+
+    top:55%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:80%;
+}
+
+.moment{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    margin-bottom:22px;
+
+    font-size:1rem;
+}
+
+.moment i{
+
+    font-size:1.5rem;
+}
+
 /* RSVP */
 
 .rsvp-btn{
 
     position:absolute;
 
-    left:50%;
+    bottom:4%;
 
-    bottom:8%;
+    left:50%;
 
     transform:translateX(-50%);
 
@@ -188,82 +174,13 @@ body{
 
     color:white;
 
-    border:1px solid white;
+    border:1px solid rgba(255,255,255,.5);
 
     padding:18px 42px;
 
-    font-size:1rem;
-
-    letter-spacing:1px;
+    border-radius:14px;
 
     background:rgba(255,255,255,.08);
 
     backdrop-filter:blur(4px);
-
-    transition:.3s;
-
-    border-radius:10px;
-}
-
-.rsvp-btn:hover{
-
-    background:white;
-
-    color:#156d79;
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-    .hero{
-
-        top:5%;
-    }
-
-    .hero p{
-
-        font-size:1rem;
-
-        padding:0 20px;
-    }
-
-    .guest-box{
-
-        top:23%;
-
-        width:82%;
-    }
-
-    .guest-box h2{
-
-        font-size:1.5rem;
-    }
-
-    .date-section{
-
-        top:37%;
-
-        gap:20px;
-    }
-
-    .date-section h3{
-
-        font-size:.9rem;
-    }
-
-    .date-section p{
-
-        font-size:1.4rem;
-    }
-
-    .rsvp-btn{
-
-        width:80%;
-
-        text-align:center;
-
-        bottom:6%;
-    }
-
 }
