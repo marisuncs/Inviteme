@@ -284,6 +284,53 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   transition: opacity 0.75s ease, transform 0.75s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
+/* ── COUNTDOWN ── */
+
+.countdown-box{
+  margin: 2rem 0;
+  text-align:center;
+}
+
+.countdown-title{
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  font-size:28px;
+  margin-bottom:1rem;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.cd-item{
+  min-width:72px;
+  padding:12px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(4px);
+}
+
+.cd-item span{
+  display:block;
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  font-size:32px;
+  line-height:1;
+}
+
+.cd-item small{
+  font-family:'Cormorant SC', serif;
+  color:var(--white-55);
+  font-size:14px;
+  letter-spacing:0.08em;
+}
+  
 </style>
 </head>
 <body>
@@ -410,6 +457,33 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
       <p class="thanks-title">¡Gracias!</p>
       <p class="thanks-text" id="thanks-txt"></p>        
     </div>
+<div class="countdown-box fade-in">
+  <p class="countdown-title">Faltan</p>
+
+  <div id="countdown" class="countdown">
+    <div class="cd-item">
+      <span id="cd-days">0</span>
+      <small>Días</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-hours">0</span>
+      <small>Horas</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-minutes">0</span>
+      <small>Min</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-seconds">0</span>
+      <small>Seg</small>
+    </div>
+  </div>
+</div>
+    
+    
   </section>
 
 </div>
@@ -563,6 +637,46 @@ document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
       }
       playing = !playing;
     });
+
+ /* ── CONTADOR ── */
+
+const targetDate = new Date("August 7, 2026 19:30:00").getTime();
+
+setInterval(() => {
+
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance <= 0) {
+
+    document.getElementById("countdown").innerHTML =
+      "🎉 ¡Llegó el gran día! 🎉";
+
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) /
+    (1000 * 60 * 60)
+  );
+
+  const minutes = Math.floor(
+    (distance % (1000 * 60 * 60)) /
+    (1000 * 60)
+  );
+
+  const seconds = Math.floor(
+    (distance % (1000 * 60)) / 1000
+  );
+
+  document.getElementById("cd-days").textContent = days;
+  document.getElementById("cd-hours").textContent = hours;
+  document.getElementById("cd-minutes").textContent = minutes;
+  document.getElementById("cd-seconds").textContent = seconds;
+
+}, 1000); 
 
 </script>
 </body>
