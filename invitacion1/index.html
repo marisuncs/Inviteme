@@ -24,25 +24,23 @@ body {
   font-family: 'Cormorant Garamond', serif;
   background: #3d7d8d;
   min-height: 100vh;
-  position: relative;
+  overflow-x: hidden;
 }
 
 /* ── FONDO FIJO ── */
 .bg-fixed {
   position: fixed;
   inset: 0;
-  background-image: url('/img/Fondo.jpg');
+  background-image: url('img/Fondo.jpg');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
   z-index: 0;
 }
-
-/* overlay muy suave para mejorar legibilidad */
 .bg-fixed::after {
   content: '';
   position: absolute; inset: 0;
-  background: rgba(20, 55, 65, 0.18);
+  background: rgba(20, 55, 65, 0.22);
 }
 
 /* ── CONTENIDO ── */
@@ -58,15 +56,14 @@ section {
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 4rem 0;
+  padding: 4.5rem 0;
   position: relative;
 }
-
 section + section {
-  border-top: 1px solid rgba(255,255,255,0.12);
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* ── TIPOGRAFÍA ── */
+/* ── NOMBRES PORTADA ── */
 .names {
   font-family: 'Cormorant SC', serif;
   color: var(--white);
@@ -74,226 +71,164 @@ section + section {
   line-height: 0.95;
   margin-bottom: 2rem;
 }
-.names .n1 { font-size: clamp(60px, 16vw, 88px); font-weight: 300; display: block; }
-.names .amp { font-size: clamp(30px, 8vw, 44px); font-weight: 300; display: block; margin: -4px 0; }
-.names .n2 { font-size: clamp(60px, 16vw, 88px); font-weight: 300; display: block; }
+.names .n1  { font-size: clamp(60px, 16vw, 88px); font-weight: 300; display: block; }
+.names .amp { font-size: clamp(30px, 8vw,  44px);  font-weight: 300; display: block; margin: -4px 0; }
+.names .n2  { font-size: clamp(60px, 16vw, 88px); font-weight: 300; display: block; }
 
 .tagline {
   font-family: 'Cormorant SC', serif;
   font-size: clamp(13px, 3.2vw, 16px);
   color: var(--white-75);
-  text-align: center;
-  letter-spacing: 0.07em;
-  line-height: 1.7;
+  text-align: center; letter-spacing: 0.07em; line-height: 1.7;
   margin-bottom: 2.5rem;
 }
 
-/* fecha */
-.date-row {
-  display: flex; gap: 2.5rem;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
+.date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
 .date-col { text-align: center; }
 .date-col .lbl {
-  font-family: 'Cormorant SC', serif;
-  font-size: 11px; color: var(--white-55);
-  letter-spacing: 0.14em; display: block; margin-bottom: 2px;
+  font-family: 'Cormorant SC', serif; font-size: 11px;
+  color: var(--white-55); letter-spacing: 0.14em; display: block; margin-bottom: 2px;
 }
 .date-col .val {
   font-family: 'Cormorant SC', serif;
   font-size: clamp(22px, 6vw, 34px);
-  color: var(--white); font-weight: 400;
-  display: block; line-height: 1;
+  color: var(--white); font-weight: 400; display: block; line-height: 1;
 }
 
-/* venue */
 .venue {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white);
-  text-align: center;
-  font-size: clamp(14px, 3.8vw, 18px);
-  letter-spacing: 0.05em;
-  margin-bottom: 0.35rem;
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  text-align: center; font-size: clamp(14px, 3.8vw, 18px);
+  letter-spacing: 0.05em; margin-bottom: 0.35rem;
 }
 .address {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-55);
-  text-align: center;
-  font-size: clamp(12px, 3vw, 14px);
-  letter-spacing: 0.03em;
-  line-height: 1.7;
-  margin-bottom: 2rem;
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  text-align: center; font-size: clamp(12px, 3vw, 14px);
+  letter-spacing: 0.03em; line-height: 1.7; margin-bottom: 2rem;
 }
 
-/* guest box */
 .guest-box {
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 14px;
-  padding: 1.25rem 1.75rem;
-  width: 100%;
-  text-align: center;
+  border-radius: 14px; padding: 1.25rem 1.75rem;
+  width: 100%; text-align: center;
   backdrop-filter: blur(4px);
 }
 .guest-box .gname {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white); font-size: 22px; font-weight: 400;
-  margin-bottom: 0.2rem;
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 22px; font-weight: 400; margin-bottom: 0.2rem;
 }
 .guest-box .gseats {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-55); font-size: 13px; letter-spacing: 0.07em;
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 13px; letter-spacing: 0.07em;
 }
 
-/* scroll hint */
-.scroll-hint {
-  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  opacity: 0.45; animation: bounce 2s infinite;
-}
-.scroll-hint span {
-  font-family: 'Cormorant SC', serif;
-  font-size: 11px; color: var(--white); letter-spacing: 0.12em;
-}
-.scroll-arrow {
-  width: 1px; height: 36px;
-  background: linear-gradient(to bottom, transparent, var(--white));
-}
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
-}
-
-/* ── SECTION TITLE ── */
+/* ── NOMBRES SECCIÓN ── */
 .section-names {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white);
-  align-self: flex-start;
-  line-height: 0.95;
-  margin-bottom: 2rem;
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  align-self: flex-start; line-height: 0.95; margin-bottom: 2rem;
 }
-.section-names .sn1 { font-size: clamp(42px, 10vw, 58px); font-weight: 300; display: block; }
-.section-names .samp { font-size: clamp(20px, 5vw, 28px); font-weight: 300; display: block; margin: -2px 0; }
-.section-names .sn2 { font-size: clamp(42px, 10vw, 58px); font-weight: 300; display: block; }
+.section-names .sn1  { font-size: clamp(42px, 10vw, 58px); font-weight: 300; display: block; }
+.section-names .samp { font-size: clamp(20px, 5vw,  28px);  font-weight: 300; display: block; margin: -2px 0; }
+.section-names .sn2  { font-size: clamp(42px, 10vw, 58px); font-weight: 300; display: block; }
 
-/* ── ITINERARY ── */
-.itinerary { width: 100%; display: flex; flex-direction: column; gap: 0; }
-
+/* ── ITINERARIO ── */
+.itinerary { width: 100%; }
 .it-item {
   display: flex; align-items: center; gap: 1.1rem;
-  padding: 1rem 0;
-  position: relative;
+  padding: 0.85rem 0; position: relative;
 }
 .it-item:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  left: 28px; top: calc(50% + 24px);
-  width: 1px; height: calc(100% - 24px);
-  border-left: 1px dashed rgba(255,255,255,0.25);
+  content: ''; position: absolute;
+  left: 27px; top: calc(50% + 28px);
+  width: 1px; height: calc(100% - 22px);
+  border-left: 1px dashed rgba(255,255,255,0.22);
 }
-
 .it-icon-wrap {
-  width: 56px; height: 56px; flex-shrink: 0;
+  width: 54px; height: 54px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50%;
-  backdrop-filter: blur(4px);
+  border-radius: 50%; backdrop-filter: blur(4px);
 }
 .it-icon-wrap img {
-  width: 30px; height: 30px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.88;
+  width: 28px; height: 28px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: 0.88;
 }
-
 .it-info { flex: 1; }
 .it-name {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white); font-size: 17px; letter-spacing: 0.05em;
-  display: block; line-height: 1.2;
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 17px; letter-spacing: 0.05em; display: block; line-height: 1.2;
 }
 .it-time {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-55); font-size: 14px; letter-spacing: 0.04em;
-  display: block; margin-top: 2px;
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 14px; letter-spacing: 0.04em; display: block; margin-top: 2px;
 }
 
-/* ── DRESS CODE ── */
+/* ── VESTIMENTA ── */
+.dress-title {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 20px; letter-spacing: 0.06em; text-align: center; margin-bottom: 0.3rem;
+}
+.dress-subtitle {
+  font-family: 'Cormorant SC', serif; color: var(--white-75);
+  font-size: 28px; letter-spacing: 0.04em; text-align: center; margin-bottom: 0.5rem;
+}
 .dress-icons {
-  display: flex; gap: 2rem; justify-content: center;
-  margin: 1.5rem 0;
+  display: flex; gap: 3rem; justify-content: center; margin: 1.5rem 0;
 }
 .dress-icon-wrap {
   display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
 }
 .dress-icon-wrap img {
-  width: 72px; height: 72px;
-  object-fit: contain;
-  filter: brightness(0) invert(1);
-  opacity: 0.88;
+  width: 72px; height: 72px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: 0.88;
 }
 .dress-lbl {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-55); font-size: 12px; letter-spacing: 0.1em;
-}
-
-.dress-title {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white); font-size: 20px; letter-spacing: 0.06em;
-  text-align: center; margin-bottom: 0.3rem;
-}
-.dress-subtitle {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-75); font-size: 28px; letter-spacing: 0.04em;
-  text-align: center; margin-bottom: 0.5rem;
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 12px; letter-spacing: 0.1em;
 }
 .dress-note {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-55); font-size: 14px; letter-spacing: 0.08em;
-  text-align: center; margin-top: 1rem;
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 14px; letter-spacing: 0.08em; text-align: center; margin-top: 1rem;
+}
+.divider {
+  width: 60px; height: 1px;
+  background: rgba(255,255,255,0.22); margin: 1.5rem auto;
 }
 
 /* ── RSVP ── */
 .rsvp-title {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white); font-size: 26px; text-align: center; margin-bottom: 0.3rem;
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 26px; text-align: center; margin-bottom: 0.3rem;
 }
 .rsvp-sub {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-55); font-size: 13px; text-align: center;
-  letter-spacing: 0.07em; margin-bottom: 1.8rem;
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 13px; text-align: center; letter-spacing: 0.07em; margin-bottom: 1.8rem;
 }
 .rsvp-lbl {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white-75); font-size: 13px; letter-spacing: 0.08em;
-  display: block; margin-bottom: 0.4rem;
+  font-family: 'Cormorant SC', serif; color: var(--white-75);
+  font-size: 13px; letter-spacing: 0.08em; display: block; margin-bottom: 0.4rem;
 }
 .rsvp-input {
   width: 100%; background: var(--white-10);
-  border: 1px solid rgba(255,255,255,0.28);
-  border-radius: 10px; padding: 0.75rem 1rem;
-  color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 16px;
-  margin-bottom: 1.2rem; outline: none;
-  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.28); border-radius: 10px;
+  padding: 0.75rem 1rem; color: var(--white);
+  font-family: 'Cormorant Garamond', serif; font-size: 16px;
+  margin-bottom: 1.2rem; outline: none; backdrop-filter: blur(4px);
   transition: border-color 0.2s, background 0.2s;
 }
 .rsvp-input::placeholder { color: rgba(255,255,255,0.3); }
 .rsvp-input:focus { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.16); }
-
 .attend-btns { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; }
 .attend-btn {
   flex: 1; padding: 0.8rem;
   font-family: 'Cormorant SC', serif; font-size: 15px; letter-spacing: 0.08em;
   border-radius: 10px; cursor: pointer;
   border: 1px solid rgba(255,255,255,0.35);
-  background: transparent; color: var(--white-75);
-  transition: all 0.2s;
+  background: transparent; color: var(--white-75); transition: all 0.2s;
 }
 .attend-btn.sel-yes { background: rgba(255,255,255,0.88); color: var(--teal-darker); border-color: transparent; }
-.attend-btn.sel-no  { background: rgba(220,80,80,0.45); color: var(--white); border-color: transparent; }
-
+.attend-btn.sel-no  { background: rgba(220,80,80,0.45);  color: var(--white); border-color: transparent; }
 .counter-wrap {
   display: flex; align-items: center; justify-content: space-between;
   background: var(--white-10); border: 1px solid rgba(255,255,255,0.28);
@@ -305,25 +240,22 @@ section + section {
   font-size: 26px; font-weight: 400;
 }
 .counter-btn {
-  background: rgba(255,255,255,0.18); border: none;
-  color: var(--white); width: 36px; height: 36px;
-  border-radius: 50%; font-size: 22px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.18); border: none; color: var(--white);
+  width: 36px; height: 36px; border-radius: 50%; font-size: 22px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: background 0.2s;
 }
 .counter-btn:hover { background: rgba(255,255,255,0.32); }
-
 .rsvp-submit {
   width: 100%; padding: 0.95rem;
   font-family: 'Cormorant SC', serif; font-size: 17px; letter-spacing: 0.1em;
   background: rgba(255,255,255,0.88); color: var(--teal-darker);
-  border: none; border-radius: 10px; cursor: pointer;
-  transition: background 0.2s;
+  border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s;
 }
 .rsvp-submit:hover { background: var(--white); }
 .rsvp-submit:disabled { opacity: 0.6; cursor: default; }
 
-/* ── THANK YOU ── */
+/* ── GRACIAS ── */
 .thanks-wrap { text-align: center; padding: 2rem 0; }
 .thanks-icon { font-size: 56px; margin-bottom: 1rem; }
 .thanks-title {
@@ -335,12 +267,18 @@ section + section {
   font-size: 16px; line-height: 1.7;
 }
 
-/* ── DIVIDER ── */
-.divider {
-  width: 60px; height: 1px;
-  background: rgba(255,255,255,0.25);
-  margin: 1.5rem auto;
+/* ── PROGRESS DOTS ── */
+.progress-dots {
+  position: fixed; right: 1.2rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 10px; z-index: 50;
 }
+.pdot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer; transition: all 0.3s;
+  border: none; padding: 0;
+}
+.pdot.active { background: var(--white); height: 22px; border-radius: 4px; }
 
 /* ── TOAST ── */
 .toast {
@@ -349,14 +287,13 @@ section + section {
   border-radius: 10px; padding: 0.75rem 1.5rem;
   font-family: 'Cormorant SC', serif; font-size: 15px;
   z-index: 200; display: none; white-space: nowrap;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
 }
 
-/* ── FADE IN ON SCROLL ── */
+/* ── FADE IN ── */
 .fade-in {
-  opacity: 0; transform: translateY(22px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 </style>
@@ -365,112 +302,101 @@ section + section {
 
 <div class="bg-fixed"></div>
 
+<!-- Progress dots -->
+<div class="progress-dots">
+  <button class="pdot active" onclick="scrollToSection(0)" title="Portada"></button>
+  <button class="pdot" onclick="scrollToSection(1)" title="Itinerario"></button>
+  <button class="pdot" onclick="scrollToSection(2)" title="Vestimenta"></button>
+  <button class="pdot" onclick="scrollToSection(3)" title="Confirmación"></button>
+</div>
+
 <div class="content">
 
-  <!-- ═══ SECCIÓN 1: PORTADA ═══ -->
-  <section id="s-portada">
+  <!-- ═══ 1: PORTADA ═══ -->
+  <section id="s0">
     <div class="names fade-in">
       <span class="n1">Gabo</span>
       <span class="amp">&amp;</span>
       <span class="n2">Miya</span>
     </div>
-
-    <p class="tagline fade-in">
-      En compañía de nuestras familias,<br>unimos nuestros destinos
-    </p>
-
+    <p class="tagline fade-in">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
     <div class="date-row fade-in">
       <div class="date-col"><span class="lbl">Viernes</span><span class="val">7</span></div>
       <div class="date-col"><span class="lbl">Agosto</span><span class="val">2026</span></div>
       <div class="date-col"><span class="lbl">Hora</span><span class="val">19:30</span></div>
     </div>
-
     <p class="venue fade-in">Centro Cultural y Social Veracruzano</p>
-    <p class="address fade-in">
-      Av. Miguel Ángel de Quevedo 687,<br>
-      San Francisco, Coyoacán,<br>
-      04320, Ciudad de México
-    </p>
-
+    <p class="address fade-in">Av. Miguel Ángel de Quevedo 687,<br>San Francisco, Coyoacán,<br>04320, Ciudad de México</p>
     <div class="guest-box fade-in">
       <p class="gname" id="inv-gname">Cargando...</p>
       <p class="gseats" id="inv-gseats"></p>
     </div>
-
-    <div class="scroll-hint">
-      <span>Desliza</span>
-      <div class="scroll-arrow"></div>
-    </div>
   </section>
 
-  <!-- ═══ SECCIÓN 2: ITINERARIO ═══ -->
-  <section id="s-itinerario">
+  <!-- ═══ 2: ITINERARIO ═══ -->
+  <section id="s1">
     <div class="section-names fade-in">
       <span class="sn1">Gabo</span>
       <span class="samp">&amp;</span>
       <span class="sn2">Miya</span>
     </div>
-
     <div class="itinerary fade-in">
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/Recepcion.png" alt="Recepción"></div>
+        <div class="it-icon-wrap"><img src="img/Recepcion.png" alt="Recepción"></div>
         <div class="it-info"><span class="it-name">Recepción</span><span class="it-time">19:30</span></div>
       </div>
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/Ceremonia.png" alt="Ceremonia"></div>
+        <div class="it-icon-wrap"><img src="img/Ceremonia.png" alt="Ceremonia"></div>
         <div class="it-info"><span class="it-name">Ceremonia Civil</span><span class="it-time">20:00</span></div>
       </div>
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/cena.png" alt="Cena"></div>
+        <div class="it-icon-wrap"><img src="img/cena.png" alt="Cena"></div>
         <div class="it-info"><span class="it-name">Cena</span><span class="it-time">21:00</span></div>
       </div>
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/PrimerBaile.png" alt="Primer Baile"></div>
+        <div class="it-icon-wrap"><img src="img/PrimerBaile.png" alt="Primer Baile"></div>
         <div class="it-info"><span class="it-name">Primer Baile</span><span class="it-time">22:00</span></div>
       </div>
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/Brindis.png" alt="Brindis"></div>
+        <div class="it-icon-wrap"><img src="img/Brindis.png" alt="Brindis"></div>
         <div class="it-info"><span class="it-name">Brindis y Pastel</span><span class="it-time">22:30</span></div>
       </div>
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/Baile.png" alt="Baile"></div>
+        <div class="it-icon-wrap"><img src="img/Baile.png" alt="Baile"></div>
         <div class="it-info"><span class="it-name">Baile</span><span class="it-time"></span></div>
       </div>
       <div class="it-item">
-        <div class="it-icon-wrap"><img src="../img/Despedida.png" alt="Despedida"></div>
+        <div class="it-icon-wrap"><img src="img/Despedida.png" alt="Despedida"></div>
         <div class="it-info"><span class="it-name">Despedida</span><span class="it-time">02:30</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ SECCIÓN 3: VESTIMENTA ═══ -->
-  <section id="s-vestimenta">
+  <!-- ═══ 3: VESTIMENTA ═══ -->
+  <section id="s2">
     <div class="section-names fade-in">
       <span class="sn1">Gabo</span>
       <span class="samp">&amp;</span>
       <span class="sn2">Miya</span>
     </div>
-
     <p class="dress-title fade-in">Código de Vestimenta</p>
     <p class="dress-subtitle fade-in">Formal Casual</p>
-
     <div class="dress-icons fade-in">
       <div class="dress-icon-wrap">
-        <img src="../img/CodigoMujer.png" alt="Mujer">
+        <img src="img/CodigoMujer.png" alt="Damas">
         <span class="dress-lbl">Damas</span>
       </div>
       <div class="dress-icon-wrap">
-        <img src="../img/CodigoHombre.png" alt="Hombre">
+        <img src="img/CodigoHombre.png" alt="Caballeros">
         <span class="dress-lbl">Caballeros</span>
       </div>
     </div>
-
     <div class="divider fade-in"></div>
     <p class="dress-note fade-in">Celebración solo para adultos</p>
   </section>
 
-  <!-- ═══ SECCIÓN 4: RSVP ═══ -->
-  <section id="s-rsvp">
+  <!-- ═══ 4: RSVP ═══ -->
+  <section id="s3">
     <div class="section-names fade-in">
       <span class="sn1">Gabo</span>
       <span class="samp">&amp;</span>
@@ -480,14 +406,12 @@ section + section {
     <div id="rsvp-form-wrap" style="width:100%">
       <p class="rsvp-title fade-in">Confirmar Asistencia</p>
       <p class="rsvp-sub fade-in" id="rsvp-sub-lbl"></p>
-
       <div class="fade-in" style="width:100%">
         <label class="rsvp-lbl">¿Asistirás?</label>
         <div class="attend-btns">
           <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
           <button class="attend-btn" id="btn-no"  onclick="selectAttend('no')">No podré ir</button>
         </div>
-
         <div id="count-section">
           <label class="rsvp-lbl">¿Cuántos asistirán? (máx. <span id="max-lbl">0</span>)</label>
           <div class="counter-wrap">
@@ -496,15 +420,12 @@ section + section {
             <button class="counter-btn" onclick="chgCount(1)">+</button>
           </div>
         </div>
-
         <label class="rsvp-lbl">Mensaje para los novios (opcional)</label>
         <textarea class="rsvp-input" rows="3" id="rsvp-msg" placeholder="Un mensaje de felicitación..."></textarea>
-
         <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
       </div>
     </div>
 
-    <!-- Thank you state -->
     <div id="thanks-wrap" style="display:none;width:100%">
       <div class="thanks-wrap">
         <div class="thanks-icon">💍</div>
@@ -514,7 +435,7 @@ section + section {
     </div>
   </section>
 
-</div><!-- /content -->
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -523,10 +444,59 @@ const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
 const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
 const ID_EVENT = 1;
 
-let activeGuest = null;
-let attendChoice = null;
-let guestCount = 1;
-let maxSeats = 2;
+let activeGuest = null, attendChoice = null, guestCount = 1, maxSeats = 2;
+let currentSection = 0;
+let autoScrollTimer = null;
+let userScrolled = false;
+
+const sections = ['s0','s1','s2','s3'];
+
+/* ── Scroll ── */
+function scrollToSection(idx) {
+  if (idx < 0 || idx >= sections.length) return;
+  currentSection = idx;
+  document.getElementById(sections[idx]).scrollIntoView({ behavior: 'smooth' });
+  updateDots();
+}
+
+function updateDots() {
+  document.querySelectorAll('.pdot').forEach((d, i) => d.classList.toggle('active', i === currentSection));
+}
+
+/* ── Auto scroll — se detiene en s3 (confirmación) ── */
+function startAutoScroll() {
+  autoScrollTimer = setInterval(() => {
+    if (userScrolled) { clearInterval(autoScrollTimer); return; }
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      scrollToSection(currentSection);
+    } else {
+      clearInterval(autoScrollTimer);
+    }
+  }, 4500);
+}
+
+/* Detectar scroll manual del usuario */
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    // Detectar sección visible
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      const rect = el.getBoundingClientRect();
+      if (rect.top >= -80 && rect.top < window.innerHeight / 2) {
+        currentSection = i;
+        updateDots();
+      }
+    });
+  }, 80);
+
+  // Si el usuario scrollea antes de que termine el auto-scroll, lo detenemos
+  if (autoScrollTimer && currentSection < sections.length - 1) {
+    userScrolled = true;
+  }
+}, { passive: true });
 
 /* ── Supabase ── */
 async function api(path, opts = {}) {
@@ -541,23 +511,20 @@ async function api(path, opts = {}) {
   const t = await res.text(); return t ? JSON.parse(t) : null;
 }
 
-/* ── Toast ── */
 function showToast(msg, dur = 2800) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.style.display = 'block';
   clearTimeout(t._t); t._t = setTimeout(() => t.style.display = 'none', dur);
 }
 
-/* ── Guest UI ── */
 function setGuestUI(g) {
-  document.getElementById('inv-gname').textContent  = g.name;
-  document.getElementById('inv-gseats').textContent = 'Lugares asignados: ' + g.seats;
+  document.getElementById('inv-gname').textContent   = g.name;
+  document.getElementById('inv-gseats').textContent  = 'Lugares asignados: ' + g.seats;
   document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats !== 1 ? 'es' : '') + ' asignado' + (g.seats !== 1 ? 's' : '');
   document.getElementById('max-lbl').textContent = g.seats;
   maxSeats = g.seats;
 }
 
-/* ── RSVP ── */
 function selectAttend(c) {
   attendChoice = c;
   document.getElementById('btn-yes').className = 'attend-btn' + (c === 'yes' ? ' sel-yes' : '');
@@ -588,9 +555,7 @@ async function submitRSVP() {
       ? 'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
       : 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
     document.getElementById('rsvp-form-wrap').style.display = 'none';
-    document.getElementById('thanks-wrap').style.display = 'block';
-    // scroll to thanks
-    document.getElementById('s-rsvp').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('thanks-wrap').style.display    = 'block';
   } catch(e) {
     btn.disabled = false; btn.textContent = 'Confirmar asistencia';
     showToast('Error al guardar: ' + e.message);
@@ -598,15 +563,15 @@ async function submitRSVP() {
 }
 
 /* ── Fade in on scroll ── */
-const observer = new IntersectionObserver((entries) => {
+const fadeObs = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+      fadeObs.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
 
 /* ── Init ── */
 (async () => {
@@ -623,6 +588,9 @@ document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
     document.getElementById('inv-gseats').textContent = '';
     document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
   }
+
+  // Iniciar auto scroll después de 3.5s
+  setTimeout(startAutoScroll, 3500);
 })();
 </script>
 </body>
