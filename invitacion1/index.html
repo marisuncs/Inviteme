@@ -14,8 +14,7 @@
   --white-55: rgba(255,255,255,0.55);
   --white-10: rgba(255,255,255,0.10);
   --teal-darker: #1e4a57;
-  --header-h: 64px;
-  --carousel-w: 110px;
+  --header-h: 70px;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -29,92 +28,81 @@ body {
 .bg-fixed {
   position: fixed; inset: 0; z-index: 0;
   background-image: url('img/Fondo.jpg');
-  background-size: 100% auto;
+  background-size: 100% auto;        /* ancho completo, alto proporcional */
   background-position: center top;
-  background-repeat: repeat-y;
+  background-repeat: repeat-y;       /* repite verticalmente si la página es más larga */
 }
 .bg-fixed::after {
   content: ''; position: absolute; inset: 0;
-  background: rgba(20,55,65,0.28);
+  background: rgba(20, 55, 65, 0.25);
 }
 
-/* ── HEADER ── */
+/* ── HEADER FIJO ── */
 .fixed-header {
   position: fixed; top: 0; left: 0; right: 0;
   height: var(--header-h);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 60;
-  background: rgba(25,68,82,0.4);
-  backdrop-filter: blur(12px);
+  display: flex; /* ── align-items: center; justify-content: center;── */
+  justify-content: flex-start; /* Alinear al inicio horizontal */
+  align-items: flex-start;     /* Alinear al inicio vertical */
+  z-index: 50;
+  background: rgba(30, 74, 87, 0.35);
+  backdrop-filter: blur(1px);
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-.header-names {
-  font-family: 'Cormorant SC', serif;
-  color: var(--white);
-  font-size: clamp(24px, 5.5vw, 34px);
-  font-weight: 300; letter-spacing: 0.08em;
-}
-.header-names .amp { font-size: 0.72em; opacity: 0.75; margin: 0 0.3em; }
+.header-names{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 
-/* ── PHOTO CAROUSEL (columna izquierda fija) ── */
-.carousel-col {
-  position: fixed;
-  top: var(--header-h);
-  left: 0;
-  bottom: 0;
-  width: var(--carousel-w);
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 8px 6px;
-  overflow: hidden;
-  background: rgba(15,45,55,0.25);
-  backdrop-filter: blur(2px);
-  border-right: 1px solid rgba(255,255,255,0.08);
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  line-height:1;
+
+  margin-top:8px;
 }
 
-.photo-slot {
-  flex: 1;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  background: rgba(255,255,255,0.05);
+.top-name{
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight:300;
+  letter-spacing:0.08em;
+  color:var(--white);
+  align-items:left;
+
+}
+  
+.bottom-name{
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight:300;
+  letter-spacing:0.08em;
+  color:var(--white);
+   align-items:center;
 }
 
-.photo-slot img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: opacity 1s ease;
-  border-radius: 8px;
+.amp{
+  font-size:18px;
+  opacity:0.8;
+  margin:2px 0;
+  color:var(--white);
 }
-.photo-slot img.hidden { opacity: 0; }
-.photo-slot img.visible { opacity: 1; }
-
 /* ── PROGRESS DOTS ── */
 .progress-dots {
-  position: fixed; right: 0.8rem; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 9px; z-index: 50;
+  position: fixed; right: 1.1rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 15px; z-index: 50;
 }
 .pdot {
-  width: 6px; height: 6px; border-radius: 50%;
+  width: 12px; height: 12px; border-radius: 50%;
   background: rgba(255,255,255,0.3);
   cursor: pointer; transition: all 0.3s; border: none; padding: 0;
 }
-.pdot.active { background: var(--white); height: 20px; border-radius: 3px; }
+.pdot.active { background: var(--white); height: 22px; border-radius: 4px; }
 
 /* ── CONTENIDO ── */
 .content {
   position: relative; z-index: 1;
-  margin-left: var(--carousel-w);
-  padding-top: var(--header-h);
-  padding-right: 1rem;
-}
-.inner {
-  max-width: 360px;
-  margin: 0 auto;
-  padding: 0 0.75rem;
+  max-width: 480px; margin: 0 auto;
+  padding: 0 1.75rem;
+  padding-top: var(--);
 }
 
 /* ── SECCIONES ── */
@@ -123,6 +111,7 @@ section {
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   padding: 3rem 0;
+  position: relative;
   text-align: center;
 }
 section + section { border-top: 1px solid rgba(255,255,255,0.1); }
@@ -130,172 +119,165 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 /* ── PORTADA ── */
 .tagline {
   font-family: 'Cormorant SC', serif;
-  font-size: clamp(13px, 3.5vw, 16px);
-  color: var(--white-75); letter-spacing: 0.07em;
-  line-height: 1.7; margin-bottom: 2rem;
+  font-size: clamp(22px, 3.8vw, 22px);
+  color: var(--white);
+  letter-spacing: 0.01em; line-height: 1.5;
+  margin-bottom: 2.0rem;
 }
-.date-row { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 1.8rem; }
+.date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
 .date-col { text-align: center; }
 .date-col .lbl {
-  font-family: 'Cormorant SC', serif; font-size: 11px;
-  color: var(--white-55); letter-spacing: 0.14em; display: block; margin-bottom: 2px;
+  font-family: 'Cormorant SC', serif; font-size: 22px;
+  color: var(--white-55); letter-spacing: 0.14em; display: block; margin-bottom: 3px;
 }
 .date-col .val {
   font-family: 'Cormorant SC', serif;
-  font-size: clamp(22px, 6vw, 32px);
+  font-size: clamp(26px, 7vw, 38px);
   color: var(--white); font-weight: 400; display: block; line-height: 1;
 }
 .venue {
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: clamp(13px, 3.5vw, 17px); letter-spacing: 0.05em; margin-bottom: 0.3rem;
+  font-size: clamp(24px, 4.2vw, 20px); letter-spacing: 0.05em; margin-bottom: 0.4rem;
 }
 .address {
-  font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.03em;
-  line-height: 1.7; margin-bottom: 1.8rem;
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: clamp(22px, 3.2vw, 16px); letter-spacing: 0.03em;
+  line-height: 1.7; margin-bottom: 2rem;
 }
 .guest-box {
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.22);
-  border-radius: 12px; padding: 1.1rem 1.5rem;
-  width: 100%; text-align: center; backdrop-filter: blur(4px);
+  border-radius: 12px; padding: 1.25rem 1.75rem;
+  width: 100%; text-align: center; backdrop-filter: blur(3px);
 }
 .guest-box .gname {
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: 21px; font-weight: 400; margin-bottom: 0.2rem;
+  font-size: 26px; font-weight: 400; margin-bottom: 0.25rem;
 }
 .guest-box .gseats {
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 13px; letter-spacing: 0.07em;
+  font-size: 26px; letter-spacing: 0.07em;
 }
 
 /* ── ITINERARIO ── */
-/* Layout:
-   [ícono]   Nombre evento
-                  Hora
-   ícono centrado verticalmente entre nombre y hora */
-.itinerary { width: 100%; max-width: 300px; }
+.itinerary { width: 100%; max-width: 320px; }
 .it-item {
-  display: grid;
-  grid-template-columns: 60px 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 0.9rem;
-  align-items: center;
-  padding: 0.9rem 0;
-  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1.1rem 0; position: relative;
 }
 .it-item:not(:last-child)::after {
   content: ''; position: absolute;
-  left: 29px; top: calc(50% + 30px);
-  width: 1px; height: calc(100% - 24px);
-  border-left: 1px dashed rgba(255,255,255,0.2);
+  left: 50%; top: calc(50% + 38px);
+  width: 1px; height: calc(100% - 38px);
+  border-left: 1px dashed rgba(255,255,255,0.22);
 }
 .it-icon-wrap {
-  grid-column: 1;
-  grid-row: 1 / span 2;  /* ocupa las dos filas → queda centrado */
-  width: 58px; height: 58px;
+  width: 72px; height: 72px;
   display: flex; align-items: center; justify-content: center;
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50%; backdrop-filter: blur(4px);
-  justify-self: center;
+  margin-bottom: 0.6rem;
 }
 .it-icon-wrap img {
-  width: 32px; height: 32px; object-fit: contain;
+  width: 40px; height: 40px; object-fit: contain;
   filter: brightness(0) invert(1); opacity: 0.9;
 }
 .it-name {
-  grid-column: 2; grid-row: 1;
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: 17px; letter-spacing: 0.05em;
-  text-align: left; align-self: end;
+  font-size: 24px; letter-spacing: 0.06em; display: block; line-height: 1.2;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 .it-time {
-  grid-column: 2; grid-row: 2;
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 14px; letter-spacing: 0.05em;
-  text-align: left; align-self: start;
-  margin-top: 2px;
+  font-size: 22px; letter-spacing: 0.05em; display: block; margin-top: 3px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
 /* ── VESTIMENTA ── */
 .dress-title {
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: 20px; letter-spacing: 0.07em; margin-bottom: 0.25rem;
+  font-size: 22px; letter-spacing: 0.07em; margin-bottom: 0.3rem;
 }
 .dress-subtitle {
   font-family: 'Cormorant SC', serif; color: var(--white-75);
-  font-size: 28px; letter-spacing: 0.04em; margin-bottom: 0.5rem;
+  font-size: 32px; letter-spacing: 0.04em; margin-bottom: 0.5rem;
 }
-.dress-icons { display: flex; gap: 3rem; justify-content: center; margin: 1.5rem 0; }
-.dress-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.dress-icons { display: flex; gap: 3.5rem; justify-content: center; margin: 1.8rem 0; }
+.dress-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
 .dress-icon-wrap img {
-  width: 72px; height: 72px; object-fit: contain;
+  width: 80px; height: 80px; object-fit: contain;
   filter: brightness(0) invert(1); opacity: 0.9;
 }
 .dress-lbl {
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 13px; letter-spacing: 0.1em;
+  font-size: 20px; letter-spacing: 0.1em;
 }
 .dress-note {
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 14px; letter-spacing: 0.08em; margin-top: 0.5rem;
+  font-size: 20px; letter-spacing: 0.08em; margin-top: 0.5rem;
 }
-.divider { width: 50px; height: 1px; background: rgba(255,255,255,0.2); margin: 1.2rem auto; }
+.divider { width: 60px; height: 1px; background: rgba(255,255,255,0.22); margin: 1.5rem auto; }
 
 /* ── RSVP ── */
 .rsvp-title {
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: 26px; margin-bottom: 0.25rem;
+  font-size: 28px; margin-bottom: 0.3rem;
 }
 .rsvp-sub {
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 13px; letter-spacing: 0.07em; margin-bottom: 1.5rem;
+  font-size: 20px; letter-spacing: 0.07em; margin-bottom: 1.8rem;
 }
 .rsvp-lbl {
   font-family: 'Cormorant SC', serif; color: var(--white-75);
-  font-size: 13px; letter-spacing: 0.08em; display: block;
-  margin-bottom: 0.35rem; text-align: left;
+  font-size: 18px; letter-spacing: 0.08em; display: block;
+  margin-bottom: 0.4rem; text-align: left;
 }
 .rsvp-input {
   width: 100%; background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.28); border-radius: 10px;
-  padding: 0.7rem 0.9rem; color: var(--white);
-  font-family: 'Cormorant Garamond', serif; font-size: 16px;
-  margin-bottom: 1rem; outline: none; backdrop-filter: blur(4px);
+  padding: 0.75rem 1rem; color: var(--white);
+  font-family: 'Cormorant Garamond', serif; font-size: 17px;
+  margin-bottom: 1.2rem; outline: none; backdrop-filter: blur(4px);
   transition: border-color 0.2s, background 0.2s;
 }
 .rsvp-input::placeholder { color: rgba(255,255,255,0.3); }
-.rsvp-input:focus { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.15); }
-.attend-btns { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
+.rsvp-input:focus { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.16); }
+.attend-btns { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; }
 .attend-btn {
-  flex: 1; padding: 0.75rem;
-  font-family: 'Cormorant SC', serif; font-size: 14px; letter-spacing: 0.07em;
+  flex: 1; padding: 0.85rem;
+  font-family: 'Cormorant SC', serif; font-size: 20px; letter-spacing: 0.08em;
   border-radius: 10px; cursor: pointer;
   border: 1px solid rgba(255,255,255,0.35);
   background: transparent; color: var(--white-75); transition: all 0.2s;
 }
 .attend-btn.sel-yes { background: rgba(255,255,255,0.88); color: var(--teal-darker); border-color: transparent; }
-.attend-btn.sel-no  { background: rgba(220,80,80,0.45); color: var(--white); border-color: transparent; }
+.attend-btn.sel-no  { background: rgba(220,80,80,0.45);  color: var(--white); border-color: transparent; }
 .counter-wrap {
   display: flex; align-items: center; justify-content: space-between;
   background: var(--white-10); border: 1px solid rgba(255,255,255,0.28);
-  border-radius: 10px; padding: 0.4rem 0.9rem; margin-bottom: 1rem;
+  border-radius: 10px; padding: 0.5rem 1rem; margin-bottom: 1.2rem;
   backdrop-filter: blur(4px);
 }
 .counter-val {
-  font-family: 'Cormorant SC', serif; color: var(--white); font-size: 26px; font-weight: 400;
+  font-family: 'Cormorant SC', serif; color: var(--white); font-size: 28px; font-weight: 400;
 }
 .counter-btn {
   background: rgba(255,255,255,0.18); border: none; color: var(--white);
-  width: 34px; height: 34px; border-radius: 50%; font-size: 22px;
+  width: 38px; height: 38px; border-radius: 50%; font-size: 24px;
   cursor: pointer; display: flex; align-items: center; justify-content: center;
   transition: background 0.2s;
 }
 .counter-btn:hover { background: rgba(255,255,255,0.32); }
 .rsvp-submit {
-  width: 100%; padding: 0.9rem;
-  font-family: 'Cormorant SC', serif; font-size: 17px; letter-spacing: 0.1em;
+  width: 100%; padding: 1rem;
+  font-family: 'Cormorant SC', serif; font-size: 18px; letter-spacing: 0.1em;
   background: rgba(255,255,255,0.88); color: var(--teal-darker);
   border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s;
 }
@@ -303,261 +285,266 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 .rsvp-submit:disabled { opacity: 0.6; cursor: default; }
 
 /* ── GRACIAS ── */
-.thanks-icon { font-size: 52px; margin-bottom: 0.8rem; }
+.thanks-icon { font-size: 60px; margin-bottom: 1rem; }
 .thanks-title {
-  font-family: 'Cormorant SC', serif; color: var(--white); font-size: 30px; margin-bottom: 0.5rem;
+  font-family: 'Cormorant SC', serif; color: var(--white); font-size: 34px; margin-bottom: 0.6rem;
 }
 .thanks-text {
-  font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: 16px; line-height: 1.7;
+  font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: 24px; line-height: 1.7;
 }
 
 /* ── TOAST ── */
 .toast {
-  position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%);
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
   background: rgba(20,55,65,0.95); color: var(--white);
-  border-radius: 10px; padding: 0.7rem 1.3rem;
-  font-family: 'Cormorant SC', serif; font-size: 14px;
+  border-radius: 10px; padding: 0.75rem 1.5rem;
+  font-family: 'Cormorant SC', serif; font-size: 15px;
   z-index: 200; display: none; white-space: nowrap;
   backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
 }
 
 /* ── FADE IN ── */
 .fade-in {
-  opacity: 0; transform: translateY(18px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
+/* ── COUNTDOWN ── */
+
+.countdown-box{
+  margin: 2rem 0;
+  text-align:center;
+}
+
+.countdown-title{
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  font-size:28px;
+  margin-bottom:1rem;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.cd-item{
+  min-width:72px;
+  padding:12px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(4px);
+}
+
+.cd-item span{
+  display:block;
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  font-size:32px;
+  line-height:1;
+}
+
+.cd-item small{
+  font-family:'Cormorant SC', serif;
+  color:var(--white-55);
+  font-size:14px;
+  letter-spacing:0.08em;
+}
+  
 </style>
 </head>
 <body>
 
 <div class="bg-fixed"></div>
 
-<!-- HEADER -->
+<!-- HEADER FIJO -->
 <header class="fixed-header">
-  <p class="header-names">Gabo <span class="amp">&amp;</span> Miya</p>
+<p class="header-names">
+  <div class="line1">
+    <span class="top-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GABO</span>
+    <span class="amp">&amp;</span>
+    <br> <br> <br>
+  </div>
+  <div class="line2">
+    <br>
+    <span class="bottom-name">MIYA</span>
+  </div>
+</p>
 </header>
 
-<!-- CARRUSEL IZQUIERDO -->
-<div class="carousel-col" id="carousel-col">
-  <div class="photo-slot" id="slot0">
-    <img src="img/1.jpg" class="visible" alt="">
-  </div>
-  <div class="photo-slot" id="slot1">
-    <img src="img/2.jpg" class="visible" alt="">
-  </div>
-  <div class="photo-slot" id="slot2">
-    <img src="img/3.jpg" class="visible" alt="">
-  </div>
-</div>
-
+  
 <!-- PROGRESS DOTS -->
 <div class="progress-dots">
-  <button class="pdot active" onclick="scrollToSection(0)"></button>
-  <button class="pdot" onclick="scrollToSection(1)"></button>
-  <button class="pdot" onclick="scrollToSection(2)"></button>
-  <button class="pdot" onclick="scrollToSection(3)"></button>
+  <button class="pdot active" onclick="scrollToSection(0)" title="Portada"></button>
+  <button class="pdot" onclick="scrollToSection(1)" title="Itinerario"></button>
+  <button class="pdot" onclick="scrollToSection(2)" title="Vestimenta"></button>
+  <button class="pdot" onclick="scrollToSection(3)" title="Confirmación"></button>
 </div>
 
-<!-- CONTENIDO -->
 <div class="content">
-  <div class="inner">
+  <!-- ═══ 1: PORTADA ═══ -->
+  <section id="s0">
+      <!-- Botón música -->
+<div id="music-toggle">🔊</div>
 
-    <!-- ═══ 1: PORTADA ═══ -->
-    <section id="s0">
-      <p class="tagline fade-in">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
-      <div class="date-row fade-in">
-        <div class="date-col"><span class="lbl">Viernes</span><span class="val">7</span></div>
-        <div class="date-col"><span class="lbl">Agosto</span><span class="val">2026</span></div>
-        <div class="date-col"><span class="lbl">Hora</span><span class="val">19:30</span></div>
+  <!-- Música oculta -->
+<iframe id="music" width="0" height="0" frameborder="0" allow="autoplay"></iframe>
+
+    <p class="tagline fade-in">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
+    <div class="date-row fade-in">
+      <div class="date-col"><span class="lbl">Viernes</span><span class="val">7</span></div>
+      <div class="date-col"><span class="lbl">Agosto</span><span class="val">2026</span></div>
+      <div class="date-col"><span class="lbl">Hora</span><span class="val">19:30</span></div>
+    </div>
+    <p class="venue fade-in">Centro Cultural y Social Veracruzano</p>
+    <p class="address fade-in">Av. Miguel Ángel de Quevedo 687,<br>San Francisco, Coyoacán,<br>04320, Ciudad de México</p>
+    <div class="guest-box fade-in">
+      <p class="gname" id="inv-gname">Cargando...</p>
+      <p class="gseats" id="inv-gseats"></p>
+    </div>
+  </section>
+
+  <!-- ═══ 2: ITINERARIO ═══ -->
+  <section id="s1">
+    <div class="itinerary fade-in">
+
+          
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Recepcion.png" alt="Recepción"></div>
+        <span class="it-name">Recepción</span><span class="it-time">19:30</span>
+      </div>    
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Ceremonia.png" alt="Ceremonia"></div>
+        <span class="it-name">Ceremonia Civil</span><span class="it-time">20:00</span>
       </div>
-      <p class="venue fade-in">Centro Cultural y Social Veracruzano</p>
-      <p class="address fade-in">Av. Miguel Ángel de Quevedo 687,<br>San Francisco, Coyoacán,<br>04320, Ciudad de México</p>
-      <div class="guest-box fade-in">
-        <p class="gname" id="inv-gname">Cargando...</p>
-        <p class="gseats" id="inv-gseats"></p>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/cena.png" alt="Cena"></div>
+        <span class="it-name">Cena</span><span class="it-time">21:00</span>
       </div>
-    </section>
-
-    <!-- ═══ 2: ITINERARIO ═══ -->
-    <section id="s1">
-      <div class="itinerary fade-in">
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/Recepcion.png" alt="Recepción"></div>
-          <span class="it-name">Recepción</span>
-          <span class="it-time">19:30</span>
-        </div>
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/Ceremonia.png" alt="Ceremonia"></div>
-          <span class="it-name">Ceremonia Civil</span>
-          <span class="it-time">20:00</span>
-        </div>
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/cena.png" alt="Cena"></div>
-          <span class="it-name">Cena</span>
-          <span class="it-time">21:00</span>
-        </div>
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/PrimerBaile.png" alt="Primer Baile"></div>
-          <span class="it-name">Primer Baile</span>
-          <span class="it-time">22:00</span>
-        </div>
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/Brindis.png" alt="Brindis"></div>
-          <span class="it-name">Brindis y Pastel</span>
-          <span class="it-time">22:30</span>
-        </div>
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/Baile.png" alt="Baile"></div>
-          <span class="it-name">Baile</span>
-          <span class="it-time">&nbsp;</span>
-        </div>
-
-        <div class="it-item">
-          <div class="it-icon-wrap"><img src="img/Despedida.png" alt="Despedida"></div>
-          <span class="it-name">Despedida</span>
-          <span class="it-time">02:30</span>
-        </div>
-
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/PrimerBaile.png" alt="Primer Baile"></div>
+        <span class="it-name">Primer Baile</span><span class="it-time">22:00</span>
       </div>
-    </section>
-
-    <!-- ═══ 3: VESTIMENTA ═══ -->
-    <section id="s2">
-      <p class="dress-title fade-in">Código de Vestimenta</p>
-      <p class="dress-subtitle fade-in">Formal Casual</p>
-      <div class="dress-icons fade-in">
-        <div class="dress-icon-wrap">
-          <img src="img/CodigoMujer.png" alt="Damas">
-          <span class="dress-lbl">Damas</span>
-        </div>
-        <div class="dress-icon-wrap">
-          <img src="img/CodigoHombre.png" alt="Caballeros">
-          <span class="dress-lbl">Caballeros</span>
-        </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Brindis.png" alt="Brindis"></div>
+        <span class="it-name">Brindis y Pastel</span><span class="it-time">22:30</span>
       </div>
-      <div class="divider fade-in"></div>
-      <p class="dress-note fade-in">Celebración solo para adultos</p>
-    </section>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Baile.png" alt="Baile"></div>
+        <span class="it-name">Baile</span><span class="it-time"></span>
+      </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Despedida.png" alt="Despedida"></div>
+        <span class="it-name">Despedida</span><span class="it-time">02:30</span>
+      </div>
+    </div>
+  </section>
 
-    <!-- ═══ 4: RSVP ═══ -->
-    <section id="s3">
-      <div id="rsvp-form-wrap" style="width:100%">
-        <p class="rsvp-title fade-in">Confirmar Asistencia</p>
-        <p class="rsvp-sub fade-in" id="rsvp-sub-lbl"></p>
-        <div class="fade-in" style="width:100%;text-align:left">
-          <label class="rsvp-lbl">¿Asistirás?</label>
-          <div class="attend-btns">
-            <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
-            <button class="attend-btn" id="btn-no"  onclick="selectAttend('no')">No podré ir</button>
+  <!-- ═══ 3: VESTIMENTA ═══ -->
+  <section id="s2">
+    <p class="dress-title fade-in">Código de Vestimenta</p>
+    <p class="dress-subtitle fade-in">Formal Casual</p>
+    <div class="dress-icons fade-in">
+      <div class="dress-icon-wrap">
+        <img src="img/CodigoMujer.png" alt="Damas">
+        <span class="dress-lbl">Damas</span>
+      </div>
+      <div class="dress-icon-wrap">
+        <img src="img/CodigoHombre.png" alt="Caballeros">
+        <span class="dress-lbl">Caballeros</span>
+      </div>
+    </div>
+    <div class="divider fade-in"></div>
+    <p class="dress-note fade-in">Celebración solo para adultos</p>
+  </section>
+
+  <!-- ═══ 4: RSVP ═══ -->
+  <section id="s3">
+    <div id="rsvp-form-wrap" style="width:100%">
+      <p class="rsvp-title fade-in">Confirmar Asistencia</p>
+      <p class="rsvp-sub fade-in" id="rsvp-sub-lbl"></p>
+      <div class="fade-in" style="width:100%;text-align:left">
+        <label class="rsvp-lbl">¿Asistirás?</label>
+        <div class="attend-btns">
+          <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
+          <button class="attend-btn" id="btn-no"  onclick="selectAttend('no')">No podré ir</button>
+        </div>
+        <div id="count-section">
+          <label class="rsvp-lbl">¿Cuántos asistirán? (máx. <span id="max-lbl">0</span>)</label>
+          <div class="counter-wrap">
+            <button class="counter-btn" onclick="chgCount(-1)">−</button>
+            <span class="counter-val" id="cnt-val">1</span>
+            <button class="counter-btn" onclick="chgCount(1)">+</button>
           </div>
-          <div id="count-section">
-            <label class="rsvp-lbl">¿Cuántos asistirán? (máx. <span id="max-lbl">0</span>)</label>
-            <div class="counter-wrap">
-              <button class="counter-btn" onclick="chgCount(-1)">−</button>
-              <span class="counter-val" id="cnt-val">1</span>
-              <button class="counter-btn" onclick="chgCount(1)">+</button>
-            </div>
-          </div>
-          <label class="rsvp-lbl">Mensaje para los novios (opcional)</label>
-          <textarea class="rsvp-input" rows="3" id="rsvp-msg" placeholder="Un mensaje de felicitación..."></textarea>
-          <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
         </div>
+        <label class="rsvp-lbl">Mensaje para los novios (opcional)</label>
+        <textarea class="rsvp-input" rows="3" id="rsvp-msg" placeholder="Un mensaje de felicitación..."></textarea>
+        <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
       </div>
-      <div id="thanks-wrap" style="display:none;width:100%;text-align:center">
-        <div class="thanks-icon">💍</div>
-        <p class="thanks-title">¡Gracias!</p>
-        <p class="thanks-text" id="thanks-txt"></p>
-      </div>
-    </section>
+    </div>
+    <div id="thanks-wrap" style="display:none;width:100%;text-align:center">
+      <div class="thanks-icon">💍</div>
+      <p class="thanks-title">¡Gracias!</p>
+      <p class="thanks-text" id="thanks-txt"></p>        
+    </div>
+<div class="countdown-box fade-in">
+  <p class="countdown-title">Faltan</p>
 
+  <div id="countdown" class="countdown">
+    <div class="cd-item">
+      <span id="cd-days">0</span>
+      <small>Días</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-hours">0</span>
+      <small>Horas</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-minutes">0</span>
+      <small>Min</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-seconds">0</span>
+      <small>Seg</small>
+    </div>
   </div>
+</div>
+    
+    
+  </section>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const SUPA_URL  = 'https://jlakoulrsnptdsslerte.supabase.co';
-const SUPA_KEY  = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
-const ID_EVENT  = 1;
-const TOTAL_PHOTOS = 84;
+const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
+const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
+const ID_EVENT = 1;
 
 let activeGuest = null, attendChoice = null, guestCount = 1, maxSeats = 2;
 let currentSection = 0, autoScrollTimer = null, userScrolled = false;
 const sections = ['s0','s1','s2','s3'];
 
-/* ── CARRUSEL ── */
-// Pool de índices aleatorios sin repetir hasta agotar todos
-let photoPool = [];
-function getNextPhoto() {
-  if (photoPool.length === 0) {
-    photoPool = Array.from({length: TOTAL_PHOTOS}, (_,i) => i+1);
-    // shuffle
-    for (let i = photoPool.length-1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i+1));
-      [photoPool[i], photoPool[j]] = [photoPool[j], photoPool[i]];
-    }
-  }
-  return photoPool.pop();
-}
-
-// Índices actuales de cada slot para no repetir entre slots
-let slotCurrent = [1, 2, 3];
-
-function changeSlotPhoto(slotIdx) {
-  const slot = document.getElementById('slot' + slotIdx);
-  const oldImg = slot.querySelector('img');
-
-  let next;
-  let attempts = 0;
-  do {
-    next = getNextPhoto();
-    attempts++;
-  } while (slotCurrent.includes(next) && attempts < 10);
-
-  slotCurrent[slotIdx] = next;
-
-  const newImg = document.createElement('img');
-  newImg.src = 'img/' + next + '.jpg';
-  newImg.alt = '';
-  newImg.className = 'hidden';
-  slot.appendChild(newImg);
-
-  // Fade in new, fade out old
-  requestAnimationFrame(() => {
-    newImg.classList.remove('hidden');
-    newImg.classList.add('visible');
-    if (oldImg) {
-      oldImg.classList.remove('visible');
-      oldImg.classList.add('hidden');
-      setTimeout(() => { if (oldImg.parentNode) oldImg.parentNode.removeChild(oldImg); }, 1100);
-    }
-  });
-}
-
-function startCarousel() {
-  // Cada slot cambia en momentos distintos para que no cambien todos a la vez
-  setInterval(() => changeSlotPhoto(0), 3200);
-  setInterval(() => changeSlotPhoto(1), 4100);
-  setInterval(() => changeSlotPhoto(2), 5000);
-}
-
-/* ── AUTO SCROLL ── */
 function scrollToSection(idx) {
   if (idx < 0 || idx >= sections.length) return;
   currentSection = idx;
   document.getElementById(sections[idx]).scrollIntoView({ behavior: 'smooth' });
   updateDots();
 }
+
 function updateDots() {
-  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i===currentSection));
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === currentSection));
 }
+
 function startAutoScroll() {
   autoScrollTimer = setInterval(() => {
     if (userScrolled) { clearInterval(autoScrollTimer); return; }
@@ -569,52 +556,53 @@ function startAutoScroll() {
     }
   }, 4500);
 }
+
 let scrollTimeout;
 window.addEventListener('scroll', () => {
-  if (autoScrollTimer) userScrolled = true;
+  if (autoScrollTimer) { userScrolled = true; }
   clearTimeout(scrollTimeout);
   scrollTimeout = setTimeout(() => {
     sections.forEach((id,i) => {
       const rect = document.getElementById(id).getBoundingClientRect();
-      if (rect.top >= -100 && rect.top < window.innerHeight/2) {
+      if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
         currentSection = i; updateDots();
       }
     });
   }, 80);
 }, { passive: true });
 
-/* ── SUPABASE ── */
-async function api(path, opts={}) {
-  const res = await fetch(SUPA_URL+'/rest/v1/'+path, {
-    headers: { 'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,
-      'Content-Type':'application/json','Prefer':'return=representation',...(opts.headers||{}) }, ...opts
+async function api(path, opts = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=representation', ...(opts.headers||{}) }, ...opts
   });
-  if (!res.ok) throw new Error(await res.text());
+  if (!res.ok) { throw new Error(await res.text()); }
   const t = await res.text(); return t ? JSON.parse(t) : null;
 }
 
 function showToast(msg, dur=2800) {
   const t = document.getElementById('toast');
-  t.textContent=msg; t.style.display='block';
-  clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',dur);
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(t._t); t._t = setTimeout(() => t.style.display='none', dur);
 }
 
 function setGuestUI(g) {
   document.getElementById('inv-gname').textContent   = g.name;
-  document.getElementById('inv-gseats').textContent  = 'Lugares asignados: '+g.seats;
-  document.getElementById('rsvp-sub-lbl').textContent = g.name+' · '+g.seats+' lugar'+(g.seats!==1?'es':'')+' asignado'+(g.seats!==1?'s':'');
+  document.getElementById('inv-gseats').textContent  = 'Lugares asignados: ' + g.seats;
+  document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats!==1?'es':'') + ' asignado' + (g.seats!==1?'s':'');
   document.getElementById('max-lbl').textContent = g.seats;
   maxSeats = g.seats;
 }
 
 function selectAttend(c) {
   attendChoice = c;
-  document.getElementById('btn-yes').className='attend-btn'+(c==='yes'?' sel-yes':'');
-  document.getElementById('btn-no').className ='attend-btn'+(c==='no' ?' sel-no' :'');
+  document.getElementById('btn-yes').className = 'attend-btn'+(c==='yes'?' sel-yes':'');
+  document.getElementById('btn-no').className  = 'attend-btn'+(c==='no'?' sel-no':'');
   document.getElementById('count-section').style.display = c==='yes'?'block':'none';
 }
+
 function chgCount(d) {
-  guestCount = Math.max(1,Math.min(maxSeats,guestCount+d));
+  guestCount = Math.max(1, Math.min(maxSeats, guestCount+d));
   document.getElementById('cnt-val').textContent = guestCount;
 }
 
@@ -622,7 +610,7 @@ async function submitRSVP() {
   if (!attendChoice) { showToast('Por favor indica si asistirás'); return; }
   if (!activeGuest)  { showToast('No se pudo identificar al invitado'); return; }
   const btn = document.getElementById('rsvp-btn');
-  btn.disabled=true; btn.textContent='Guardando...';
+  btn.disabled = true; btn.textContent = 'Guardando...';
   try {
     await api('guests?id=eq.'+activeGuest.id+'&id_event=eq.'+ID_EVENT, {
       method:'PATCH', body:JSON.stringify({
@@ -634,37 +622,97 @@ async function submitRSVP() {
     document.getElementById('thanks-txt').innerHTML = attendChoice==='yes'
       ? 'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
       : 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
-    document.getElementById('rsvp-form-wrap').style.display='none';
-    document.getElementById('thanks-wrap').style.display='block';
+    document.getElementById('rsvp-form-wrap').style.display = 'none';
+    document.getElementById('thanks-wrap').style.display    = 'block';
   } catch(e) {
     btn.disabled=false; btn.textContent='Confirmar asistencia';
     showToast('Error: '+e.message);
   }
 }
 
-/* ── FADE IN ── */
 const fadeObs = new IntersectionObserver((entries) => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); fadeObs.unobserve(e.target); }});
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
 
-/* ── INIT ── */
 (async () => {
   const gid = new URLSearchParams(window.location.search).get('id');
   if (gid) {
     try {
       const res = await api('guests?id=eq.'+gid+'&id_event=eq.'+ID_EVENT);
-      if (res && res[0]) { activeGuest=res[0]; setGuestUI(res[0]); }
-      else { document.getElementById('inv-gname').textContent='Invitado no encontrado'; }
-    } catch(e) { document.getElementById('inv-gname').textContent='Error al cargar'; }
+      if (res && res[0]) { activeGuest = res[0]; setGuestUI(res[0]); }
+      else { document.getElementById('inv-gname').textContent = 'Invitado no encontrado'; }
+
+    } catch(e) { document.getElementById('inv-gname').textContent = 'Error al cargar'; }
   } else {
     document.getElementById('inv-gname').textContent  = 'Bienvenido';
     document.getElementById('inv-gseats').textContent = '';
     document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
   }
-  startCarousel();
   setTimeout(startAutoScroll, 3500);
 })();
+  
+    /* ---------------------------
+     Config (modifica si necesitas)
+    ----------------------------*/
+    const YT_ID = "suHvGQYTAG0";
+    const musicFrame = document.getElementById("music");
+    const musicBtn = document.getElementById("music-toggle");
+    let playing = false;
+    /*const embedURL = "https://www.youtube.com/embed/6dYWe1c3OyU?autoplay=1&loop=1&playlist=6dYWe1c3OyU";*/
+    const embedURL = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&controls=0&rel=0&modestbranding=1`;
+
+    musicBtn.addEventListener("click", () => {
+      if (playing) {
+        musicFrame.src = "";
+        musicBtn.textContent = "🔇";
+      } else {
+        musicFrame.src = embedURL;
+        musicBtn.textContent = "🔊";
+      }
+      playing = !playing;
+    });
+
+ /* ── CONTADOR ── */
+
+const targetDate = new Date("August 7, 2026 19:30:00").getTime();
+
+setInterval(() => {
+
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance <= 0) {
+
+    document.getElementById("countdown").innerHTML =
+      "🎉 ¡Llegó el gran día! 🎉";
+
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) /
+    (1000 * 60 * 60)
+  );
+
+  const minutes = Math.floor(
+    (distance % (1000 * 60 * 60)) /
+    (1000 * 60)
+  );
+
+  const seconds = Math.floor(
+    (distance % (1000 * 60)) / 1000
+  );
+
+  document.getElementById("cd-days").textContent = days;
+  document.getElementById("cd-hours").textContent = hours;
+  document.getElementById("cd-minutes").textContent = minutes;
+  document.getElementById("cd-seconds").textContent = seconds;
+
+}, 1000); 
+
 </script>
 </body>
 </html>
