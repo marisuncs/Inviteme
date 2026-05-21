@@ -14,7 +14,7 @@
   --white-55: rgba(255,255,255,0.55);
   --white-10: rgba(255,255,255,0.10);
   --teal-darker: #1e4a57;
-  --header-h: 70px;
+  --header-h: 130px; /* nombres (70px) + tira fotos (60px) */
 }
 html { scroll-behavior: smooth; }
 body {
@@ -28,78 +28,91 @@ body {
 .bg-fixed {
   position: fixed; inset: 0; z-index: 0;
   background-image: url('img/Fondo.jpg');
-  background-size: 100% auto;        /* ancho completo, alto proporcional */
+  background-size: 100% auto;
   background-position: center top;
-  background-repeat: repeat-y;       /* repite verticalmente si la página es más larga */
+  background-repeat: repeat-y;
 }
 .bg-fixed::after {
   content: ''; position: absolute; inset: 0;
-  background: rgba(20, 55, 65, 0.25);
+  background: rgba(20,55,65,0.25);
 }
 
-/* ── HEADER FIJO ── */
+/* ── HEADER ── */
 .fixed-header {
   position: fixed; top: 0; left: 0; right: 0;
-  height: var(--header-h);
-  display: flex; /* ── align-items: center; justify-content: center;── */
-  justify-content: flex-start; /* Alinear al inicio horizontal */
-  align-items: flex-start;     /* Alinear al inicio vertical */
   z-index: 50;
-  background: rgba(30, 74, 87, 0.35);
-  backdrop-filter: blur(1px);
+  background: rgba(30,74,87,0.45);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.header-names{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-
-  font-family:'Cormorant SC', serif;
-  color:var(--white);
-  line-height:1;
-
-  margin-top:8px;
+  display: flex; flex-direction: column;
 }
 
-.top-name{
-  font-size: clamp(30px, 6vw, 42px);
-  font-weight:300;
-  letter-spacing:0.08em;
-  color:var(--white);
-  align-items:left;
+/* Fila 1: nombres */
+.header-top {
+  height: 70px;
+  display: flex; align-items: center; justify-content: flex-start;
+  padding: 0 1rem;
+  gap: 0;
+}
+.header-names {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Cormorant SC', serif;
+  color: var(--white); line-height: 1;
+}
+.top-name, .bottom-name {
+  font-size: clamp(26px, 5.5vw, 38px);
+  font-weight: 300; letter-spacing: 0.08em; color: var(--white);
+}
+.amp { font-size: 16px; opacity: 0.75; margin: 2px 0; color: var(--white); }
 
+/* Fila 2: tira de fotos */
+.photo-strip {
+  height: 60px;
+  display: flex; gap: 4px; padding: 4px 6px;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
-  
-.bottom-name{
-  font-size: clamp(30px, 6vw, 42px);
-  font-weight:300;
-  letter-spacing:0.08em;
-  color:var(--white);
-   align-items:center;
+.strip-slot {
+  flex: 1; border-radius: 6px;
+  overflow: hidden; position: relative;
+  background: rgba(255,255,255,0.05);
 }
+.strip-slot img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 6px;
+  transition: opacity 1s ease;
+}
+.strip-slot img.hidden  { opacity: 0; }
+.strip-slot img.visible { opacity: 1; }
 
-.amp{
-  font-size:18px;
-  opacity:0.8;
-  margin:2px 0;
-  color:var(--white);
-}
 /* ── PROGRESS DOTS ── */
 .progress-dots {
-  position: fixed; right: 1.1rem; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 15px; z-index: 50;
+  position: fixed; right: 0.9rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 14px; z-index: 50;
 }
 .pdot {
-  width: 12px; height: 12px; border-radius: 50%;
+  width: 10px; height: 10px; border-radius: 50%;
   background: rgba(255,255,255,0.3);
   cursor: pointer; transition: all 0.3s; border: none; padding: 0;
 }
 .pdot.active { background: var(--white); height: 22px; border-radius: 4px; }
 
+/* ── MUSIC BUTTON ── */
+#music-toggle {
+  position: fixed; bottom: 1.2rem; right: 3rem;
+  z-index: 60; background: rgba(25,68,82,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%; width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer;
+  backdrop-filter: blur(8px); transition: background 0.2s;
+}
+#music-toggle:hover { background: rgba(25,68,82,0.8); }
+
 /* ── CONTENIDO ── */
 .content {
-  margin-left: 100px;
   position: relative; z-index: 1;
   max-width: 480px; margin: 0 auto;
   padding: 0 1.75rem;
@@ -111,24 +124,21 @@ section {
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 3rem 0;
-  position: relative;
-  text-align: center;
+  padding: 3rem 0; text-align: center;
 }
 section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 
 /* ── PORTADA ── */
 .tagline {
   font-family: 'Cormorant SC', serif;
-  font-size: clamp(22px, 3.8vw, 22px);
-  color: var(--white);
-  letter-spacing: 0.01em; line-height: 1.5;
-  margin-bottom: 2.0rem;
+  font-size: clamp(18px, 3.8vw, 22px);
+  color: var(--white); letter-spacing: 0.01em; line-height: 1.5;
+  margin-bottom: 2rem;
 }
 .date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
 .date-col { text-align: center; }
 .date-col .lbl {
-  font-family: 'Cormorant SC', serif; font-size: 22px;
+  font-family: 'Cormorant SC', serif; font-size: 20px;
   color: var(--white-55); letter-spacing: 0.14em; display: block; margin-bottom: 3px;
 }
 .date-col .val {
@@ -138,11 +148,11 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 }
 .venue {
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: clamp(24px, 4.2vw, 20px); letter-spacing: 0.05em; margin-bottom: 0.4rem;
+  font-size: clamp(20px, 4.2vw, 24px); letter-spacing: 0.05em; margin-bottom: 0.4rem;
 }
 .address {
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: clamp(22px, 3.2vw, 16px); letter-spacing: 0.03em;
+  font-size: clamp(18px, 3.2vw, 22px); letter-spacing: 0.03em;
   line-height: 1.7; margin-bottom: 2rem;
 }
 .guest-box {
@@ -157,7 +167,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 }
 .guest-box .gseats {
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 26px; letter-spacing: 0.07em;
+  font-size: 22px; letter-spacing: 0.07em;
 }
 
 /* ── ITINERARIO ── */
@@ -166,10 +176,8 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   display: grid;
   grid-template-columns: 72px 1fr;
   grid-template-rows: auto auto;
-  column-gap: 1rem;
-  align-items: center;
-  padding: 0.9rem 0;
-  position: relative;
+  column-gap: 1rem; align-items: center;
+  padding: 0.9rem 0; position: relative;
 }
 .it-item:not(:last-child)::after {
   content: ''; position: absolute;
@@ -178,8 +186,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   border-left: 1px dashed rgba(255,255,255,0.22);
 }
 .it-icon-wrap {
-  grid-column: 1;
-  grid-row: 1 / span 2;
+  grid-column: 1; grid-row: 1 / span 2;
   width: 68px; height: 68px;
   display: flex; align-items: center; justify-content: center;
   background: var(--white-10);
@@ -194,14 +201,12 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 .it-name {
   grid-column: 2; grid-row: 1;
   font-family: 'Cormorant SC', serif; color: var(--white);
-  font-size: 24px; letter-spacing: 0.06em;
-  line-height: 1.2; align-self: end;
+  font-size: 24px; letter-spacing: 0.06em; line-height: 1.2; align-self: end;
 }
 .it-time {
   grid-column: 2; grid-row: 2;
   font-family: 'Cormorant SC', serif; color: var(--white-55);
-  font-size: 22px; letter-spacing: 0.05em;
-  margin-top: 2px; align-self: start;
+  font-size: 22px; letter-spacing: 0.05em; margin-top: 2px; align-self: start;
 }
 
 /* ── VESTIMENTA ── */
@@ -262,7 +267,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   background: transparent; color: var(--white-75); transition: all 0.2s;
 }
 .attend-btn.sel-yes { background: rgba(255,255,255,0.88); color: var(--teal-darker); border-color: transparent; }
-.attend-btn.sel-no  { background: rgba(220,80,80,0.45);  color: var(--white); border-color: transparent; }
+.attend-btn.sel-no  { background: rgba(220,80,80,0.45); color: var(--white); border-color: transparent; }
 .counter-wrap {
   display: flex; align-items: center; justify-content: space-between;
   background: var(--white-10); border: 1px solid rgba(255,255,255,0.28);
@@ -297,6 +302,27 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: 24px; line-height: 1.7;
 }
 
+/* ── COUNTDOWN ── */
+.countdown-box { margin: 2rem 0; text-align: center; }
+.countdown-title {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 28px; margin-bottom: 1rem;
+}
+.countdown { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.cd-item {
+  min-width: 72px; padding: 12px 10px; border-radius: 12px;
+  background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(4px);
+}
+.cd-item span {
+  display: block; font-family: 'Cormorant SC', serif;
+  color: var(--white); font-size: 32px; line-height: 1;
+}
+.cd-item small {
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 14px; letter-spacing: 0.08em;
+}
+
 /* ── TOAST ── */
 .toast {
   position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
@@ -307,142 +333,52 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
 }
 
-/* ── CAROUSEL ── */
-.carousel-col {
-  position: fixed;
-  top: var(--header-h); left: 0; bottom: 0;
-  width: 100px; z-index: 40;
-  display: flex; flex-direction: column;
-  gap: 6px; padding: 8px 6px;
-  overflow: hidden;
-  background: rgba(15,45,55,0.2);
-  backdrop-filter: blur(2px);
-  border-right: 1px solid rgba(255,255,255,0.08);
-}
-.photo-slot {
-  flex: 1; border-radius: 8px;
-  overflow: hidden; position: relative;
-  background: rgba(255,255,255,0.05);
-}
-.photo-slot img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; border-radius: 8px;
-  transition: opacity 1s ease;
-}
-.photo-slot img.hidden  { opacity: 0; }
-.photo-slot img.visible { opacity: 1; }
-
 /* ── FADE IN ── */
 .fade-in {
   opacity: 0; transform: translateY(20px);
   transition: opacity 0.75s ease, transform 0.75s ease;
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-
-/* ── COUNTDOWN ── */
-
-.countdown-box{
-  margin: 2rem 0;
-  text-align:center;
-}
-
-.countdown-title{
-  font-family:'Cormorant SC', serif;
-  color:var(--white);
-  font-size:28px;
-  margin-bottom:1rem;
-}
-
-.countdown{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.cd-item{
-  min-width:72px;
-  padding:12px 10px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.10);
-  border:1px solid rgba(255,255,255,0.18);
-  backdrop-filter:blur(4px);
-}
-
-.cd-item span{
-  display:block;
-  font-family:'Cormorant SC', serif;
-  color:var(--white);
-  font-size:32px;
-  line-height:1;
-}
-
-.cd-item small{
-  font-family:'Cormorant SC', serif;
-  color:var(--white-55);
-  font-size:14px;
-  letter-spacing:0.08em;
-}
-  
-#music-toggle {
-  position: fixed; bottom: 1.2rem; left: 110px;
-  z-index: 60; background: rgba(25,68,82,0.5);
-  border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50%; width: 42px; height: 42px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: background 0.2s;
-}
-#music-toggle:hover { background: rgba(25,68,82,0.75); }
 </style>
 </head>
 <body>
 
 <div class="bg-fixed"></div>
 
-<!-- CARRUSEL IZQUIERDO -->
-<div class="carousel-col" id="carousel-col">
-  <div class="photo-slot" id="slot0"><img src="img/1.jpg" class="visible" alt=""></div>
-  <div class="photo-slot" id="slot1"><img src="img/2.jpg" class="visible" alt=""></div>
-  <div class="photo-slot" id="slot2"><img src="img/3.jpg" class="visible" alt=""></div>
-</div>
-
-<!-- HEADER FIJO -->
+<!-- HEADER: nombres + tira de 5 fotos -->
 <header class="fixed-header">
-<p class="header-names">
-  <div class="line1">
-    <span class="top-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GABO</span>
-    <span class="amp">&amp;</span>
-    <br> <br> <br>
+  <div class="header-top">
+    <div class="header-names">
+      <span class="top-name">GABO</span>
+      <span class="amp">&amp;</span>
+      <span class="bottom-name">MIYA</span>
+    </div>
   </div>
-  <div class="line2">
-    <br>
-    <span class="bottom-name">MIYA</span>
+  <div class="photo-strip">
+    <div class="strip-slot" id="strip0"><img src="img/1.jpg" class="visible" alt=""></div>
+    <div class="strip-slot" id="strip1"><img src="img/2.jpg" class="visible" alt=""></div>
+    <div class="strip-slot" id="strip2"><img src="img/3.jpg" class="visible" alt=""></div>
+    <div class="strip-slot" id="strip3"><img src="img/4.jpg" class="visible" alt=""></div>
+    <div class="strip-slot" id="strip4"><img src="img/5.jpg" class="visible" alt=""></div>
   </div>
-</p>
 </header>
 
-  
 <!-- PROGRESS DOTS -->
 <div class="progress-dots">
-  <button class="pdot active" onclick="scrollToSection(0)" title="Portada"></button>
-  <button class="pdot" onclick="scrollToSection(1)" title="Itinerario"></button>
-  <button class="pdot" onclick="scrollToSection(2)" title="Vestimenta"></button>
-  <button class="pdot" onclick="scrollToSection(3)" title="Confirmación"></button>
+  <button class="pdot active" onclick="scrollToSection(0)"></button>
+  <button class="pdot" onclick="scrollToSection(1)"></button>
+  <button class="pdot" onclick="scrollToSection(2)"></button>
+  <button class="pdot" onclick="scrollToSection(3)"></button>
 </div>
 
-<div class="content">
-  <!-- ═══ 1: PORTADA ═══ -->
-  <section id="s0">
-      <!-- Botón música -->
-<div id="music-toggle">🔊</div>
-
-  <!-- Música oculta -->
+<!-- MUSIC -->
+<div id="music-toggle">🔇</div>
 <iframe id="music" width="0" height="0" frameborder="0" allow="autoplay"></iframe>
 
+<div class="content">
+
+  <!-- ═══ 1: PORTADA ═══ -->
+  <section id="s0">
     <p class="tagline fade-in">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
     <div class="date-row fade-in">
       <div class="date-col"><span class="lbl">Viernes</span><span class="val">7</span></div>
@@ -460,12 +396,10 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   <!-- ═══ 2: ITINERARIO ═══ -->
   <section id="s1">
     <div class="itinerary fade-in">
-
-          
       <div class="it-item">
         <div class="it-icon-wrap"><img src="img/Recepcion.png" alt="Recepción"></div>
         <span class="it-name">Recepción</span><span class="it-time">19:30</span>
-      </div>    
+      </div>
       <div class="it-item">
         <div class="it-icon-wrap"><img src="img/Ceremonia.png" alt="Ceremonia"></div>
         <span class="it-name">Ceremonia Civil</span><span class="it-time">20:00</span>
@@ -484,7 +418,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
       </div>
       <div class="it-item">
         <div class="it-icon-wrap"><img src="img/Baile.png" alt="Baile"></div>
-        <span class="it-name">Baile</span><span class="it-time"></span>
+        <span class="it-name">Baile</span><span class="it-time">&nbsp;</span>
       </div>
       <div class="it-item">
         <div class="it-icon-wrap"><img src="img/Despedida.png" alt="Despedida"></div>
@@ -511,7 +445,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     <p class="dress-note fade-in">Celebración solo para adultos</p>
   </section>
 
-  <!-- ═══ 4: RSVP ═══ -->
+  <!-- ═══ 4: RSVP + COUNTDOWN ═══ -->
   <section id="s3">
     <div id="rsvp-form-wrap" style="width:100%">
       <p class="rsvp-title fade-in">Confirmar Asistencia</p>
@@ -538,35 +472,18 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     <div id="thanks-wrap" style="display:none;width:100%;text-align:center">
       <div class="thanks-icon">💍</div>
       <p class="thanks-title">¡Gracias!</p>
-      <p class="thanks-text" id="thanks-txt"></p>        
-    </div>
-<div class="countdown-box fade-in">
-  <p class="countdown-title">Faltan</p>
-
-  <div id="countdown" class="countdown">
-    <div class="cd-item">
-      <span id="cd-days">0</span>
-      <small>Días</small>
+      <p class="thanks-text" id="thanks-txt"></p>
     </div>
 
-    <div class="cd-item">
-      <span id="cd-hours">0</span>
-      <small>Horas</small>
+    <div class="countdown-box fade-in">
+      <p class="countdown-title">Faltan</p>
+      <div id="countdown" class="countdown">
+        <div class="cd-item"><span id="cd-days">0</span><small>Días</small></div>
+        <div class="cd-item"><span id="cd-hours">0</span><small>Horas</small></div>
+        <div class="cd-item"><span id="cd-minutes">0</span><small>Min</small></div>
+        <div class="cd-item"><span id="cd-seconds">0</span><small>Seg</small></div>
+      </div>
     </div>
-
-    <div class="cd-item">
-      <span id="cd-minutes">0</span>
-      <small>Min</small>
-    </div>
-
-    <div class="cd-item">
-      <span id="cd-seconds">0</span>
-      <small>Seg</small>
-    </div>
-  </div>
-</div>
-    
-    
   </section>
 
 </div>
@@ -577,156 +494,16 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
 const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
 const ID_EVENT = 1;
+const TOTAL_PHOTOS = 84;
 
 let activeGuest = null, attendChoice = null, guestCount = 1, maxSeats = 2;
 let currentSection = 0, autoScrollTimer = null, userScrolled = false;
 const sections = ['s0','s1','s2','s3'];
 
-function scrollToSection(idx) {
-  if (idx < 0 || idx >= sections.length) return;
-  currentSection = idx;
-  document.getElementById(sections[idx]).scrollIntoView({ behavior: 'smooth' });
-  updateDots();
-}
-
-function updateDots() {
-  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === currentSection));
-}
-
-function startAutoScroll() {
-  autoScrollTimer = setInterval(() => {
-    if (userScrolled) { clearInterval(autoScrollTimer); return; }
-    if (currentSection < sections.length - 1) {
-      currentSection++;
-      scrollToSection(currentSection);
-    } else {
-      clearInterval(autoScrollTimer);
-    }
-  }, 4500);
-}
-
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-  if (autoScrollTimer) { userScrolled = true; }
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    sections.forEach((id,i) => {
-      const rect = document.getElementById(id).getBoundingClientRect();
-      if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
-        currentSection = i; updateDots();
-      }
-    });
-  }, 80);
-}, { passive: true });
-
-async function api(path, opts = {}) {
-  const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
-    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
-      'Content-Type': 'application/json', 'Prefer': 'return=representation', ...(opts.headers||{}) }, ...opts
-  });
-  if (!res.ok) { throw new Error(await res.text()); }
-  const t = await res.text(); return t ? JSON.parse(t) : null;
-}
-
-function showToast(msg, dur=2800) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.display = 'block';
-  clearTimeout(t._t); t._t = setTimeout(() => t.style.display='none', dur);
-}
-
-function setGuestUI(g) {
-  document.getElementById('inv-gname').textContent   = g.name;
-  document.getElementById('inv-gseats').textContent  = 'Lugares asignados: ' + g.seats;
-  document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats!==1?'es':'') + ' asignado' + (g.seats!==1?'s':'');
-  document.getElementById('max-lbl').textContent = g.seats;
-  maxSeats = g.seats;
-}
-
-function selectAttend(c) {
-  attendChoice = c;
-  document.getElementById('btn-yes').className = 'attend-btn'+(c==='yes'?' sel-yes':'');
-  document.getElementById('btn-no').className  = 'attend-btn'+(c==='no'?' sel-no':'');
-  document.getElementById('count-section').style.display = c==='yes'?'block':'none';
-}
-
-function chgCount(d) {
-  guestCount = Math.max(1, Math.min(maxSeats, guestCount+d));
-  document.getElementById('cnt-val').textContent = guestCount;
-}
-
-async function submitRSVP() {
-  if (!attendChoice) { showToast('Por favor indica si asistirás'); return; }
-  if (!activeGuest)  { showToast('No se pudo identificar al invitado'); return; }
-  const btn = document.getElementById('rsvp-btn');
-  btn.disabled = true; btn.textContent = 'Guardando...';
-  try {
-    await api('guests?id=eq.'+activeGuest.id+'&id_event=eq.'+ID_EVENT, {
-      method:'PATCH', body:JSON.stringify({
-        status: attendChoice==='yes'?'confirmed':'declined',
-        confirmed: attendChoice==='yes'?guestCount:0,
-        msg: document.getElementById('rsvp-msg').value
-      })
-    });
-    document.getElementById('thanks-txt').innerHTML = attendChoice==='yes'
-      ? 'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
-      : 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
-    document.getElementById('rsvp-form-wrap').style.display = 'none';
-    document.getElementById('thanks-wrap').style.display    = 'block';
-  } catch(e) {
-    btn.disabled=false; btn.textContent='Confirmar asistencia';
-    showToast('Error: '+e.message);
-  }
-}
-
-const fadeObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); fadeObs.unobserve(e.target); }});
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
-
-(async () => {
-  const gid = new URLSearchParams(window.location.search).get('id');
-  if (gid) {
-    try {
-      const res = await api('guests?id=eq.'+gid+'&id_event=eq.'+ID_EVENT);
-      if (res && res[0]) { activeGuest = res[0]; setGuestUI(res[0]); }
-      else { document.getElementById('inv-gname').textContent = 'Invitado no encontrado'; }
-
-    } catch(e) { document.getElementById('inv-gname').textContent = 'Error al cargar'; }
-  } else {
-    document.getElementById('inv-gname').textContent  = 'Bienvenido';
-    document.getElementById('inv-gseats').textContent = '';
-    document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
-  }
-  setTimeout(startAutoScroll, 3500);
-  startCarousel();
-})();
-  
-    /* ---------------------------
-     Config (modifica si necesitas)
-    ----------------------------*/
-    const YT_ID = "suHvGQYTAG0";
-    const musicFrame = document.getElementById("music");
-    const musicBtn = document.getElementById("music-toggle");
-    let playing = false;
-    /*const embedURL = "https://www.youtube.com/embed/6dYWe1c3OyU?autoplay=1&loop=1&playlist=6dYWe1c3OyU";*/
-    const embedURL = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&controls=0&rel=0&modestbranding=1`;
-
-    musicBtn.addEventListener("click", () => {
-      if (playing) {
-        musicFrame.src = "";
-        musicBtn.textContent = "🔇";
-      } else {
-        musicFrame.src = embedURL;
-        musicBtn.textContent = "🔊";
-      }
-      playing = !playing;
-    });
-
- /* ── CARRUSEL JS ── */
-const TOTAL_PHOTOS = 84;
+/* ── CARRUSEL ── */
 let photoPool = [];
 function getNextPhoto() {
-  if (photoPool.length === 0) {
+  if (!photoPool.length) {
     photoPool = Array.from({length: TOTAL_PHOTOS}, (_,i) => i+1);
     for (let i = photoPool.length-1; i > 0; i--) {
       const j = Math.floor(Math.random()*(i+1));
@@ -735,69 +512,161 @@ function getNextPhoto() {
   }
   return photoPool.pop();
 }
-let slotCurrent = [1,2,3];
-function changeSlotPhoto(slotIdx) {
-  const slot = document.getElementById("slot"+slotIdx);
-  const oldImg = slot.querySelector("img");
-  let next, attempts=0;
-  do { next = getNextPhoto(); attempts++; } while (slotCurrent.includes(next) && attempts<10);
-  slotCurrent[slotIdx] = next;
-  const newImg = document.createElement("img");
-  newImg.src = "img/"+next+".jpg";
-  newImg.alt = ""; newImg.className = "hidden";
+
+function changeStripPhoto(idx) {
+  const slot = document.getElementById('strip'+idx);
+  if (!slot) return;
+  const oldImg = slot.querySelector('img');
+  const newImg = document.createElement('img');
+  newImg.src = 'img/'+getNextPhoto()+'.jpg';
+  newImg.alt = ''; newImg.className = 'hidden';
   slot.appendChild(newImg);
   requestAnimationFrame(() => {
-    newImg.classList.remove("hidden"); newImg.classList.add("visible");
-    if (oldImg) { oldImg.classList.remove("visible"); oldImg.classList.add("hidden");
-      setTimeout(() => { if(oldImg.parentNode) oldImg.parentNode.removeChild(oldImg); }, 1100); }
+    newImg.classList.remove('hidden'); newImg.classList.add('visible');
+    if (oldImg) {
+      oldImg.classList.remove('visible'); oldImg.classList.add('hidden');
+      setTimeout(() => { if (oldImg.parentNode) oldImg.parentNode.removeChild(oldImg); }, 1100);
+    }
   });
 }
+
 function startCarousel() {
-  setInterval(() => changeSlotPhoto(0), 3200);
-  setInterval(() => changeSlotPhoto(1), 4100);
-  setInterval(() => changeSlotPhoto(2), 5000);
+  setInterval(() => changeStripPhoto(0), 3200);
+  setInterval(() => changeStripPhoto(1), 4100);
+  setInterval(() => changeStripPhoto(2), 5000);
+  setInterval(() => changeStripPhoto(3), 3700);
+  setInterval(() => changeStripPhoto(4), 4500);
 }
 
-/* ── CONTADOR ── */
+/* ── SCROLL ── */
+function scrollToSection(idx) {
+  if (idx < 0 || idx >= sections.length) return;
+  currentSection = idx;
+  document.getElementById(sections[idx]).scrollIntoView({ behavior: 'smooth' });
+  updateDots();
+}
+function updateDots() {
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i===currentSection));
+}
+function startAutoScroll() {
+  autoScrollTimer = setInterval(() => {
+    if (userScrolled) { clearInterval(autoScrollTimer); return; }
+    if (currentSection < sections.length-1) { currentSection++; scrollToSection(currentSection); }
+    else { clearInterval(autoScrollTimer); }
+  }, 4500);
+}
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  if (autoScrollTimer) userScrolled = true;
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    sections.forEach((id,i) => {
+      const rect = document.getElementById(id).getBoundingClientRect();
+      if (rect.top >= -100 && rect.top < window.innerHeight/2) { currentSection=i; updateDots(); }
+    });
+  }, 80);
+}, { passive: true });
 
-const targetDate = new Date("August 7, 2026 19:30:00").getTime();
+/* ── MÚSICA ── */
+const YT_ID = 'suHvGQYTAG0';
+const embedURL = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&controls=0&rel=0&modestbranding=1`;
+let playing = false;
+document.getElementById('music-toggle').addEventListener('click', () => {
+  const frame = document.getElementById('music');
+  if (playing) { frame.src=''; document.getElementById('music-toggle').textContent='🔇'; }
+  else { frame.src=embedURL; document.getElementById('music-toggle').textContent='🔊'; }
+  playing = !playing;
+});
 
+/* ── COUNTDOWN ── */
+const targetDate = new Date('August 7, 2026 19:30:00').getTime();
 setInterval(() => {
+  const dist = targetDate - Date.now();
+  if (dist <= 0) { document.getElementById('countdown').innerHTML='🎉 ¡Llegó el gran día! 🎉'; return; }
+  document.getElementById('cd-days').textContent    = Math.floor(dist/(1000*60*60*24));
+  document.getElementById('cd-hours').textContent   = Math.floor((dist%(1000*60*60*24))/(1000*60*60));
+  document.getElementById('cd-minutes').textContent = Math.floor((dist%(1000*60*60))/(1000*60));
+  document.getElementById('cd-seconds').textContent = Math.floor((dist%(1000*60))/1000);
+}, 1000);
 
-  const now = new Date().getTime();
-  const distance = targetDate - now;
-
-  if (distance <= 0) {
-
-    document.getElementById("countdown").innerHTML =
-      "🎉 ¡Llegó el gran día! 🎉";
-
-    return;
+/* ── SUPABASE ── */
+async function api(path, opts={}) {
+  const res = await fetch(SUPA_URL+'/rest/v1/'+path, {
+    headers: { 'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,
+      'Content-Type':'application/json','Prefer':'return=representation',...(opts.headers||{}) },...opts
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+function showToast(msg, dur=2800) {
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',dur);
+}
+function setGuestUI(g) {
+  document.getElementById('inv-gname').textContent   = g.name;
+  document.getElementById('inv-gseats').textContent  = 'Lugares asignados: '+g.seats;
+  document.getElementById('rsvp-sub-lbl').textContent = g.name+' · '+g.seats+' lugar'+(g.seats!==1?'es':'')+' asignado'+(g.seats!==1?'s':'');
+  document.getElementById('max-lbl').textContent = g.seats;
+  maxSeats = g.seats;
+}
+function selectAttend(c) {
+  attendChoice=c;
+  document.getElementById('btn-yes').className='attend-btn'+(c==='yes'?' sel-yes':'');
+  document.getElementById('btn-no').className ='attend-btn'+(c==='no' ?' sel-no' :'');
+  document.getElementById('count-section').style.display=c==='yes'?'block':'none';
+}
+function chgCount(d) {
+  guestCount=Math.max(1,Math.min(maxSeats,guestCount+d));
+  document.getElementById('cnt-val').textContent=guestCount;
+}
+async function submitRSVP() {
+  if (!attendChoice) { showToast('Por favor indica si asistirás'); return; }
+  if (!activeGuest)  { showToast('No se pudo identificar al invitado'); return; }
+  const btn=document.getElementById('rsvp-btn');
+  btn.disabled=true; btn.textContent='Guardando...';
+  try {
+    await api('guests?id=eq.'+activeGuest.id+'&id_event=eq.'+ID_EVENT,{
+      method:'PATCH',body:JSON.stringify({
+        status:attendChoice==='yes'?'confirmed':'declined',
+        confirmed:attendChoice==='yes'?guestCount:0,
+        msg:document.getElementById('rsvp-msg').value
+      })
+    });
+    document.getElementById('thanks-txt').innerHTML=attendChoice==='yes'
+      ?'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
+      :'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
+    document.getElementById('rsvp-form-wrap').style.display='none';
+    document.getElementById('thanks-wrap').style.display='block';
+  } catch(e) {
+    btn.disabled=false; btn.textContent='Confirmar asistencia';
+    showToast('Error: '+e.message);
   }
+}
 
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+/* ── FADE IN ── */
+const fadeObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
 
-  const hours = Math.floor(
-    (distance % (1000 * 60 * 60 * 24)) /
-    (1000 * 60 * 60)
-  );
-
-  const minutes = Math.floor(
-    (distance % (1000 * 60 * 60)) /
-    (1000 * 60)
-  );
-
-  const seconds = Math.floor(
-    (distance % (1000 * 60)) / 1000
-  );
-
-  document.getElementById("cd-days").textContent = days;
-  document.getElementById("cd-hours").textContent = hours;
-  document.getElementById("cd-minutes").textContent = minutes;
-  document.getElementById("cd-seconds").textContent = seconds;
-
-}, 1000); 
-
+/* ── INIT ── */
+(async()=>{
+  const gid=new URLSearchParams(window.location.search).get('id');
+  if(gid){
+    try{
+      const res=await api('guests?id=eq.'+gid+'&id_event=eq.'+ID_EVENT);
+      if(res&&res[0]){activeGuest=res[0];setGuestUI(res[0]);}
+      else{document.getElementById('inv-gname').textContent='Invitado no encontrado';}
+    }catch(e){document.getElementById('inv-gname').textContent='Error al cargar';}
+  }else{
+    document.getElementById('inv-gname').textContent='Bienvenido';
+    document.getElementById('inv-gseats').textContent='';
+    document.getElementById('rsvp-sub-lbl').textContent='Ingresa con tu link personalizado';
+  }
+  startCarousel();
+  setTimeout(startAutoScroll,3500);
+})();
 </script>
 </body>
 </html>
