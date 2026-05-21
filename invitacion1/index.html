@@ -568,7 +568,7 @@ function scrollToSection(idx) {
 function updateDots() {
   document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i===currentSection));
 }
-function startAutoScroll() {
+/*function startAutoScroll() {
   autoScrollTimer = setInterval(() => {
     if (userScrolled) { clearInterval(autoScrollTimer); return; }
     if (currentSection < sections.length-1) { currentSection++; scrollToSection(currentSection); }
@@ -585,6 +585,47 @@ window.addEventListener('scroll', () => {
       if (rect.top >= -100 && rect.top < window.innerHeight/2) { currentSection=i; updateDots(); }
     });
   }, 80);
+}, { passive: true });*/
+
+  function startAutoScroll() {
+  autoScrollTimer = setInterval(() => {
+
+    if (userScrolled) {
+      clearInterval(autoScrollTimer);
+      return;
+    }
+
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      scrollToSection(currentSection);
+    } else {
+      clearInterval(autoScrollTimer);
+    }
+
+  }, 4500);
+}
+
+let scrollTimeout;
+
+window.addEventListener('scroll', () => {
+
+  clearTimeout(scrollTimeout);
+
+  scrollTimeout = setTimeout(() => {
+
+    sections.forEach((id, i) => {
+
+      const rect = document.getElementById(id).getBoundingClientRect();
+
+      if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+        currentSection = i;
+        updateDots();
+      }
+
+    });
+
+  }, 80);
+
 }, { passive: true });
 
 /* ── MÚSICA ── */
