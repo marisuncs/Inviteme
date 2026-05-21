@@ -343,12 +343,24 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
 }
 
-/* ── FADE IN ── */
+/* ── FADE IN ── 
 .fade-in {
   opacity: 0; transform: translateY(20px);
   transition: opacity 0.75s ease, transform 0.75s ease;
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in.visible { opacity: 1; transform: translateY(0); }*/
+
+  .fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+  
 </style>
 </head>
 <body>
