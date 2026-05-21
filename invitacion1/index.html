@@ -99,10 +99,11 @@ body {
 
 /* ── CONTENIDO ── */
 .content {
+  margin-left: 100px;
   position: relative; z-index: 1;
   max-width: 480px; margin: 0 auto;
   padding: 0 1.75rem;
-  padding-top: var(--);
+  padding-top: var(--header-h);
 }
 
 /* ── SECCIONES ── */
@@ -303,6 +304,32 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
 }
 
+/* ── CAROUSEL ── */
+.carousel-col {
+  position: fixed;
+  top: var(--header-h); left: 0; bottom: 0;
+  width: 100px; z-index: 40;
+  display: flex; flex-direction: column;
+  gap: 6px; padding: 8px 6px;
+  overflow: hidden;
+  background: rgba(15,45,55,0.2);
+  backdrop-filter: blur(2px);
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.photo-slot {
+  flex: 1; border-radius: 8px;
+  overflow: hidden; position: relative;
+  background: rgba(255,255,255,0.05);
+}
+.photo-slot img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 8px;
+  transition: opacity 1s ease;
+}
+.photo-slot img.hidden  { opacity: 0; }
+.photo-slot img.visible { opacity: 1; }
+
 /* ── FADE IN ── */
 .fade-in {
   opacity: 0; transform: translateY(20px);
@@ -356,11 +383,29 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   letter-spacing:0.08em;
 }
   
+#music-toggle {
+  position: fixed; bottom: 1.2rem; left: 110px;
+  z-index: 60; background: rgba(25,68,82,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%; width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+}
+#music-toggle:hover { background: rgba(25,68,82,0.75); }
 </style>
 </head>
 <body>
 
 <div class="bg-fixed"></div>
+
+<!-- CARRUSEL IZQUIERDO -->
+<div class="carousel-col" id="carousel-col">
+  <div class="photo-slot" id="slot0"><img src="img/1.jpg" class="visible" alt=""></div>
+  <div class="photo-slot" id="slot1"><img src="img/2.jpg" class="visible" alt=""></div>
+  <div class="photo-slot" id="slot2"><img src="img/3.jpg" class="visible" alt=""></div>
+</div>
 
 <!-- HEADER FIJO -->
 <header class="fixed-header">
@@ -650,6 +695,7 @@ document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
     document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
   }
   setTimeout(startAutoScroll, 3500);
+  startCarousel();
 })();
   
     /* ---------------------------
@@ -673,7 +719,43 @@ document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
       playing = !playing;
     });
 
- /* ── CONTADOR ── */
+ /* ── CARRUSEL JS ── */
+const TOTAL_PHOTOS = 84;
+let photoPool = [];
+function getNextPhoto() {
+  if (photoPool.length === 0) {
+    photoPool = Array.from({length: TOTAL_PHOTOS}, (_,i) => i+1);
+    for (let i = photoPool.length-1; i > 0; i--) {
+      const j = Math.floor(Math.random()*(i+1));
+      [photoPool[i],photoPool[j]] = [photoPool[j],photoPool[i]];
+    }
+  }
+  return photoPool.pop();
+}
+let slotCurrent = [1,2,3];
+function changeSlotPhoto(slotIdx) {
+  const slot = document.getElementById("slot"+slotIdx);
+  const oldImg = slot.querySelector("img");
+  let next, attempts=0;
+  do { next = getNextPhoto(); attempts++; } while (slotCurrent.includes(next) && attempts<10);
+  slotCurrent[slotIdx] = next;
+  const newImg = document.createElement("img");
+  newImg.src = "img/"+next+".jpg";
+  newImg.alt = ""; newImg.className = "hidden";
+  slot.appendChild(newImg);
+  requestAnimationFrame(() => {
+    newImg.classList.remove("hidden"); newImg.classList.add("visible");
+    if (oldImg) { oldImg.classList.remove("visible"); oldImg.classList.add("hidden");
+      setTimeout(() => { if(oldImg.parentNode) oldImg.parentNode.removeChild(oldImg); }, 1100); }
+  });
+}
+function startCarousel() {
+  setInterval(() => changeSlotPhoto(0), 3200);
+  setInterval(() => changeSlotPhoto(1), 4100);
+  setInterval(() => changeSlotPhoto(2), 5000);
+}
+
+/* ── CONTADOR ── */
 
 const targetDate = new Date("August 7, 2026 19:30:00").getTime();
 
