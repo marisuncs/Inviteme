@@ -708,7 +708,9 @@ async function submitRSVP() {
       })
     });
     document.getElementById('thanks-txt').innerHTML=attendChoice==='yes'
-      ?'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
+      ?'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.5786449670118!2d-99.16278129999999!3d19.3440819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1ffdc108e4edb%3A0x21547a1c1bc54b25!2sCentro%20Cultural%20y%20Social%20Veracruzano!5e0!3m2!1ses-419!2smx!4v1779481895197!5m2!1ses-419!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> 
+      '
       :'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
     document.getElementById('rsvp-form-wrap').style.display='none';
     document.getElementById('thanks-wrap').style.display='block';
