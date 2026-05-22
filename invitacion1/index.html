@@ -213,17 +213,16 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   font-family: 'Cormorant SC', serif; color: var(--white);
   font-size: 24px; letter-spacing: 0.06em; line-height: 1.2; align-self: end;
 }
-.it-icon-wrap {
+.it-icon-wrapNoBkg {
   grid-column: 1; grid-row: 1 / span 2;
   width: 68px; height: 68px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50%; backdrop-filter: blur(4px);
   justify-self: center;
 }
 .it-icon-wrapNoBkg img {
-  width: 50px; height: 50px; object-fit: contain;
+  width: 40px; height: 40px; object-fit: contain;
 }
 .it-time {
   grid-column: 2; grid-row: 2;
@@ -504,7 +503,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     <div id="thanks-wrap" style="display:none;width:100%;text-align:center">
    <!--   <div class="thanks-icon">💍</div>-->
       <!--   <div class="it-icon-wrap"><img src="img/darth-vader.svg" alt="Que la fuerza te acompañe"></div> -->
-      <div class=it-icon-wrapNoBkg"><img src="img/darth-vader.jpg" alt="Que la fuerza te acompañe"></div>
+      <div class="it-icon-wrapNoBkg"><img src="img/darth-vader.jpg" alt="Que la fuerza te acompañe"></div>
       <p class="thanks-title">¡Gracias!</p>
       <p class="thanks-text" id="thanks-txt"></p>
     </div>
