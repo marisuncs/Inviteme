@@ -24,11 +24,15 @@
   --teal-darker: #1e4a57;
   --header-h: 100px; /* nombres (70px) + tira fotos (60px) */
 }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  height: -webkit-fill-available;
+}
 body {
   font-family: 'FelixTitling', serif;
   background: #3d7d8d;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   overflow-x: hidden;
 }
 
@@ -51,6 +55,7 @@ body {
   z-index: 50;
   background: rgba(30,74,87,0.45);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.1);
   display: flex; flex-direction: column;
 }
@@ -140,9 +145,11 @@ body {
 /* ── SECCIONES ── */
 section {
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   padding: 1.5rem 0; text-align: center;
+  width: 100%;
 }
 section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 
@@ -177,7 +184,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.22);
   border-radius: 12px; padding: 1.25rem 1.75rem;
-  width: 100%; text-align: center; backdrop-filter: blur(3px);
+  width: 100%; text-align: center; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
 }
 .guest-box .gname {
   font-family: 'FelixTitling', serif; color: var(--white);
@@ -209,7 +216,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   display: flex; align-items: center; justify-content: center;
   background: var(--white-10);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50%; backdrop-filter: blur(4px);
+  border-radius: 50%; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   justify-self: center;
 }
 .it-icon-wrap img {
@@ -226,7 +233,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   width: 68px; height: 68px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 50%; backdrop-filter: blur(4px);
+  border-radius: 50%; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   justify-self: center;
 }
 .it-icon-wrapNoBkg img {
@@ -282,7 +289,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   border: 1px solid rgba(255,255,255,0.28); border-radius: 10px;
   padding: 0.75rem 1rem; color: var(--white);
   font-family: 'FelixTitling', serif; font-size: clamp(13px, 3.5vw, 15px);
-  margin-bottom: 0.8rem; outline: none; backdrop-filter: blur(4px);
+  margin-bottom: 0.8rem; outline: none; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   transition: border-color 0.2s, background 0.2s;
 }
 .rsvp-input::placeholder { color: rgba(255,255,255,0.3); }
@@ -301,7 +308,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   display: flex; align-items: center; justify-content: space-between;
   background: var(--white-10); border: 1px solid rgba(255,255,255,0.28);
   border-radius: 10px; padding: 0.4rem 0.9rem; margin-bottom: 0.8rem;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
 .counter-val {
   font-family: 'FelixTitling', serif; color: var(--white); font-size: clamp(20px, 5vw, 26px); font-weight: 400;
@@ -341,7 +348,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 .cd-item {
   min-width: 72px; padding: 12px 10px; border-radius: 12px;
   background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.18);
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
 }
 .cd-item span {
   display: block; font-family: 'FelixTitling', serif;
@@ -555,10 +562,10 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 
   <!-- ═══ 4: RSVP + COUNTDOWN ═══ -->
   <section id="s3">
-    <div id="rsvp-form-wrap" style="width:100%">
+    <div id="rsvp-form-wrap" style="width:100%;display:flex;flex-direction:column;align-items:center;">
       <p class="rsvp-title fade-in">Confirmar Asistencia</p>
       <p class="rsvp-sub fade-in" id="rsvp-sub-lbl"></p>
-      <div class="fade-in" style="width:100%;text-align:left">
+      <div class="fade-in" style="width:100%;max-width:400px;text-align:left">
         <label class="rsvp-lbl">¿Asistirás?</label>
         <div class="attend-btns">
           <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
@@ -577,7 +584,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
         <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
       </div>
     </div>
-    <div id="thanks-wrap" style="display:none;width:100%;text-align:center">
+    <div id="thanks-wrap" style="display:none;width:100%;max-width:400px;text-align:center;margin:0 auto">
    <!--   <div class="thanks-icon">💍</div>-->
       <!--   <div class="it-icon-wrap"><img src="img/darth-vader.svg" alt="Que la fuerza te acompañe"></div> -->
       <div class="it-icon-wrapNoBkg"><img src="img/darth-vader.png" alt="Que la fuerza te acompañe"></div>
@@ -644,16 +651,21 @@ function changeStripPhoto(idx) {
   if (!slot) return;
   const oldImg = slot.querySelector('img');
   const newImg = document.createElement('img');
-  newImg.src = 'img/'+getNextPhoto()+'.jpg';
   newImg.alt = ''; newImg.className = 'hidden';
-  slot.appendChild(newImg);
-  requestAnimationFrame(() => {
-    newImg.classList.remove('hidden'); newImg.classList.add('visible');
-    if (oldImg) {
-      oldImg.classList.remove('visible'); oldImg.classList.add('hidden');
-      setTimeout(() => { if (oldImg.parentNode) oldImg.parentNode.removeChild(oldImg); }, 1100);
-    }
-  });
+  let attempts = 0;
+  function tryLoad() { newImg.src = 'img/' + getNextPhoto() + '.jpg'; attempts++; }
+  newImg.onerror = () => { if(attempts < 5) tryLoad(); };
+  newImg.onload = () => {
+    slot.appendChild(newImg);
+    requestAnimationFrame(() => {
+      newImg.classList.remove('hidden'); newImg.classList.add('visible');
+      if (oldImg) {
+        oldImg.classList.remove('visible'); oldImg.classList.add('hidden');
+        setTimeout(() => { if (oldImg.parentNode) oldImg.parentNode.removeChild(oldImg); }, 1100);
+      }
+    });
+  };
+  tryLoad();
 }
 
 function startCarousel() {
