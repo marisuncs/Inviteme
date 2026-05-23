@@ -674,24 +674,7 @@ function scrollToSection(idx) {
 function updateDots() {
   document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i===currentSection));
 }
-/*function startAutoScroll() {
-  autoScrollTimer = setInterval(() => {
-    if (userScrolled) { clearInterval(autoScrollTimer); return; }
-    if (currentSection < sections.length-1) { currentSection++; scrollToSection(currentSection); }
-    else { clearInterval(autoScrollTimer); }
-  }, 4500);
-}
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-  if (autoScrollTimer) userScrolled = true;
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    sections.forEach((id,i) => {
-      const rect = document.getElementById(id).getBoundingClientRect();
-      if (rect.top >= -100 && rect.top < window.innerHeight/2) { currentSection=i; updateDots(); }
-    });
-  }, 80);
-}, { passive: true });*/
+
 
   function startAutoScroll() {
   autoScrollTimer = setInterval(() => {
@@ -734,15 +717,44 @@ window.addEventListener('scroll', () => {
 
 }, { passive: true });
 
-/* ── MÚSICA ── */
+/* ── SPLASH ── */
+const SPLASH_PHOTOS = 84;
 const YT_ID = 'suHvGQYTAG0';
-const embedURL = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&controls=0&rel=0&modestbranding=1`;
+const embedURL = 'https://www.youtube.com/embed/' + YT_ID + '?autoplay=1&loop=1&playlist=' + YT_ID + '&controls=0&rel=0&modestbranding=1';
 let playing = false;
+
+function startInvitation() {
+  const frame = document.getElementById('music');
+  frame.src = embedURL;
+  document.getElementById('music-toggle').textContent = '🔊';
+  playing = true;
+  const splash = document.getElementById('splash');
+  splash.style.opacity = '0';
+  splash.style.transition = 'opacity 0.8s ease';
+  setTimeout(() => { splash.style.display = 'none'; }, 850);
+  setTimeout(startAutoScroll, 4000);
+}
+
+function showAlreadyReplied(g) {
+  document.querySelectorAll('section').forEach(s => { s.style.display = 'none'; });
+  const s3 = document.getElementById('s3');
+  s3.style.display = 'flex';
+  document.getElementById('rsvp-form-wrap').style.display = 'none';
+  document.getElementById('thanks-wrap').style.display = 'block';
+  document.getElementById('thanks-txt').innerHTML = g.status === 'confirmed'
+    ? 'Ya confirmaste tu asistencia.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
+    : 'Ya registraste que no podrás asistir.<br>Gracias por avisarnos.';
+  if (g.status === 'confirmed') {
+    document.getElementById('location-btn-wrap').style.display = 'block';
+  }
+  document.querySelectorAll('.pdot').forEach((d, i) => d.classList.toggle('active', i === 3));
+}
+
+/* ── MÚSICA ── */
 document.getElementById('music-toggle').addEventListener('click', () => {
   const frame = document.getElementById('music');
-  if (playing) { frame.src=''; document.getElementById('music-toggle').textContent='🔇'; }
-  else { frame.src=embedURL; document.getElementById('music-toggle').textContent='🔊'; }
-  playing = !playing;
+  if (playing) { frame.src=''; document.getElementById('music-toggle').textContent='🔇'; playing=false; }
+  else { frame.src=embedURL; document.getElementById('music-toggle').textContent='🔊'; playing=true; }
 });
 
 /* ── COUNTDOWN ── */
