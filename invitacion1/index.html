@@ -442,9 +442,9 @@ tbody tr:last-child td { border-bottom:none; }
 
 <!-- HEADER: nombres + tira de 5 fotos -->
 <header class="fixed-header">
-  <div class="header-names">
+  <p class="header-names">
   GABO <span class="amp">&amp;</span> MIYA
- </div>
+ </p>
   
   <div class="photo-strip">
     <div class="strip-slot" id="strip0"><img src="img/1.jpg" class="visible" alt=""></div>
@@ -625,8 +625,6 @@ tbody tr:last-child td { border-bottom:none; }
         <span class="g-title">Invitados</span>
         <div class="g-actions">
           <button class="g-btn" onclick="exportCSV()">⬇ CSV</button>
-          <button class="g-btn" onclick="openImportModal()">⬆ Importar</button>
-          <button class="g-btn" onclick="openImportModal()">⬆ Importar</button>
           <button class="g-btn primary" onclick="openAddModal()">+ Agregar</button>
         </div>
       </div>
@@ -884,6 +882,32 @@ const fadeObs=new IntersectionObserver((entries)=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});
 },{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
+
+/* ── CARRUSEL ── */
+const TOTAL_PHOTOS = 84;
+let photoPool = [];
+function getNextPhoto() {
+  if (!photoPool.length) {
+    photoPool = Array.from({length:TOTAL_PHOTOS},(_,i)=>i+1);
+    for(let i=photoPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[photoPool[i],photoPool[j]]=[photoPool[j],photoPool[i]];}
+  }
+  return photoPool.pop();
+}
+function changeStripPhoto(idx) {
+  const slot=document.getElementById('strip'+idx); if(!slot)return;
+  const oldImg=slot.querySelector('img');
+  const newImg=document.createElement('img');
+  newImg.src='img/'+getNextPhoto()+'.jpg'; newImg.alt=''; newImg.className='hidden';
+  slot.appendChild(newImg);
+  requestAnimationFrame(()=>{newImg.classList.remove('hidden');newImg.classList.add('visible');if(oldImg){oldImg.classList.remove('visible');oldImg.classList.add('hidden');setTimeout(()=>{if(oldImg.parentNode)oldImg.parentNode.removeChild(oldImg);},1100);}});
+}
+function startCarousel() {
+  setInterval(()=>changeStripPhoto(0),3200);
+  setInterval(()=>changeStripPhoto(1),4100);
+  setInterval(()=>changeStripPhoto(2),5000);
+  setInterval(()=>changeStripPhoto(3),3700);
+  setInterval(()=>changeStripPhoto(4),4500);
+}
 
 /* ── ADMIN ── */
 const ADMIN_PASS = '20M4risun26';
