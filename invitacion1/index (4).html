@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gabo &amp; Miya · Boda 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --white: #ffffff;
+  --white-75: rgba(255,255,255,0.75);
+  --white-55: rgba(255,255,255,0.55);
+  --white-10: rgba(255,255,255,0.10);
+  --teal-darker: #1e4a57;
+  --header-h: 70px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: #3d7d8d;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── FONDO FIJO ── */
+.bg-fixed {
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url('img/Fondo.jpg');
+  background-size: 100% auto;        /* ancho completo, alto proporcional */
+  background-position: center top;
+  background-repeat: repeat-y;       /* repite verticalmente si la página es más larga */
+}
+.bg-fixed::after {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(20, 55, 65, 0.25);
+}
+
+/* ── HEADER FIJO ── */
+.fixed-header {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  display: flex; /* ── align-items: center; justify-content: center;── */
+  justify-content: flex-start; /* Alinear al inicio horizontal */
+  align-items: flex-start;     /* Alinear al inicio vertical */
+  z-index: 50;
+  background: rgba(30, 74, 87, 0.35);
+  backdrop-filter: blur(1px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.header-names{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  line-height:1;
+
+  margin-top:8px;
+}
+
+.top-name{
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight:300;
+  letter-spacing:0.08em;
+  color:var(--white);
+  align-items:left;
+
+}
+  
+.bottom-name{
+  font-size: clamp(30px, 6vw, 42px);
+  font-weight:300;
+  letter-spacing:0.08em;
+  color:var(--white);
+   align-items:center;
+}
+
+.amp{
+  font-size:18px;
+  opacity:0.8;
+  margin:2px 0;
+  color:var(--white);
+}
+/* ── PROGRESS DOTS ── */
+.progress-dots {
+  position: fixed; right: 1.1rem; top: 50%; transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 15px; z-index: 50;
+}
+.pdot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer; transition: all 0.3s; border: none; padding: 0;
+}
+.pdot.active { background: var(--white); height: 22px; border-radius: 4px; }
+
+/* ── CONTENIDO ── */
+.content {
+  position: relative; z-index: 1;
+  max-width: 480px; margin: 0 auto;
+  padding: 0 1.75rem;
+  padding-top: var(--);
+}
+
+/* ── SECCIONES ── */
+section {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 3rem 0;
+  position: relative;
+  text-align: center;
+}
+section + section { border-top: 1px solid rgba(255,255,255,0.1); }
+
+/* ── PORTADA ── */
+.tagline {
+  font-family: 'Cormorant SC', serif;
+  font-size: clamp(22px, 3.8vw, 22px);
+  color: var(--white);
+  letter-spacing: 0.01em; line-height: 1.5;
+  margin-bottom: 2.0rem;
+}
+.date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
+.date-col { text-align: center; }
+.date-col .lbl {
+  font-family: 'Cormorant SC', serif; font-size: 22px;
+  color: var(--white-55); letter-spacing: 0.14em; display: block; margin-bottom: 3px;
+}
+.date-col .val {
+  font-family: 'Cormorant SC', serif;
+  font-size: clamp(26px, 7vw, 38px);
+  color: var(--white); font-weight: 400; display: block; line-height: 1;
+}
+.venue {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: clamp(24px, 4.2vw, 20px); letter-spacing: 0.05em; margin-bottom: 0.4rem;
+}
+.address {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: clamp(22px, 3.2vw, 16px); letter-spacing: 0.03em;
+  line-height: 1.7; margin-bottom: 2rem;
+}
+.guest-box {
+  background: var(--white-10);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 12px; padding: 1.25rem 1.75rem;
+  width: 100%; text-align: center; backdrop-filter: blur(3px);
+}
+.guest-box .gname {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 26px; font-weight: 400; margin-bottom: 0.25rem;
+}
+.guest-box .gseats {
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 26px; letter-spacing: 0.07em;
+}
+
+/* ── ITINERARIO ── */
+.itinerary { width: 100%; max-width: 320px; }
+.it-item {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1.1rem 0; position: relative;
+}
+.it-item:not(:last-child)::after {
+  content: ''; position: absolute;
+  left: 50%; top: calc(50% + 38px);
+  width: 1px; height: calc(100% - 38px);
+  border-left: 1px dashed rgba(255,255,255,0.22);
+}
+.it-icon-wrap {
+  width: 72px; height: 72px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--white-10);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%; backdrop-filter: blur(4px);
+  margin-bottom: 0.6rem;
+}
+.it-icon-wrap img {
+  width: 40px; height: 40px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: 0.9;
+}
+.it-name {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 24px; letter-spacing: 0.06em; display: block; line-height: 1.2;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.it-time {
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 22px; letter-spacing: 0.05em; display: block; margin-top: 3px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+/* ── VESTIMENTA ── */
+.dress-title {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 22px; letter-spacing: 0.07em; margin-bottom: 0.3rem;
+}
+.dress-subtitle {
+  font-family: 'Cormorant SC', serif; color: var(--white-75);
+  font-size: 32px; letter-spacing: 0.04em; margin-bottom: 0.5rem;
+}
+.dress-icons { display: flex; gap: 3.5rem; justify-content: center; margin: 1.8rem 0; }
+.dress-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; }
+.dress-icon-wrap img {
+  width: 80px; height: 80px; object-fit: contain;
+  filter: brightness(0) invert(1); opacity: 0.9;
+}
+.dress-lbl {
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 20px; letter-spacing: 0.1em;
+}
+.dress-note {
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 20px; letter-spacing: 0.08em; margin-top: 0.5rem;
+}
+.divider { width: 60px; height: 1px; background: rgba(255,255,255,0.22); margin: 1.5rem auto; }
+
+/* ── RSVP ── */
+.rsvp-title {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: 28px; margin-bottom: 0.3rem;
+}
+.rsvp-sub {
+  font-family: 'Cormorant SC', serif; color: var(--white-55);
+  font-size: 20px; letter-spacing: 0.07em; margin-bottom: 1.8rem;
+}
+.rsvp-lbl {
+  font-family: 'Cormorant SC', serif; color: var(--white-75);
+  font-size: 18px; letter-spacing: 0.08em; display: block;
+  margin-bottom: 0.4rem; text-align: left;
+}
+.rsvp-input {
+  width: 100%; background: var(--white-10);
+  border: 1px solid rgba(255,255,255,0.28); border-radius: 10px;
+  padding: 0.75rem 1rem; color: var(--white);
+  font-family: 'Cormorant Garamond', serif; font-size: 17px;
+  margin-bottom: 1.2rem; outline: none; backdrop-filter: blur(4px);
+  transition: border-color 0.2s, background 0.2s;
+}
+.rsvp-input::placeholder { color: rgba(255,255,255,0.3); }
+.rsvp-input:focus { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.16); }
+.attend-btns { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; }
+.attend-btn {
+  flex: 1; padding: 0.85rem;
+  font-family: 'Cormorant SC', serif; font-size: 20px; letter-spacing: 0.08em;
+  border-radius: 10px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: transparent; color: var(--white-75); transition: all 0.2s;
+}
+.attend-btn.sel-yes { background: rgba(255,255,255,0.88); color: var(--teal-darker); border-color: transparent; }
+.attend-btn.sel-no  { background: rgba(220,80,80,0.45);  color: var(--white); border-color: transparent; }
+.counter-wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--white-10); border: 1px solid rgba(255,255,255,0.28);
+  border-radius: 10px; padding: 0.5rem 1rem; margin-bottom: 1.2rem;
+  backdrop-filter: blur(4px);
+}
+.counter-val {
+  font-family: 'Cormorant SC', serif; color: var(--white); font-size: 28px; font-weight: 400;
+}
+.counter-btn {
+  background: rgba(255,255,255,0.18); border: none; color: var(--white);
+  width: 38px; height: 38px; border-radius: 50%; font-size: 24px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.counter-btn:hover { background: rgba(255,255,255,0.32); }
+.rsvp-submit {
+  width: 100%; padding: 1rem;
+  font-family: 'Cormorant SC', serif; font-size: 18px; letter-spacing: 0.1em;
+  background: rgba(255,255,255,0.88); color: var(--teal-darker);
+  border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s;
+}
+.rsvp-submit:hover { background: var(--white); }
+.rsvp-submit:disabled { opacity: 0.6; cursor: default; }
+
+/* ── GRACIAS ── */
+.thanks-icon { font-size: 60px; margin-bottom: 1rem; }
+.thanks-title {
+  font-family: 'Cormorant SC', serif; color: var(--white); font-size: 34px; margin-bottom: 0.6rem;
+}
+.thanks-text {
+  font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: 24px; line-height: 1.7;
+}
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  background: rgba(20,55,65,0.95); color: var(--white);
+  border-radius: 10px; padding: 0.75rem 1.5rem;
+  font-family: 'Cormorant SC', serif; font-size: 15px;
+  z-index: 200; display: none; white-space: nowrap;
+  backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ── ADMIN PANEL ── */
+#view-admin { display:none; min-height:100vh; background:rgba(20,55,65,0.97); padding-top:var(--header-h); }
+.admin-body { padding:1.2rem; max-width:900px; margin:0 auto; }
+.admin-tabs { display:flex; gap:0.5rem; margin-bottom:1.2rem; }
+.admin-tab { padding:0.5rem 1rem; border-radius:8px; font-size:13px; font-weight:500; cursor:pointer; background:transparent; border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.6); transition:all 0.2s; font-family:inherit; }
+.admin-tab.active { background:rgba(255,255,255,0.15); color:var(--white); border-color:rgba(255,255,255,0.4); }
+.tab-content { display:none; } .tab-content.active { display:block; }
+.metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:10px; margin-bottom:1.2rem; }
+.metric { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:0.9rem; text-align:center; }
+.metric-val { font-size:26px; font-weight:500; color:var(--white); display:block; font-family:"Cormorant SC",serif; }
+.metric-lbl { font-size:11px; color:rgba(255,255,255,0.5); display:block; margin-top:2px; }
+.m-conf .metric-val{color:#4dd4a0;} .m-pend .metric-val{color:#f5c066;} .m-dec .metric-val{color:#f07070;}
+.cap-wrap { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:1rem 1.2rem; margin-bottom:1.2rem; }
+.cap-hdr { display:flex; justify-content:space-between; font-size:12px; color:rgba(255,255,255,0.5); margin-bottom:0.5rem; font-family:"Cormorant SC",serif; }
+.cap-bar { height:8px; background:rgba(255,255,255,0.1); border-radius:99px; overflow:hidden; }
+.cap-fill { height:100%; background:rgba(100,200,180,0.7); border-radius:99px; transition:width 0.5s; }
+.g-hdr { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.9rem; flex-wrap:wrap; gap:0.6rem; }
+.g-title { font-size:14px; font-weight:500; color:var(--white); font-family:"Cormorant SC",serif; }
+.g-actions { display:flex; gap:0.4rem; }
+.g-btn { font-size:12px; padding:0.4rem 0.8rem; border-radius:8px; cursor:pointer; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); transition:all 0.2s; display:flex; align-items:center; gap:4px; font-family:inherit; }
+.g-btn:hover { background:rgba(255,255,255,0.15); }
+.g-btn.primary { background:rgba(100,200,180,0.25); border-color:rgba(100,200,180,0.5); color:var(--white); }
+.g-search input { width:100%; padding:0.5rem 0.9rem; font-size:13px; border:1px solid rgba(255,255,255,0.2); border-radius:8px; background:rgba(255,255,255,0.08); color:var(--white); outline:none; font-family:inherit; margin-bottom:0.9rem; }
+.g-search input::placeholder { color:rgba(255,255,255,0.3); }
+.tbl-wrap { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; overflow:auto; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { padding:0.6rem 0.9rem; text-align:left; font-size:11px; color:rgba(255,255,255,0.45); border-bottom:1px solid rgba(255,255,255,0.1); font-family:"Cormorant SC",serif; letter-spacing:0.06em; }
+td { padding:0.65rem 0.9rem; border-bottom:1px solid rgba(255,255,255,0.07); color:rgba(255,255,255,0.85); font-family:"Cormorant SC",serif; }
+tbody tr:last-child td { border-bottom:none; }
+.sbadge { font-size:10px; padding:2px 9px; border-radius:20px; font-weight:500; }
+.s-confirmed{background:rgba(100,200,180,0.2);color:#4dd4a0;} .s-pending{background:rgba(245,192,102,0.2);color:#f5c066;} .s-declined{background:rgba(240,112,112,0.2);color:#f07070;}
+.row-acts { display:flex; gap:5px; }
+.rbtn { font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer; border:1px solid rgba(255,255,255,0.15); background:transparent; color:rgba(255,255,255,0.6); transition:all 0.2s; }
+.rbtn:hover { background:rgba(255,255,255,0.1); color:var(--white); }
+.rbtn.wa { color:#4dd4a0; border-color:rgba(100,200,180,0.3); }
+.rbtn.del { color:#f07070; border-color:rgba(240,112,112,0.3); }
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:200; padding:1rem; }
+.modal-overlay.open { display:flex; }
+.modal-card { background:#1a3a45; border:1px solid rgba(255,255,255,0.15); border-radius:16px; padding:1.75rem; width:100%; max-width:400px; }
+.modal-title { font-size:16px; font-weight:500; color:var(--white); margin-bottom:1.2rem; font-family:"Cormorant SC",serif; }
+.modal-lbl { font-size:12px; color:rgba(255,255,255,0.5); display:block; margin-bottom:0.35rem; font-family:"Cormorant SC",serif; letter-spacing:0.06em; }
+.modal-input { width:100%; font-size:14px; padding:0.6rem 0.9rem; border:1px solid rgba(255,255,255,0.2); border-radius:8px; background:rgba(255,255,255,0.08); color:var(--white); margin-bottom:1rem; outline:none; font-family:inherit; }
+.modal-input:focus { border-color:rgba(100,200,180,0.6); }
+.modal-footer { display:flex; gap:0.6rem; justify-content:flex-end; margin-top:0.5rem; }
+.set-card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:1.1rem 1.3rem; margin-bottom:0.9rem; }
+.set-title { font-size:13px; font-weight:500; color:var(--white); margin-bottom:0.8rem; font-family:"Cormorant SC",serif; }
+.set-lbl { font-size:12px; color:rgba(255,255,255,0.5); }
+#admin-login { min-height:100vh; display:flex; align-items:center; justify-content:center; }
+.admin-login-card { background:rgba(20,55,65,0.95); border:1px solid rgba(255,255,255,0.15); border-radius:20px; padding:2.5rem 2rem; width:320px; text-align:center; backdrop-filter:blur(12px); }
+.admin-login-title { font-family:"Cormorant SC",serif; color:var(--white); font-size:22px; margin-bottom:0.25rem; }
+.admin-login-sub { font-family:"Cormorant SC",serif; color:rgba(255,255,255,0.5); font-size:14px; margin-bottom:1.8rem; }
+.admin-login-inp { width:100%; padding:0.7rem 1rem; font-size:15px; border:1px solid rgba(255,255,255,0.2); border-radius:10px; background:rgba(255,255,255,0.08); color:var(--white); outline:none; font-family:inherit; margin-bottom:0.6rem; }
+.admin-login-inp:focus { border-color:rgba(100,200,180,0.6); }
+.admin-login-btn { width:100%; padding:0.75rem; background:rgba(100,200,180,0.25); color:var(--white); border:1px solid rgba(100,200,180,0.4); border-radius:10px; font-size:15px; cursor:pointer; font-family:inherit; transition:background 0.2s; margin-top:0.3rem; }
+.admin-login-btn:hover { background:rgba(100,200,180,0.4); }
+.admin-err { font-size:13px; color:#f07070; margin-top:-0.4rem; margin-bottom:0.6rem; display:none; }
+.admin-back { font-size:12px; color:rgba(255,255,255,0.4); margin-top:1rem; cursor:pointer; }
+.admin-back:hover { color:rgba(255,255,255,0.7); }
+
+/* ── FADE IN ── */
+.fade-in {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+
+/* ── COUNTDOWN ── */
+
+.countdown-box{
+  margin: 2rem 0;
+  text-align:center;
+}
+
+.countdown-title{
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  font-size:28px;
+  margin-bottom:1rem;
+}
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.cd-item{
+  min-width:72px;
+  padding:12px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(4px);
+}
+
+.cd-item span{
+  display:block;
+  font-family:'Cormorant SC', serif;
+  color:var(--white);
+  font-size:32px;
+  line-height:1;
+}
+
+.cd-item small{
+  font-family:'Cormorant SC', serif;
+  color:var(--white-55);
+  font-size:14px;
+  letter-spacing:0.08em;
+}
+  
+</style>
+</head>
+<body>
+
+<div class="bg-fixed"></div>
+
+<!-- HEADER FIJO -->
+<header class="fixed-header">
+<p class="header-names">
+  <div class="line1">
+    <span class="top-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GABO</span>
+    <span class="amp">&amp;</span>
+    <br> <br> <br>
+  </div>
+  <div class="line2">
+    <br>
+    <span class="bottom-name">MIYA</span>
+  </div>
+</p>
+</header>
+
+  
+<!-- PROGRESS DOTS -->
+<div class="progress-dots">
+  <button class="pdot active" onclick="scrollToSection(0)" title="Portada"></button>
+  <button class="pdot" onclick="scrollToSection(1)" title="Itinerario"></button>
+  <button class="pdot" onclick="scrollToSection(2)" title="Vestimenta"></button>
+  <button class="pdot" onclick="scrollToSection(3)" title="Confirmación"></button>
+</div>
+
+<div class="content">
+  <!-- ═══ 1: PORTADA ═══ -->
+  <section id="s0">
+      <!-- Botón música -->
+<div id="music-toggle">🔊</div>
+
+  <!-- Música oculta -->
+<iframe id="music" width="0" height="0" frameborder="0" allow="autoplay"></iframe>
+
+    <p class="tagline fade-in">En compañía de nuestras familias,<br>unimos nuestros destinos</p>
+    <div class="date-row fade-in">
+      <div class="date-col"><span class="lbl">Viernes</span><span class="val">7</span></div>
+      <div class="date-col"><span class="lbl">Agosto</span><span class="val">2026</span></div>
+      <div class="date-col"><span class="lbl">Hora</span><span class="val">19:30</span></div>
+    </div>
+    <p class="venue fade-in">Centro Cultural y Social Veracruzano</p>
+    <p class="address fade-in">Av. Miguel Ángel de Quevedo 687,<br>San Francisco, Coyoacán,<br>04320, Ciudad de México</p>
+    <div class="guest-box fade-in">
+      <p class="gname" id="inv-gname">Cargando...</p>
+      <p class="gseats" id="inv-gseats"></p>
+    </div>
+  </section>
+
+  <!-- ═══ 2: ITINERARIO ═══ -->
+  <section id="s1">
+    <div class="itinerary fade-in">
+
+          
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Recepcion.png" alt="Recepción"></div>
+        <span class="it-name">Recepción</span><span class="it-time">19:30</span>
+      </div>    
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Ceremonia.png" alt="Ceremonia"></div>
+        <span class="it-name">Ceremonia Civil</span><span class="it-time">20:00</span>
+      </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/cena.png" alt="Cena"></div>
+        <span class="it-name">Cena</span><span class="it-time">21:00</span>
+      </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/PrimerBaile.png" alt="Primer Baile"></div>
+        <span class="it-name">Primer Baile</span><span class="it-time">22:00</span>
+      </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Brindis.png" alt="Brindis"></div>
+        <span class="it-name">Brindis y Pastel</span><span class="it-time">22:30</span>
+      </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Baile.png" alt="Baile"></div>
+        <span class="it-name">Baile</span><span class="it-time"></span>
+      </div>
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="img/Despedida.png" alt="Despedida"></div>
+        <span class="it-name">Despedida</span><span class="it-time">02:30</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ 3: VESTIMENTA ═══ -->
+  <section id="s2">
+    <p class="dress-title fade-in">Código de Vestimenta</p>
+    <p class="dress-subtitle fade-in">Formal Casual</p>
+    <div class="dress-icons fade-in">
+      <div class="dress-icon-wrap">
+        <img src="img/CodigoMujer.png" alt="Damas">
+        <span class="dress-lbl">Damas</span>
+      </div>
+      <div class="dress-icon-wrap">
+        <img src="img/CodigoHombre.png" alt="Caballeros">
+        <span class="dress-lbl">Caballeros</span>
+      </div>
+    </div>
+    <div class="divider fade-in"></div>
+    <p class="dress-note fade-in">Celebración solo para adultos</p>
+  </section>
+
+  <!-- ═══ 4: RSVP ═══ -->
+  <section id="s3">
+    <div id="rsvp-form-wrap" style="width:100%">
+      <p class="rsvp-title fade-in">Confirmar Asistencia</p>
+      <p class="rsvp-sub fade-in" id="rsvp-sub-lbl"></p>
+      <div class="fade-in" style="width:100%;text-align:left">
+        <label class="rsvp-lbl">¿Asistirás?</label>
+        <div class="attend-btns">
+          <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
+          <button class="attend-btn" id="btn-no"  onclick="selectAttend('no')">No podré ir</button>
+        </div>
+        <div id="count-section">
+          <label class="rsvp-lbl">¿Cuántos asistirán? (máx. <span id="max-lbl">0</span>)</label>
+          <div class="counter-wrap">
+            <button class="counter-btn" onclick="chgCount(-1)">−</button>
+            <span class="counter-val" id="cnt-val">1</span>
+            <button class="counter-btn" onclick="chgCount(1)">+</button>
+          </div>
+        </div>
+        <label class="rsvp-lbl">Mensaje para los novios (opcional)</label>
+        <textarea class="rsvp-input" rows="3" id="rsvp-msg" placeholder="Un mensaje de felicitación..."></textarea>
+        <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
+      </div>
+    </div>
+    <div id="thanks-wrap" style="display:none;width:100%;text-align:center">
+      <div class="thanks-icon">💍</div>
+      <p class="thanks-title">¡Gracias!</p>
+      <p class="thanks-text" id="thanks-txt"></p>        
+    </div>
+<div class="countdown-box fade-in">
+  <p class="countdown-title">Faltan</p>
+
+  <div id="countdown" class="countdown">
+    <div class="cd-item">
+      <span id="cd-days">0</span>
+      <small>Días</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-hours">0</span>
+      <small>Horas</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-minutes">0</span>
+      <small>Min</small>
+    </div>
+
+    <div class="cd-item">
+      <span id="cd-seconds">0</span>
+      <small>Seg</small>
+    </div>
+  </div>
+</div>
+    
+    
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══ ADMIN LOGIN ═══ -->
+<div id="admin-login" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(15,40,50,0.97);align-items:center;justify-content:center;">
+  <div class="admin-login-card">
+    <div style="font-size:28px;margin-bottom:0.5rem">🔐</div>
+    <p class="admin-login-title">Panel Admin</p>
+    <p class="admin-login-sub">Gabo &amp; Miya · Boda 2026</p>
+    <input type="password" class="admin-login-inp" id="admin-pass" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doAdminLogin()">
+    <p class="admin-err" id="admin-err">Contraseña incorrecta</p>
+    <button class="admin-login-btn" onclick="doAdminLogin()">Entrar</button>
+    <p class="admin-back" onclick="hideAdmin()">← Volver a la invitación</p>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PANEL ═══ -->
+<div id="view-admin" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(15,40,50,0.97);overflow-y:auto;">
+  <div style="padding:1rem 1.2rem;background:rgba(20,55,65,0.9);border-bottom:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;">
+    <span style="font-family:'Cormorant SC',serif;color:var(--white);font-size:18px">Gabo &amp; Miya · Admin</span>
+    <button onclick="hideAdmin()" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;font-size:13px;font-family:inherit">✕ Salir</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchAdminTab('overview')">Resumen</button>
+      <button class="admin-tab" onclick="switchAdminTab('guests')">Invitados</button>
+      <button class="admin-tab" onclick="switchAdminTab('settings')">Config</button>
+    </div>
+    <div class="tab-content active" id="atab-overview">
+      <div class="metrics" id="a-metrics"></div>
+      <div class="cap-wrap">
+        <div class="cap-hdr"><span>Ocupación</span><span id="a-cap-lbl">0/150</span></div>
+        <div class="cap-bar"><div class="cap-fill" id="a-cap-fill" style="width:0%"></div></div>
+      </div>
+      <div class="tbl-wrap">
+        <table><thead><tr><th>Familia</th><th>Asignados</th><th>Confirmados</th><th>Estado</th></tr></thead>
+        <tbody id="a-overview-tbody"></tbody></table>
+      </div>
+    </div>
+    <div class="tab-content" id="atab-guests">
+      <div class="g-hdr">
+        <span class="g-title">Invitados</span>
+        <div class="g-actions">
+          <button class="g-btn" onclick="exportCSV()">⬇ CSV</button>
+          <button class="g-btn" onclick="openImportModal()">⬆ Importar</button>
+          <button class="g-btn" onclick="openImportModal()">⬆ Importar</button>
+          <button class="g-btn primary" onclick="openAddModal()">+ Agregar</button>
+        </div>
+      </div>
+      <div class="g-search"><input placeholder="Buscar..." oninput="filterAdminGuests(this.value)" id="a-search"></div>
+      <div class="tbl-wrap">
+        <table><thead><tr><th>Familia</th><th>Tel</th><th>Asig</th><th>Conf</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="a-guests-tbody"></tbody></table>
+      </div>
+    </div>
+    <div class="tab-content" id="atab-settings">
+      <div class="set-card">
+        <p class="set-title">Cupo máximo</p>
+        <div style="display:flex;align-items:center;gap:8px">
+          <input type="number" id="a-cap-inp" value="150" min="1" style="width:80px;text-align:center;padding:0.4rem;border:1px solid rgba(255,255,255,0.2);border-radius:6px;background:rgba(255,255,255,0.08);color:var(--white);font-family:inherit">
+          <button class="g-btn primary" onclick="saveAdminCap()">Guardar</button>
+        </div>
+      </div>
+      <div class="set-card">
+        <p class="set-title">Plantilla WhatsApp</p>
+        <p class="set-lbl" style="margin-bottom:0.5rem">Usa {ID} para el link del invitado</p>
+        <textarea id="a-wa-tpl" style="width:100%;font-size:12px;min-height:80px;padding:0.5rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:var(--white);font-family:inherit;resize:vertical"></textarea>
+        <button class="g-btn primary" style="margin-top:0.5rem" onclick="saveWATpl()">✓ Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT CSV MODAL -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal-card">
+    <p class="modal-title">⬆ Importar invitados CSV</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:1rem">El CSV debe tener columnas: nombre, telefono, lugares<br>Primera fila = encabezados, se ignora.</p>
+    <label class="modal-lbl">Selecciona tu archivo CSV</label>
+    <input type="file" id="csv-file" accept=".csv" style="width:100%;padding:0.5rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:var(--white);font-family:inherit;margin-bottom:0.5rem">
+    <div id="csv-preview" style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:1rem;min-height:20px"></div>
+    <div class="modal-footer">
+      <button class="g-btn" onclick="closeImportModal()">Cancelar</button>
+      <button class="g-btn primary" onclick="importCSV()">Importar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- IMPORT CSV MODAL -->
+<div class="modal-overlay" id="import-modal">
+  <div class="modal-card">
+    <p class="modal-title">⬆ Importar invitados CSV</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:1rem">Columnas requeridas: <strong>nombre, telefono, lugares</strong><br>La primera fila (encabezados) se ignora.</p>
+    <label class="modal-lbl">Selecciona tu archivo CSV</label>
+    <input type="file" id="csv-file" accept=".csv" style="width:100%;padding:0.5rem;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.08);color:var(--white);font-family:inherit;margin-bottom:0.5rem">
+    <div id="csv-preview" style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:1rem;min-height:20px"></div>
+    <div class="modal-footer">
+      <button class="g-btn" onclick="closeImportModal()">Cancelar</button>
+      <button class="g-btn primary" onclick="importCSV()">Importar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD GUEST MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal-card">
+    <p class="modal-title">+ Agregar invitado</p>
+    <label class="modal-lbl">Nombre de familia</label>
+    <input class="modal-input" id="new-name" placeholder="Ej: Familia Martínez">
+    <label class="modal-lbl">Teléfono WhatsApp</label>
+    <input class="modal-input" id="new-phone" placeholder="521XXXXXXXXXX">
+    <label class="modal-lbl">Lugares asignados</label>
+    <input class="modal-input" type="number" id="new-seats" value="2" min="1" max="30">
+    <div class="modal-footer">
+      <button class="g-btn" onclick="closeAddModal()">Cancelar</button>
+      <button class="g-btn primary" onclick="addGuest()">Agregar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
+const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
+const ID_EVENT = 1;
+
+let activeGuest = null, attendChoice = null, guestCount = 1, maxSeats = 2;
+let currentSection = 0, autoScrollTimer = null, userScrolled = false;
+const sections = ['s0','s1','s2','s3'];
+
+function scrollToSection(idx) {
+  if (idx < 0 || idx >= sections.length) return;
+  currentSection = idx;
+  document.getElementById(sections[idx]).scrollIntoView({ behavior: 'smooth' });
+  updateDots();
+}
+
+function updateDots() {
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === currentSection));
+}
+
+function startAutoScroll() {
+  autoScrollTimer = setInterval(() => {
+    if (userScrolled) { clearInterval(autoScrollTimer); return; }
+    if (currentSection < sections.length - 1) {
+      currentSection++;
+      scrollToSection(currentSection);
+    } else {
+      clearInterval(autoScrollTimer);
+    }
+  }, 4500);
+}
+
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  if (autoScrollTimer) { userScrolled = true; }
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    sections.forEach((id,i) => {
+      const rect = document.getElementById(id).getBoundingClientRect();
+      if (rect.top >= -100 && rect.top < window.innerHeight / 2) {
+        currentSection = i; updateDots();
+      }
+    });
+  }, 80);
+}, { passive: true });
+
+async function api(path, opts = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=representation', ...(opts.headers||{}) }, ...opts
+  });
+  if (!res.ok) { throw new Error(await res.text()); }
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+
+function showToast(msg, dur=2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(t._t); t._t = setTimeout(() => t.style.display='none', dur);
+}
+
+function setGuestUI(g) {
+  document.getElementById('inv-gname').textContent   = g.name;
+  document.getElementById('inv-gseats').textContent  = 'Lugares asignados: ' + g.seats;
+  document.getElementById('rsvp-sub-lbl').textContent = g.name + ' · ' + g.seats + ' lugar' + (g.seats!==1?'es':'') + ' asignado' + (g.seats!==1?'s':'');
+  document.getElementById('max-lbl').textContent = g.seats;
+  maxSeats = g.seats;
+}
+
+function selectAttend(c) {
+  attendChoice = c;
+  document.getElementById('btn-yes').className = 'attend-btn'+(c==='yes'?' sel-yes':'');
+  document.getElementById('btn-no').className  = 'attend-btn'+(c==='no'?' sel-no':'');
+  document.getElementById('count-section').style.display = c==='yes'?'block':'none';
+}
+
+function chgCount(d) {
+  guestCount = Math.max(1, Math.min(maxSeats, guestCount+d));
+  document.getElementById('cnt-val').textContent = guestCount;
+}
+
+async function submitRSVP() {
+  if (!attendChoice) { showToast('Por favor indica si asistirás'); return; }
+  if (!activeGuest)  { showToast('No se pudo identificar al invitado'); return; }
+  const btn = document.getElementById('rsvp-btn');
+  btn.disabled = true; btn.textContent = 'Guardando...';
+  try {
+    await api('guests?id=eq.'+activeGuest.id+'&id_event=eq.'+ID_EVENT, {
+      method:'PATCH', body:JSON.stringify({
+        status: attendChoice==='yes'?'confirmed':'declined',
+        confirmed: attendChoice==='yes'?guestCount:0,
+        msg: document.getElementById('rsvp-msg').value
+      })
+    });
+    document.getElementById('thanks-txt').innerHTML = attendChoice==='yes'
+      ? 'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
+      : 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
+    document.getElementById('rsvp-form-wrap').style.display = 'none';
+    document.getElementById('thanks-wrap').style.display    = 'block';
+  } catch(e) {
+    btn.disabled=false; btn.textContent='Confirmar asistencia';
+    showToast('Error: '+e.message);
+  }
+}
+
+const fadeObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); fadeObs.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => fadeObs.observe(el));
+
+/* ── CARRUSEL ── */
+const TOTAL_PHOTOS = 84;
+let photoPool = [];
+function getNextPhoto() {
+  if (!photoPool.length) {
+    photoPool = Array.from({length:TOTAL_PHOTOS},(_,i)=>i+1);
+    for(let i=photoPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[photoPool[i],photoPool[j]]=[photoPool[j],photoPool[i]];}
+  }
+  return photoPool.pop();
+}
+function changeStripPhoto(idx) {
+  const slot=document.getElementById('strip'+idx); if(!slot)return;
+  const oldImg=slot.querySelector('img');
+  const newImg=document.createElement('img');
+  newImg.src='img/'+getNextPhoto()+'.jpg'; newImg.alt=''; newImg.className='hidden';
+  slot.appendChild(newImg);
+  requestAnimationFrame(()=>{newImg.classList.remove('hidden');newImg.classList.add('visible');if(oldImg){oldImg.classList.remove('visible');oldImg.classList.add('hidden');setTimeout(()=>{if(oldImg.parentNode)oldImg.parentNode.removeChild(oldImg);},1100);}});
+}
+function startCarousel() {
+  setInterval(()=>changeStripPhoto(0),3200);
+  setInterval(()=>changeStripPhoto(1),4100);
+  setInterval(()=>changeStripPhoto(2),5000);
+  setInterval(()=>changeStripPhoto(3),3700);
+  setInterval(()=>changeStripPhoto(4),4500);
+}
+
+/* ── ADMIN ── */
+const ADMIN_PASS = '20M4risun26';
+let adminGuests=[], adminMaxCap=150, adminWaTpl='', adminFilterStr='';
+
+function showAdminLogin() {
+  document.getElementById('admin-login').style.display='flex';
+  document.getElementById('admin-err').style.display='none';
+  document.getElementById('admin-pass').value='';
+}
+function hideAdmin() {
+  document.getElementById('admin-login').style.display='none';
+  document.getElementById('view-admin').style.display='none';
+}
+function doAdminLogin() {
+  if(document.getElementById('admin-pass').value===ADMIN_PASS) {
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('view-admin').style.display='block';
+    initAdminPanel();
+  } else { document.getElementById('admin-err').style.display='block'; }
+}
+async function initAdminPanel() {
+  try {
+    const cfg=await api('event_config?id_event=eq.'+ID_EVENT);
+    if(cfg&&cfg[0]){adminMaxCap=cfg[0].max_capacity||150;adminWaTpl=cfg[0].wa_template||'';}
+    document.getElementById('a-cap-inp').value=adminMaxCap;
+    document.getElementById('a-wa-tpl').value=adminWaTpl;
+  } catch(e){}
+  adminGuests=await api('guests?id_event=eq.'+ID_EVENT+'&order=created_at.asc')||[];
+  renderAdminAll();
+}
+function switchAdminTab(t) {
+  ['overview','guests','settings'].forEach((n,i)=>document.querySelectorAll('.admin-tab')[i].classList.toggle('active',n===t));
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.getElementById('atab-'+t).classList.add('active');
+}
+function renderAdminAll(){renderAdminMetrics();renderAdminOverview();renderAdminGuests(adminFilterStr);}
+function getAdminStats(){
+  const confirmed=adminGuests.filter(g=>g.status==='confirmed').reduce((s,g)=>s+(g.confirmed||0),0);
+  return{confirmed,pending:adminGuests.filter(g=>g.status==='pending').length,declined:adminGuests.filter(g=>g.status==='declined').length,seats:adminGuests.reduce((s,g)=>s+(g.seats||0),0),total:adminGuests.length};
+}
+function renderAdminMetrics(){
+  const s=getAdminStats();
+  document.getElementById('a-metrics').innerHTML=`<div class="metric"><span class="metric-val">${s.total}</span><span class="metric-lbl">Familias</span></div><div class="metric"><span class="metric-val">${s.seats}</span><span class="metric-lbl">Asignados</span></div><div class="metric m-conf"><span class="metric-val">${s.confirmed}</span><span class="metric-lbl">Confirmados</span></div><div class="metric m-pend"><span class="metric-val">${s.pending}</span><span class="metric-lbl">Pendientes</span></div><div class="metric m-dec"><span class="metric-val">${s.declined}</span><span class="metric-lbl">Declinaron</span></div>`;
+  const pct=adminMaxCap>0?Math.round((s.confirmed/adminMaxCap)*100):0;
+  document.getElementById('a-cap-lbl').textContent=s.confirmed+'/'+adminMaxCap;
+  document.getElementById('a-cap-fill').style.width=Math.min(pct,100)+'%';
+}
+function sbadge(s){if(s==='confirmed')return'<span class="sbadge s-confirmed">Confirmado</span>';if(s==='declined')return'<span class="sbadge s-declined">Declinó</span>';return'<span class="sbadge s-pending">Pendiente</span>';}
+function renderAdminOverview(){document.getElementById('a-overview-tbody').innerHTML=adminGuests.length?adminGuests.map(g=>`<tr><td>${g.name}</td><td>${g.seats}</td><td>${g.status==='confirmed'?g.confirmed:'—'}</td><td>${sbadge(g.status)}</td></tr>`).join(''):'<tr><td colspan="4" style="text-align:center;opacity:0.4;padding:2rem">Sin invitados</td></tr>';}
+function renderAdminGuests(f=''){const list=f?adminGuests.filter(g=>g.name.toLowerCase().includes(f.toLowerCase())):adminGuests;document.getElementById('a-guests-tbody').innerHTML=list.length?list.map(g=>`<tr><td><strong>${g.name}</strong></td><td style="font-size:11px;opacity:0.6">${g.phone||'—'}</td><td>${g.seats}</td><td>${g.status==='confirmed'?g.confirmed:'—'}</td><td>${sbadge(g.status)}</td><td><div class="row-acts"><button class="rbtn wa" onclick="sendWA('${g.id}')">WA</button><button class="rbtn del" onclick="deleteGuest('${g.id}')">✕</button></div></td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;opacity:0.4;padding:2rem">Sin resultados</td></tr>';}
+function filterAdminGuests(v){adminFilterStr=v;renderAdminGuests(v);}
+function openAddModal(){document.getElementById('add-modal').classList.add('open');}
+function closeAddModal(){document.getElementById('add-modal').classList.remove('open');}
+async function addGuest(){
+  const name=document.getElementById('new-name').value.trim();
+  const phone=document.getElementById('new-phone').value.trim();
+  const seats=parseInt(document.getElementById('new-seats').value)||2;
+  if(!name){showToast('Escribe el nombre');return;}
+  try{const res=await api('guests',{method:'POST',body:JSON.stringify({name,phone,seats,confirmed:0,status:'pending',msg:'',id_event:ID_EVENT})});if(res&&res[0])adminGuests.push(res[0]);closeAddModal();['new-name','new-phone'].forEach(id=>document.getElementById(id).value='');document.getElementById('new-seats').value='2';renderAdminAll();showToast('✓ '+name+' agregado');}catch(e){showToast('Error: '+e.message);}
+}
+async function deleteGuest(id){
+  if(!confirm('¿Eliminar?'))return;
+  try{await api('guests?id=eq.'+id+'&id_event=eq.'+ID_EVENT,{method:'DELETE'});adminGuests=adminGuests.filter(g=>g.id!==id);renderAdminAll();showToast('Eliminado');}catch(e){showToast('Error: '+e.message);}
+}
+function sendWA(id){const g=adminGuests.find(x=>x.id===id);if(!g||!g.phone){showToast('Sin teléfono');return;}const tpl=document.getElementById('a-wa-tpl').value||adminWaTpl;window.open('https://wa.me/'+g.phone+'?text='+encodeURIComponent(tpl.replace('{ID}',id)),'_blank');}
+async function saveAdminCap(){const v=parseInt(document.getElementById('a-cap-inp').value);if(v>0){adminMaxCap=v;await api('event_config?id_event=eq.'+ID_EVENT,{method:'PATCH',body:JSON.stringify({max_capacity:v})});renderAdminMetrics();showToast('✓ Cupo actualizado');}}
+async function saveWATpl(){adminWaTpl=document.getElementById('a-wa-tpl').value;await api('event_config?id_event=eq.'+ID_EVENT,{method:'PATCH',body:JSON.stringify({wa_template:adminWaTpl})});showToast('✓ Guardado');}
+function exportCSV(){const rows=[['Familia','Teléfono','Asignados','Confirmados','Estado','Mensaje']];adminGuests.forEach(g=>rows.push([g.name,g.phone||'',g.seats,g.confirmed||0,g.status,g.msg||'']));const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='invitados.csv';a.click();showToast('✓ CSV descargado');}
+
+(async () => {
+  const params = new URLSearchParams(window.location.search);
+  const gid = params.get('id');
+  const isAdmin = params.get('admin') === '1';
+
+  if (isAdmin) {
+    showAdminLogin();
+    document.getElementById('admin-pass').addEventListener('keydown', e => { if(e.key==='Enter') doAdminLogin(); });
+  } else if (gid) {
+    try {
+      const res = await api('guests?id=eq.'+gid+'&id_event=eq.'+ID_EVENT);
+      if (res && res[0]) { activeGuest = res[0]; setGuestUI(res[0]); }
+      else { document.getElementById('inv-gname').textContent = 'Invitado no encontrado'; }
+    } catch(e) { document.getElementById('inv-gname').textContent = 'Error al cargar'; }
+  } else {
+    document.getElementById('inv-gname').textContent  = 'Bienvenido';
+    document.getElementById('inv-gseats').textContent = '';
+    document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
+  }
+  startCarousel();
+  setTimeout(startAutoScroll, 3500);
+})();
+  
+    /* ---------------------------
+     Config (modifica si necesitas)
+    ----------------------------*/
+    const YT_ID = "suHvGQYTAG0";
+    const musicFrame = document.getElementById("music");
+    const musicBtn = document.getElementById("music-toggle");
+    let playing = false;
+    /*const embedURL = "https://www.youtube.com/embed/6dYWe1c3OyU?autoplay=1&loop=1&playlist=6dYWe1c3OyU";*/
+    const embedURL = `https://www.youtube.com/embed/${YT_ID}?autoplay=1&loop=1&playlist=${YT_ID}&controls=0&rel=0&modestbranding=1`;
+
+    musicBtn.addEventListener("click", () => {
+      if (playing) {
+        musicFrame.src = "";
+        musicBtn.textContent = "🔇";
+      } else {
+        musicFrame.src = embedURL;
+        musicBtn.textContent = "🔊";
+      }
+      playing = !playing;
+    });
+
+ /* ── CONTADOR ── */
+
+const targetDate = new Date("August 7, 2026 19:30:00").getTime();
+
+setInterval(() => {
+
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance <= 0) {
+
+    document.getElementById("countdown").innerHTML =
+      "🎉 ¡Llegó el gran día! 🎉";
+
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+  const hours = Math.floor(
+    (distance % (1000 * 60 * 60 * 24)) /
+    (1000 * 60 * 60)
+  );
+
+  const minutes = Math.floor(
+    (distance % (1000 * 60 * 60)) /
+    (1000 * 60)
+  );
+
+  const seconds = Math.floor(
+    (distance % (1000 * 60)) / 1000
+  );
+
+  document.getElementById("cd-days").textContent = days;
+  document.getElementById("cd-hours").textContent = hours;
+  document.getElementById("cd-minutes").textContent = minutes;
+  document.getElementById("cd-seconds").textContent = seconds;
+
+}, 1000); 
+
+
+/* ── IMPORTAR CSV ── */
+function openImportModal(){document.getElementById("import-modal").classList.add("open");document.getElementById("csv-preview").textContent="";document.getElementById("csv-file").value="";}
+function closeImportModal(){document.getElementById("import-modal").classList.remove("open");}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const fi=document.getElementById("csv-file");
+  if(fi) fi.addEventListener("change",()=>{
+    const f=fi.files[0]; if(!f)return;
+    const r=new FileReader();
+    r.onload=e=>{
+      const lines=e.target.result.split("\n").filter(l=>l.trim()).slice(1);
+      document.getElementById("csv-preview").textContent=lines.length+" invitados detectados";
+    };
+    r.readAsText(f);
+  });
+});
+
+async function importCSV(){
+  const fi=document.getElementById("csv-file");
+  if(!fi.files[0]){showToast("Selecciona un archivo CSV");return;}
+  const r=new FileReader();
+  r.onload=async e=>{
+    const lines=e.target.result.split("\n").filter(l=>l.trim()).slice(1);
+    let ok=0,err=0;
+    for(const line of lines){
+      const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
+      const name=cols[0],phone=cols[1]||"",seats=parseInt(cols[2])||2;
+      if(!name)continue;
+      try{
+        const res=await api("guests",{method:"POST",body:JSON.stringify({name,phone,seats,confirmed:0,status:"pending",msg:"",id_event:ID_EVENT})});
+        if(res&&res[0])adminGuests.push(res[0]);
+        ok++;
+      }catch(e2){err++;}
+    }
+    closeImportModal();
+    renderAdminAll();
+    showToast("✓ "+ok+" importados"+(err?", "+err+" errores":""),3500);
+  };
+  r.readAsText(fi.files[0]);
+}
+
+</script>
+</body>
+</html>
