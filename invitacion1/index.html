@@ -24,15 +24,11 @@
   --teal-darker: #1e4a57;
   --header-h: 100px; /* nombres (70px) + tira fotos (60px) */
 }
-html {
-  scroll-behavior: smooth;
-  height: -webkit-fill-available;
-}
+html { scroll-behavior: smooth; }
 body {
   font-family: 'FelixTitling', serif;
   background: #3d7d8d;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
   overflow-x: hidden;
 }
 
@@ -145,10 +141,9 @@ body {
 /* ── SECCIONES ── */
 section {
   min-height: 100vh;
-  min-height: -webkit-fill-available;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 3rem 0; text-align: center;
+  padding: 1.5rem 0; text-align: center;
   width: 100%;
 }
 section + section { border-top: 1px solid rgba(255,255,255,0.1); }
@@ -156,9 +151,9 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 /* ── PORTADA ── */
 .tagline {
   font-family: 'FelixTitling', serif;
-  font-size: (18px, 3.8vw, 22px);
+  font-size: clamp(18px, 3.8vw, 22px);
   color: var(--white); letter-spacing: 0.01em; line-height: 1.5;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 .date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
 .date-col { text-align: center; }
@@ -202,7 +197,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   grid-template-columns: 72px 1fr;
   grid-template-rows: auto auto;
   column-gap: 1rem; align-items: center;
-  padding: 1rem 0; position: relative;
+  padding: 0.9rem 0; position: relative;
 }
 .it-item:not(:last-child)::after {
   content: ''; position: absolute;
@@ -500,7 +495,6 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     </div>
     <p class="venue fade-in">Centro Cultural y Social Veracruzano</p>
     <p class="address fade-in">Av. Miguel Ángel de Quevedo 687,<br>San Francisco, Coyoacán,<br>04320, Ciudad de México</p>
-    <BR><BR>
     <div class="guest-box fade-in">
       <p class="gname" id="inv-gname">Cargando...</p>
       <p class="gseats" id="inv-gseats"></p>
@@ -557,8 +551,8 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     </div>
     <div class="divider fade-in"></div>
     <p class="dress-note fade-in">Celebración solo para adultos</p>
-    <p class="dress-note fade-in">Más allá de cualquier obsequio, valoramos el privilegio de contar con su compañía en este momento inolvidable. Si así lo desean, una aportación será bienvenida con gratitud y cariño. a nombre de Miriam Haydee Belman Flores</p>
-    <p class="dress-note fade-in">BBVA CLABE 012180015079889317</p>
+    <p class="dress-note fade-in">Agradecemos sus regalos a nombre de Miriam Haydee Belman Flores</p>
+    <p class="dress-note fade-in">Banamex CLABE 012180015079889317</p>
   </section>
 
   <!-- ═══ 4: RSVP + COUNTDOWN ═══ -->
