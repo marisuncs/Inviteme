@@ -135,7 +135,8 @@ section {
   min-height: 100vh;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  padding: 3rem 0; text-align: center;
+  padding: 3rem 0; 
+  text-align: center;
 }
 section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 
@@ -143,7 +144,8 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 .tagline {
   font-family: 'Cormorant SC', serif;
   font-size: clamp(18px, 3.8vw, 22px);
-  color: var(--white); letter-spacing: 0.01em; line-height: 1.5;
+  color: var(--white); 
+  letter-spacing: 0.01em; line-height: 1.5;
   margin-bottom: 2rem;
 }
 .date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
@@ -412,6 +414,7 @@ tbody tr:last-child td { border-bottom:none; }
 .admin-err { font-size:13px; color:#f07070; margin-top:-0.4rem; margin-bottom:0.6rem; display:none; }
 .admin-back { font-size:12px; color:rgba(255,255,255,0.4); margin-top:1rem; cursor:pointer; }
 .admin-back:hover { color:rgba(255,255,255,0.7); }
+
 
 /* ── FADE IN ── 
 .fade-in {
@@ -699,7 +702,6 @@ tbody tr:last-child td { border-bottom:none; }
   </div>
 </div>
 
-
 <script>
 const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
 const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
@@ -758,27 +760,8 @@ function scrollToSection(idx) {
 function updateDots() {
   document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i===currentSection));
 }
-/*function startAutoScroll() {
-  autoScrollTimer = setInterval(() => {
-    if (userScrolled) { clearInterval(autoScrollTimer); return; }
-    if (currentSection < sections.length-1) { currentSection++; scrollToSection(currentSection); }
-    else { clearInterval(autoScrollTimer); }
-  }, 4500);
-}
-let scrollTimeout;
-window.addEventListener('scroll', () => {
-  if (autoScrollTimer) userScrolled = true;
-  clearTimeout(scrollTimeout);
-  scrollTimeout = setTimeout(() => {
-    sections.forEach((id,i) => {
-      const rect = document.getElementById(id).getBoundingClientRect();
-      if (rect.top >= -100 && rect.top < window.innerHeight/2) { currentSection=i; updateDots(); }
-    });
-  }, 80);
-}, { passive: true });*/
-
-  function startAutoScroll() {
-  autoScrollTimer = setInterval(() => {
+function startAutoScroll() {
+autoScrollTimer = setInterval(() => {
 
     if (userScrolled) {
       clearInterval(autoScrollTimer);
@@ -851,8 +834,8 @@ async function api(path, opts={}) {
 }
 function showToast(msg, dur=2800) {
   const t = document.getElementById('toast');
-  t.textContent=msg; t.style.display='block';
-  clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',dur);
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(t._t); t._t=setTimeout(() => t.style.display='none',dur);
 }
 function setGuestUI(g) {
   document.getElementById('inv-gname').textContent   = g.name;
@@ -902,26 +885,139 @@ const fadeObs=new IntersectionObserver((entries)=>{
 },{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
 
-/* ── INIT ── */
-(async()=>{
-  const gid=new URLSearchParams(window.location.search).get('id');
-  if(gid){
-    try{
-      const res=await api('guests?id=eq.'+gid+'&id_event=eq.'+ID_EVENT);
-      if(res&&res[0]){activeGuest=res[0];setGuestUI(res[0]);}
-      else{document.getElementById('inv-gname').textContent='Invitado no encontrado';}
-    }catch(e){document.getElementById('inv-gname').textContent='Error al cargar';}
-  }else{
-    document.getElementById('inv-gname').textContent='Bienvenido';
-    document.getElementById('inv-gseats').textContent='';
-    document.getElementById('rsvp-sub-lbl').textContent='Ingresa con tu link personalizado';
-  }
+/* ── ADMIN ── */
+const ADMIN_PASS = '20M4risun26';
+let adminGuests=[], adminMaxCap=150, adminWaTpl='', adminFilterStr='';
+
+function showAdminLogin() {
+  document.getElementById('admin-login').style.display='flex';
+  document.getElementById('admin-err').style.display='none';
+  document.getElementById('admin-pass').value='';
+}
+function hideAdmin() {
+  document.getElementById('admin-login').style.display='none';
+  document.getElementById('view-admin').style.display='none';
+}
+function doAdminLogin() {
+  if(document.getElementById('admin-pass').value===ADMIN_PASS) {
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('view-admin').style.display='block';
+    initAdminPanel();
+  } else { document.getElementById('admin-err').style.display='block'; }
+}
+async function initAdminPanel() {
+  try {
+    const cfg=await api('event_config?id_event=eq.'+ID_EVENT);
+    if(cfg&&cfg[0]){adminMaxCap=cfg[0].max_capacity||150;adminWaTpl=cfg[0].wa_template||'';}
+    document.getElementById('a-cap-inp').value=adminMaxCap;
+    document.getElementById('a-wa-tpl').value=adminWaTpl;
+  } catch(e){}
+  adminGuests=await api('guests?id_event=eq.'+ID_EVENT+'&order=created_at.asc')||[];
+  renderAdminAll();
+}
+function switchAdminTab(t) {
+  ['overview','guests','settings'].forEach((n,i)=>document.querySelectorAll('.admin-tab')[i].classList.toggle('active',n===t));
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.getElementById('atab-'+t).classList.add('active');
+}
+function renderAdminAll(){renderAdminMetrics();renderAdminOverview();renderAdminGuests(adminFilterStr);}
+function getAdminStats(){
+  const confirmed=adminGuests.filter(g=>g.status==='confirmed').reduce((s,g)=>s+(g.confirmed||0),0);
+  return{confirmed,pending:adminGuests.filter(g=>g.status==='pending').length,declined:adminGuests.filter(g=>g.status==='declined').length,seats:adminGuests.reduce((s,g)=>s+(g.seats||0),0),total:adminGuests.length};
+}
+function renderAdminMetrics(){
+  const s=getAdminStats();
+  document.getElementById('a-metrics').innerHTML=`<div class="metric"><span class="metric-val">${s.total}</span><span class="metric-lbl">Familias</span></div><div class="metric"><span class="metric-val">${s.seats}</span><span class="metric-lbl">Asignados</span></div><div class="metric m-conf"><span class="metric-val">${s.confirmed}</span><span class="metric-lbl">Confirmados</span></div><div class="metric m-pend"><span class="metric-val">${s.pending}</span><span class="metric-lbl">Pendientes</span></div><div class="metric m-dec"><span class="metric-val">${s.declined}</span><span class="metric-lbl">Declinaron</span></div>`;
+  const pct=adminMaxCap>0?Math.round((s.confirmed/adminMaxCap)*100):0;
+  document.getElementById('a-cap-lbl').textContent=s.confirmed+'/'+adminMaxCap;
+  document.getElementById('a-cap-fill').style.width=Math.min(pct,100)+'%';
+}
+function sbadge(s){if(s==='confirmed')return'<span class="sbadge s-confirmed">Confirmado</span>';if(s==='declined')return'<span class="sbadge s-declined">Declinó</span>';return'<span class="sbadge s-pending">Pendiente</span>';}
+function renderAdminOverview(){document.getElementById('a-overview-tbody').innerHTML=adminGuests.length?adminGuests.map(g=>`<tr><td>${g.name}</td><td>${g.seats}</td><td>${g.status==='confirmed'?g.confirmed:'—'}</td><td>${sbadge(g.status)}</td></tr>`).join(''):'<tr><td colspan="4" style="text-align:center;opacity:0.4;padding:2rem">Sin invitados</td></tr>';}
+function renderAdminGuests(f=''){const list=f?adminGuests.filter(g=>g.name.toLowerCase().includes(f.toLowerCase())):adminGuests;document.getElementById('a-guests-tbody').innerHTML=list.length?list.map(g=>`<tr><td><strong>${g.name}</strong></td><td style="font-size:11px;opacity:0.6">${g.phone||'—'}</td><td>${g.seats}</td><td>${g.status==='confirmed'?g.confirmed:'—'}</td><td>${sbadge(g.status)}</td><td><div class="row-acts"><button class="rbtn wa" onclick="sendWA('${g.id}')">WA</button><button class="rbtn del" onclick="deleteGuest('${g.id}')">✕</button></div></td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;opacity:0.4;padding:2rem">Sin resultados</td></tr>';}
+function filterAdminGuests(v){adminFilterStr=v;renderAdminGuests(v);}
+function openAddModal(){document.getElementById('add-modal').classList.add('open');}
+function closeAddModal(){document.getElementById('add-modal').classList.remove('open');}
+async function addGuest(){
+  const name=document.getElementById('new-name').value.trim();
+  const phone=document.getElementById('new-phone').value.trim();
+  const seats=parseInt(document.getElementById('new-seats').value)||2;
+  if(!name){showToast('Escribe el nombre');return;}
+  try{const res=await api('guests',{method:'POST',body:JSON.stringify({name,phone,seats,confirmed:0,status:'pending',msg:'',id_event:ID_EVENT})});if(res&&res[0])adminGuests.push(res[0]);closeAddModal();['new-name','new-phone'].forEach(id=>document.getElementById(id).value='');document.getElementById('new-seats').value='2';renderAdminAll();showToast('✓ '+name+' agregado');}catch(e){showToast('Error: '+e.message);}
+}
+async function deleteGuest(id){
+  if(!confirm('¿Eliminar?'))return;
+  try{await api('guests?id=eq.'+id+'&id_event=eq.'+ID_EVENT,{method:'DELETE'});adminGuests=adminGuests.filter(g=>g.id!==id);renderAdminAll();showToast('Eliminado');}catch(e){showToast('Error: '+e.message);}
+}
+function sendWA(id){const g=adminGuests.find(x=>x.id===id);if(!g||!g.phone){showToast('Sin teléfono');return;}const tpl=document.getElementById('a-wa-tpl').value||adminWaTpl;window.open('https://wa.me/'+g.phone+'?text='+encodeURIComponent(tpl.replace('{ID}',id)),'_blank');}
+async function saveAdminCap(){const v=parseInt(document.getElementById('a-cap-inp').value);if(v>0){adminMaxCap=v;await api('event_config?id_event=eq.'+ID_EVENT,{method:'PATCH',body:JSON.stringify({max_capacity:v})});renderAdminMetrics();showToast('✓ Cupo actualizado');}}
+async function saveWATpl(){adminWaTpl=document.getElementById('a-wa-tpl').value;await api('event_config?id_event=eq.'+ID_EVENT,{method:'PATCH',body:JSON.stringify({wa_template:adminWaTpl})});showToast('✓ Guardado');}
+function exportCSV(){const rows=[['Familia','Teléfono','Asignados','Confirmados','Estado','Mensaje']];adminGuests.forEach(g=>rows.push([g.name,g.phone||'',g.seats,g.confirmed||0,g.status,g.msg||'']));const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download='invitados.csv';a.click();showToast('✓ CSV descargado');}
+
+(async () => {
+  const params = new URLSearchParams(window.location.search);
+  const gid = params.get('id');
+  const isAdmin = params.get('admin') === '1';
+
+  if (isAdmin) {
+    showAdminLogin();
+    document.getElementById('admin-pass').addEventListener('keydown', e => { if(e.key==='Enter') doAdminLogin(); });
+  } else if (gid) {
+    try {
+      const res = await api('guests?id=eq.'+gid+'&id_event=eq.'+ID_EVENT);
+      if (res && res[0]) { activeGuest = res[0]; setGuestUI(res[0]); }
+      else { document.getElementById('inv-gname').textContent = 'Invitado no encontrado'; }
+    } catch(e) { document.getElementById('inv-gname').textContent = 'Error al cargar'; }
+  } else {
+    document.getElementById('inv-gname').textContent  = 'Bienvenido';
+    document.getElementById('inv-gseats').textContent = '';
+    document.getElementById('rsvp-sub-lbl').textContent = 'Ingresa con tu link personalizado';
+  }  
   startCarousel();
   setTimeout(startAutoScroll,3500);
 })();
+
+/* ── IMPORTAR CSV ── */
+function openImportModal(){document.getElementById("import-modal").classList.add("open");document.getElementById("csv-preview").textContent="";document.getElementById("csv-file").value="";}
+function closeImportModal(){document.getElementById("import-modal").classList.remove("open");}
+
+document.addEventListener("DOMContentLoaded",()=>{
+  const fi=document.getElementById("csv-file");
+  if(fi) fi.addEventListener("change",()=>{
+    const f=fi.files[0]; if(!f)return;
+    const r=new FileReader();
+    r.onload=e=>{
+      const lines=e.target.result.split("\n").filter(l=>l.trim()).slice(1);
+      document.getElementById("csv-preview").textContent=lines.length+" invitados detectados";
+    };
+    r.readAsText(f);
+  });
+});
+
+async function importCSV(){
+  const fi=document.getElementById("csv-file");
+  if(!fi.files[0]){showToast("Selecciona un archivo CSV");return;}
+  const r=new FileReader();
+  r.onload=async e=>{
+    const lines=e.target.result.split("\n").filter(l=>l.trim()).slice(1);
+    let ok=0,err=0;
+    for(const line of lines){
+      const cols=line.split(",").map(c=>c.replace(/^"|"$/g,"").trim());
+      const name=cols[0],phone=cols[1]||"",seats=parseInt(cols[2])||2;
+      if(!name)continue;
+      try{
+        const res=await api("guests",{method:"POST",body:JSON.stringify({name,phone,seats,confirmed:0,status:"pending",msg:"",id_event:ID_EVENT})});
+        if(res&&res[0])adminGuests.push(res[0]);
+        ok++;
+      }catch(e2){err++;}
+    }
+    closeImportModal();
+    renderAdminAll();
+    showToast("✓ "+ok+" importados"+(err?", "+err+" errores":""),3500);
+  };
+  r.readAsText(fi.files[0]);
+}
+
 </script>
 </body>
 </html>
-
-
-
