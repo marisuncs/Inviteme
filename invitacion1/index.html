@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gabo &amp; Miya · Boda 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -708,8 +709,7 @@ async function submitRSVP() {
       })
     });
     document.getElementById('thanks-txt').innerHTML=attendChoice==='yes'
-      ?'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂
-      '
+      ?'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>7 de agosto</strong>! 🥂'
       :'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
     document.getElementById('rsvp-form-wrap').style.display='none';
     document.getElementById('thanks-wrap').style.display='block';
