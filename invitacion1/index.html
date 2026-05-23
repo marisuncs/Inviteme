@@ -480,7 +480,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 
 <!-- MUSIC -->
 <div id="music-toggle">🔇</div>
-<iframe id="music" width="0" height="0" frameborder="0" allow="autoplay; encrypted-media" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation"></iframe>
+<iframe id="music" width="0" height="0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
 
 <div class="content">
   <!-- ═══ 1: PORTADA ═══ -->
@@ -724,14 +724,17 @@ const embedURL = 'https://www.youtube.com/embed/' + YT_ID + '?autoplay=1&loop=1&
 let playing = false;
 
 function startInvitation() {
+  // Set src after user gesture — browsers only allow autoplay after user interaction
   const frame = document.getElementById('music');
   frame.src = embedURL;
-  document.getElementById('music-toggle').textContent = '🔊';
   playing = true;
+  document.getElementById('music-toggle').textContent = '🔊';
+  // Fade out splash
   const splash = document.getElementById('splash');
   splash.style.opacity = '0';
   splash.style.transition = 'opacity 0.8s ease';
   setTimeout(() => { splash.style.display = 'none'; }, 850);
+  // Start autoscroll after splash fades
   setTimeout(startAutoScroll, 4000);
 }
 
