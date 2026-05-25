@@ -351,6 +351,19 @@ async function api(path, opts = {}) {
   const t = await res.text(); return t ? JSON.parse(t) : null;
 }
 
+async function apiRPC(fn, params = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) { const e = await res.text(); throw new Error(e); }
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+
 /* ── Helpers ── */
 function showView(v) {
   document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
