@@ -514,26 +514,52 @@ async function importCSV() {
   if (!fi.files[0]) { showToast('Selecciona un archivo CSV'); return; }
   const btn = document.querySelector('#import-modal .g-btn.primary');
   btn.textContent = 'Importando...'; btn.disabled = true;
+
   const r = new FileReader();
   r.onload = async e => {
     const lines = e.target.result.split('\n').filter(l => l.trim()).slice(1);
-    let ok = 0, err = 0;
+
+    // Nombres existentes en minúsculas para comparar sin importar mayúsculas
+    const existingNames = new Set(guests.map(g => g.name.toLowerCase().trim()));
+
+    let ok = 0, skipped = 0, err = 0;
+
     for (const line of lines) {
-      // Handle quoted and unquoted CSV
-      const cols = line.match(/("([^"]*)"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) || line.split(',');
-      const clean = cols.map(c => c.replace(/^"|"$/g, '').trim());
-      const name = clean[0], phone = clean[1] || '', seats = parseInt(clean[2]) || 2;
+      // Parse CSV — soporta campos con y sin comillas
+      const cols = line.split(',').map(c => c.replace(/^"|"$/g, '').trim());
+      const name  = cols[0] || '';
+      const phone = cols[1] || '';
+      const seats = parseInt(cols[2]) || 2;
+
       if (!name) continue;
+
+      // Si ya existe con ese nombre, lo saltamos
+      if (existingNames.has(name.toLowerCase())) {
+        skipped++;
+        continue;
+      }
+
       try {
-        const res = await api('guests', { method: 'POST', body: JSON.stringify({ name, phone, seats, confirmed: 0, status: 'pending', msg: '', id_event: ID_EVENT }) });
-        if (res && res[0]) guests.push(res[0]);
+        const res = await api('guests', {
+          method: 'POST',
+          body: JSON.stringify({ name, phone, seats, confirmed: 0, status: 'pending', msg: '', id_event: ID_EVENT })
+        });
+        if (res && res[0]) {
+          guests.push(res[0]);
+          existingNames.add(name.toLowerCase()); // Evitar duplicados dentro del mismo CSV
+        }
         ok++;
       } catch(e2) { err++; }
     }
+
     btn.textContent = 'Importar'; btn.disabled = false;
     closeImportModal();
     renderAll();
-    showToast('✓ ' + ok + ' importados' + (err ? ', ' + err + ' errores' : ''), 3500);
+
+    let msg = '✓ ' + ok + ' importados';
+    if (skipped > 0) msg += ' · ' + skipped + ' ya existían';
+    if (err > 0)     msg += ' · ' + err + ' errores';
+    showToast(msg, 4000);
   };
   r.readAsText(fi.files[0]);
 }
