@@ -283,7 +283,6 @@ tbody tr:hover td { background: var(--cream); }
 <script>
 const SUPA_URL  = 'https://jlakoulrsnptdsslerte.supabase.co';
 const SUPA_KEY  = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
-const ADMIN_PASS = '20M4risun26';
 const ID_EVENT   = 1;
 const BASE_URL   = 'https://inviteme.fun/invitacion1/';
 
@@ -302,6 +301,19 @@ async function api(path, opts = {}) {
   const t = await res.text(); return t ? JSON.parse(t) : null;
 }
 
+async function apiRPC(fn, params = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+
 /* ── Toast ── */
 function showToast(msg, dur = 2800) {
   const t = document.getElementById('toast');
@@ -310,18 +322,22 @@ function showToast(msg, dur = 2800) {
 }
 
 /* ── Auth ── */
-function doLogin() {
+async function doLogin() {
   const v = document.getElementById('login-pass').value;
   const err = document.getElementById('login-err');
-  if (v === ADMIN_PASS) {
-    err.style.display = 'none';
-    document.getElementById('login-pass').value = '';
-    document.getElementById('view-login').style.display = 'none';
-    document.getElementById('view-admin').style.display = 'block';
-    initAdmin();
-  } else {
-    err.style.display = 'block';
-  }
+  err.style.display = 'none';
+  if (!v) { err.style.display = 'block'; return; }
+  try {
+    const ok = await apiRPC('verify_event_admin', { p_id_event: ID_EVENT, p_password: v });
+    if (ok === true || ok === 'true' || ok) {
+      document.getElementById('login-pass').value = '';
+      document.getElementById('view-login').style.display = 'none';
+      document.getElementById('view-admin').style.display = 'block';
+      initAdmin();
+    } else {
+      err.style.display = 'block';
+    }
+  } catch(e) { err.textContent = 'Error: ' + e.message; err.style.display = 'block'; }
 }
 function doLogout() {
   document.getElementById('view-admin').style.display = 'none';
