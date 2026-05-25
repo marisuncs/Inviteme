@@ -500,12 +500,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const fi = document.getElementById('csv-file');
   if (fi) fi.addEventListener('change', () => {
     const f = fi.files[0]; if (!f) return;
-    const r = new FileReader();
-    r.onload = e => {
-      const lines = e.target.result.split('\n').filter(l => l.trim()).slice(1);
+    detectAndReadCSV(f, text => {
+      const lines = text.split('\n').filter(l => l.trim()).slice(1);
       document.getElementById('csv-preview').textContent = lines.length + ' invitados detectados en el archivo';
-    };
-    r.readAsText(f);
+    });
   });
 });
 
@@ -515,9 +513,8 @@ async function importCSV() {
   const btn = document.querySelector('#import-modal .g-btn.primary');
   btn.textContent = 'Importando...'; btn.disabled = true;
 
-  const r = new FileReader();
-  r.onload = async e => {
-    const lines = e.target.result.split('\n').filter(l => l.trim()).slice(1);
+  detectAndReadCSV(fi.files[0], async text => {
+    const lines = text.split('\n').filter(l => l.trim()).slice(1);
 
     // Nombres existentes en minúsculas para comparar sin importar mayúsculas
     const existingNames = new Set(guests.map(g => g.name.toLowerCase().trim()));
@@ -560,8 +557,24 @@ async function importCSV() {
     if (skipped > 0) msg += ' · ' + skipped + ' ya existían';
     if (err > 0)     msg += ' · ' + err + ' errores';
     showToast(msg, 4000);
+  });
+}
+
+function detectAndReadCSV(file, callback) {
+  const r1 = new FileReader();
+  r1.onload = e => {
+    const txt = e.target.result;
+    // Detectar caracteres mal codificados (signo de reemplazamiento Unicode)
+    if (txt.includes('\uFFFD') || txt.includes('Ã') || txt.includes('Ã³')) {
+      // Releer con latin-1
+      const r2 = new FileReader();
+      r2.onload = e2 => callback(e2.target.result);
+      r2.readAsText(file, 'ISO-8859-1');
+    } else {
+      callback(txt);
+    }
   };
-  r.readAsText(fi.files[0]);
+  r1.readAsText(file, 'UTF-8');
 }
 </script>
 </body>
