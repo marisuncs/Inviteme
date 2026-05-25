@@ -376,7 +376,7 @@ async function doLogin() {
   err.style.display = 'none';
   if (!email || !pass) { err.textContent = 'Completa todos los campos'; err.style.display = 'block'; return; }
   try {
-    const res = await api('organizers?email=eq.' + encodeURIComponent(email) + '&password=eq.' + encodeURIComponent(pass));
+    const res = await apiRPC('verify_organizer', { p_email: email, p_password: pass });
     if (res && res[0]) {
       currentOrganizer = res[0];
       sessionStorage.setItem('organizer', JSON.stringify(res[0]));
@@ -397,10 +397,10 @@ async function doRegister() {
   if (!name || !email || !pass) { err.textContent = 'Completa todos los campos'; err.style.display = 'block'; return; }
   if (pass.length < 6) { err.textContent = 'La contraseña debe tener al menos 6 caracteres'; err.style.display = 'block'; return; }
   try {
-    // Check if email exists
     const exists = await api('organizers?email=eq.' + encodeURIComponent(email));
     if (exists && exists.length > 0) { err.textContent = 'Este correo ya está registrado'; err.style.display = 'block'; return; }
-    await api('organizers', { method: 'POST', body: JSON.stringify({ name, email, password: pass }) });
+    // Store password as bcrypt hash via Supabase pgcrypto
+    await apiRPC('register_organizer', { p_name: name, p_email: email, p_password: pass });
     ok.style.display = 'block';
     setTimeout(() => switchAuth('login'), 1800);
   } catch(e) { err.textContent = 'Error: ' + e.message; err.style.display = 'block'; }
