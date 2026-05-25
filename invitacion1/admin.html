@@ -120,6 +120,7 @@ tbody tr:hover td { background: var(--cream); }
 .rbtn:hover { background: var(--warm); }
 .rbtn.wa { color: var(--success); border-color: #9fe1cb; } .rbtn.wa:hover { background: #e1f5ee; }
 .rbtn.del { color: var(--danger); border-color: #f7c1c1; } .rbtn.del:hover { background: #fcebeb; }
+.rbtn.edit { color: var(--teal); border-color: #9fd4e0; } .rbtn.edit:hover { background: #e1f5f9; }
 .empty-row td { text-align: center; color: var(--muted); font-style: italic; padding: 2.5rem; }
 
 /* Settings */
@@ -423,6 +424,7 @@ function renderGuests(f = '') {
         <td><div class="row-acts">
           <button class="rbtn wa" onclick="sendWA('${g.id}')" title="WhatsApp">WA</button>
           <button class="rbtn" onclick="copyGuestLink('${g.id}')" title="Copiar link">🔗</button>
+          <button class="rbtn edit" onclick="openEditModal('${g.id}')" title="Editar">✏️</button>
           <button class="rbtn del" onclick="deleteGuest('${g.id}')" title="Eliminar">✕</button>
         </div></td>
       </tr>`).join('')
@@ -592,6 +594,70 @@ function detectAndReadCSV(file, callback) {
   };
   r1.readAsText(file, 'UTF-8');
 }
+
+/* ── EDITAR INVITADO ── */
+function openEditModal(id) {
+  const g = guests.find(x => x.id === id);
+  if (!g) return;
+  document.getElementById('edit-id').value    = g.id;
+  document.getElementById('edit-name').value  = g.name;
+  document.getElementById('edit-phone').value = g.phone || '';
+  document.getElementById('edit-seats').value = g.seats;
+  document.getElementById('edit-status').value = g.status;
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').classList.remove('open');
+}
+
+async function saveGuest() {
+  const id     = document.getElementById('edit-id').value;
+  const name   = document.getElementById('edit-name').value.trim();
+  const phone  = document.getElementById('edit-phone').value.trim();
+  const seats  = parseInt(document.getElementById('edit-seats').value) || 2;
+  const status = document.getElementById('edit-status').value;
+
+  if (!name) { showToast('Escribe el nombre de la familia'); return; }
+
+  try {
+    await api('guests?id=eq.' + id + '&id_event=eq.' + ID_EVENT, {
+      method: 'PATCH',
+      body: JSON.stringify({ name, phone, seats, status })
+    });
+    const idx = guests.findIndex(g => g.id === id);
+    if (idx > -1) Object.assign(guests[idx], { name, phone, seats, status });
+    closeEditModal();
+    renderAll();
+    showToast('✓ Invitado actualizado');
+  } catch(e) { showToast('Error: ' + e.message); }
+}
+
 </script>
+
+<!-- EDIT GUEST MODAL -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-card">
+    <p class="modal-title">✏️ Editar invitado</p>
+    <input type="hidden" id="edit-id">
+    <label class="modal-lbl">Nombre de familia</label>
+    <input class="modal-input" id="edit-name" placeholder="Ej: Familia Martínez">
+    <label class="modal-lbl">Teléfono WhatsApp</label>
+    <input class="modal-input" id="edit-phone" placeholder="521XXXXXXXXXX">
+    <label class="modal-lbl">Lugares asignados</label>
+    <input class="modal-input" type="number" id="edit-seats" min="1" max="30">
+    <label class="modal-lbl">Estado</label>
+    <select class="modal-input" id="edit-status">
+      <option value="pending">Pendiente</option>
+      <option value="confirmed">Confirmado</option>
+      <option value="declined">Declinó</option>
+    </select>
+    <div class="modal-footer">
+      <button class="g-btn" onclick="closeEditModal()">Cancelar</button>
+      <button class="g-btn primary" onclick="saveGuest()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
