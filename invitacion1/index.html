@@ -686,21 +686,20 @@ function updateDots() {
 
 
   function startAutoScroll() {
-  autoScrollTimer = setInterval(() => {
-
-    if (userScrolled) {
-      clearInterval(autoScrollTimer);
-      return;
-    }
-
-    if (currentSection < sections.length - 1) {
-      currentSection++;
-      scrollToSection(currentSection);
-    } else {
-      clearInterval(autoScrollTimer);
-    }
-
-  }, 4500);
+  // Tiempos por sección: portada(4.5s) → itinerario(5s) → vestimenta(8s) → stop
+  const sectionTimes = [4500, 5000, 8000];
+  function scheduleNext() {
+    if (userScrolled || currentSection >= sections.length - 1) return;
+    const delay = sectionTimes[currentSection] || 4500;
+    setTimeout(() => {
+      if (!userScrolled && currentSection < sections.length - 1) {
+        currentSection++;
+        scrollToSection(currentSection);
+        scheduleNext();
+      }
+    }, delay);
+  }
+  scheduleNext();
 }
 
 let scrollTimeout;
