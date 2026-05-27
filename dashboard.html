@@ -490,8 +490,8 @@ async function renderEvents(events) {
           <div class="event-stat"><span class="event-stat-val">${ev.max_capacity || 150}</span><span class="event-stat-lbl">Cupo</span></div>
         </div>
         <div class="event-card-actions">
-          <button class="ecard-btn primary" onclick="goToEvent(${ev.id_event})"><i class="ti ti-settings"></i> Administrar</button>
-          <button class="ecard-btn" onclick="copyLink(${ev.id_event})"><i class="ti ti-link"></i> Link</button>
+          <button class="ecard-btn primary" onclick="goToEvent(${ev.id_event},'${ev.slug||''}')"><i class="ti ti-settings"></i> Administrar</button>
+          <button class="ecard-btn" onclick="copyLink(${ev.id_event},'${ev.slug||''}')"><i class="ti ti-link"></i> Link</button>
         </div>
       </div>
     </div>`;
@@ -502,13 +502,23 @@ async function renderEvents(events) {
     </div>`;
 }
 
-function goToEvent(id_event) {
-  window.location.href = window.location.origin + "/invitacion" + id_event + "/admin.html";
+function goToEvent(id_event, slug) {
+  // Event 1 (Gabo & Miya) keeps its original path
+  if (id_event === 1) {
+    window.location.href = window.location.origin + "/invitacion1/admin.html";
+  } else {
+    window.location.href = window.location.origin + "/e/admin.html?slug=" + slug;
+  }
 }
 
-function copyLink(id_event) {
-  const url = window.location.origin + '/invitacion' + id_event + '.html';
-  navigator.clipboard.writeText(url).then(() => showToast('✓ Link copiado: ' + url));
+function copyLink(id_event, slug) {
+  let url;
+  if (id_event === 1) {
+    url = window.location.origin + '/invitacion1/';
+  } else {
+    url = window.location.origin + '/e/?slug=' + slug;
+  }
+  navigator.clipboard.writeText(url).then(() => showToast('✓ Link copiado'));
 }
 
 /* ── New Event Modal ── */
@@ -534,7 +544,7 @@ async function createEvent() {
     .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').slice(0, 40)
     + '-' + Date.now().toString(36);
 
-  const wa = '¡Hola! Te invitamos a ' + title + '. Confirma tu asistencia aquí: ' + window.location.origin + '/invitacion{ID_EVENT}.html?id={ID}';
+  const wa = '¡Hola! Te invitamos a ' + title + '. Confirma tu asistencia aquí: ' + window.location.origin + '/e/?slug=' + slug + '&id={ID}';
 
   try {
     const res = await api('event_config', {
