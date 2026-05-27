@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>inviteme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+SC:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --primary: #3a7d8c;
+  --white: #ffffff;
+  --white-75: rgba(255,255,255,0.75);
+  --white-55: rgba(255,255,255,0.55);
+  --white-10: rgba(255,255,255,0.10);
+  --darker: #1e4a57;
+  --header-h: 130px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Cormorant Garamond', serif; background: var(--primary); min-height: 100vh; overflow-x: hidden; }
+
+/* ── LOADING ── */
+#loading {
+  position: fixed; inset: 0; z-index: 999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #1e4a57;
+}
+.loading-logo { font-family: 'Cormorant SC', serif; font-size: 32px; color: var(--white); margin-bottom: 1rem; font-weight: 300; }
+.loading-logo span { color: rgba(255,255,255,0.4); }
+.loading-spinner { width: 32px; height: 32px; border: 2px solid rgba(255,255,255,0.2); border-top-color: var(--white); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── ERROR ── */
+#error-view {
+  display: none; position: fixed; inset: 0; z-index: 998;
+  background: #1e4a57; align-items: center; justify-content: center; text-align: center; padding: 2rem;
+}
+.error-icon { font-size: 48px; margin-bottom: 1rem; }
+.error-title { font-family: 'Cormorant SC', serif; color: var(--white); font-size: 28px; margin-bottom: 0.5rem; }
+.error-text { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: 16px; }
+
+/* ── FONDO ── */
+.bg-fixed {
+  position: fixed; inset: 0; z-index: 0;
+  background-size: cover; background-position: center top; background-repeat: repeat-y;
+}
+.bg-fixed::after { content: ''; position: absolute; inset: 0; background: rgba(20,55,65,0.25); }
+
+/* ── HEADER ── */
+.fixed-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background: rgba(30,74,87,0.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-direction: column;
+}
+.header-top {
+  height: 70px; display: flex; align-items: center; justify-content: center; padding: 0 1rem;
+}
+.header-names {
+  font-family: 'Cormorant SC', serif; color: var(--white);
+  font-size: clamp(24px, 5.5vw, 36px); font-weight: 300; letter-spacing: 0.08em;
+  display: flex; align-items: center; gap: 0.4em;
+}
+.header-amp { font-size: 0.6em; opacity: 0.75; }
+.photo-strip {
+  height: 60px; display: flex; gap: 4px; padding: 4px 6px; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.strip-slot { flex: 1; border-radius: 6px; overflow: hidden; position: relative; background: rgba(255,255,255,0.05); }
+.strip-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 6px; transition: opacity 1s ease; }
+.strip-slot img.hidden { opacity: 0; } .strip-slot img.visible { opacity: 1; }
+
+/* ── PROGRESS DOTS ── */
+.progress-dots { position: fixed; right: 0.9rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 9px; z-index: 50; }
+.pdot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; border: none; padding: 0; }
+.pdot.active { background: var(--white); height: 20px; border-radius: 3px; }
+
+/* ── MUSIC ── */
+#music-toggle {
+  position: fixed; bottom: 1.2rem; right: 3rem; z-index: 60;
+  background: rgba(25,68,82,0.5); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%; width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; cursor: pointer; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+
+/* ── SPLASH ── */
+#splash {
+  position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; background: #1e4a57;
+  transition: opacity 0.8s ease;
+}
+#splash.fade-out { opacity: 0; pointer-events: none; }
+.splash-photo { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.45); }
+.splash-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; padding: 2rem; }
+.splash-title { font-family: 'Cormorant SC', serif; color: var(--white); font-size: clamp(32px, 9vw, 56px); font-weight: 300; line-height: 1.1; letter-spacing: 0.08em; }
+.splash-sub { font-family: 'Cormorant SC', serif; color: rgba(255,255,255,0.6); font-size: clamp(13px, 3vw, 16px); letter-spacing: 0.12em; }
+.splash-btn { font-family: 'Cormorant SC', serif; font-size: clamp(14px, 3.5vw, 17px); letter-spacing: 0.1em; color: var(--white); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.4); border-radius: 100px; padding: 0.9rem 2.5rem; cursor: pointer; transition: background 0.2s; }
+.splash-btn:hover { background: rgba(255,255,255,0.22); }
+.splash-pulse { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.5); animation: pulse 1.8s infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:0.5} 50%{transform:scale(1.6);opacity:1} }
+
+/* ── CONTENIDO ── */
+.content { position: relative; z-index: 1; max-width: 480px; margin: 0 auto; padding: 0 1.75rem; padding-top: var(--header-h); }
+section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 0; text-align: center; width: 100%; }
+section + section { border-top: 1px solid rgba(255,255,255,0.1); }
+
+/* ── PORTADA ── */
+.tagline { font-family: 'Cormorant SC', serif; font-size: clamp(15px, 3.8vw, 19px); color: var(--white-75); letter-spacing: 0.07em; line-height: 1.7; margin-bottom: 2rem; }
+.date-row { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 2rem; }
+.date-col { text-align: center; }
+.date-col .lbl { font-family: 'Cormorant SC', serif; font-size: 12px; color: var(--white-55); letter-spacing: 0.14em; display: block; margin-bottom: 2px; }
+.date-col .val { font-family: 'Cormorant SC', serif; font-size: clamp(22px, 6vw, 32px); color: var(--white); font-weight: 400; display: block; line-height: 1; }
+.venue-name { font-family: 'Cormorant SC', serif; color: var(--white); font-size: clamp(14px, 3.8vw, 18px); letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+.venue-address { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: clamp(12px, 3vw, 14px); letter-spacing: 0.03em; line-height: 1.7; margin-bottom: 2rem; }
+.guest-box { background: var(--white-10); border: 1px solid rgba(255,255,255,0.22); border-radius: 12px; padding: 1.2rem 1.5rem; width: 100%; text-align: center; backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.guest-box .gname { font-family: 'Cormorant SC', serif; color: var(--white); font-size: 22px; font-weight: 400; margin-bottom: 0.25rem; }
+.guest-box .gseats { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: 14px; letter-spacing: 0.07em; }
+
+/* ── ITINERARIO ── */
+.itinerary { width: 100%; max-width: 320px; }
+.it-item { display: grid; grid-template-columns: 72px 1fr; grid-template-rows: auto auto; column-gap: 1rem; align-items: center; padding: 0.9rem 0; position: relative; }
+.it-item:not(:last-child)::after { content: ''; position: absolute; left: 35px; top: calc(50% + 36px); width: 1px; height: calc(100% - 28px); border-left: 1px dashed rgba(255,255,255,0.22); }
+.it-icon-wrap { grid-column: 1; grid-row: 1 / span 2; width: 68px; height: 68px; display: flex; align-items: center; justify-content: center; background: var(--white-10); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); justify-self: center; }
+.it-icon-wrap img { width: 38px; height: 38px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+.it-name { grid-column: 2; grid-row: 1; font-family: 'Cormorant SC', serif; color: var(--white); font-size: 20px; letter-spacing: 0.05em; line-height: 1.2; align-self: end; }
+.it-time { grid-column: 2; grid-row: 2; font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: 18px; letter-spacing: 0.05em; margin-top: 2px; align-self: start; }
+
+/* ── DRESS CODE ── */
+.dress-title { font-family: 'Cormorant SC', serif; color: var(--white); font-size: 20px; letter-spacing: 0.07em; margin-bottom: 0.3rem; }
+.dress-subtitle { font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: 28px; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+.dress-icons { display: flex; gap: 3rem; justify-content: center; margin: 1.5rem 0; }
+.dress-icon-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.dress-icon-wrap img { width: 72px; height: 72px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+.dress-lbl { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: 13px; letter-spacing: 0.1em; }
+.dress-note { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: 14px; letter-spacing: 0.06em; margin-top: 0.5rem; line-height: 1.6; text-align: center; }
+.divider { width: 60px; height: 1px; background: rgba(255,255,255,0.22); margin: 1.2rem auto; }
+
+/* ── RSVP ── */
+.rsvp-title { font-family: 'Cormorant SC', serif; color: var(--white); font-size: clamp(18px, 5vw, 26px); margin-bottom: 0.3rem; }
+.rsvp-sub { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: clamp(13px, 3.5vw, 16px); letter-spacing: 0.07em; margin-bottom: 1.2rem; }
+.rsvp-lbl { font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: clamp(13px, 3.5vw, 15px); letter-spacing: 0.06em; display: block; margin-bottom: 0.3rem; text-align: left; }
+.rsvp-input { width: 100%; background: var(--white-10); border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; padding: 0.7rem 1rem; color: var(--white); font-family: 'Cormorant Garamond', serif; font-size: 15px; margin-bottom: 0.9rem; outline: none; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.rsvp-input::placeholder { color: rgba(255,255,255,0.3); }
+.rsvp-input:focus { border-color: rgba(255,255,255,0.55); background: rgba(255,255,255,0.16); }
+.attend-btns { display: flex; gap: 0.7rem; margin-bottom: 0.9rem; }
+.attend-btn { flex: 1; padding: 0.7rem; font-family: 'Cormorant SC', serif; font-size: clamp(13px, 4vw, 16px); letter-spacing: 0.06em; border-radius: 10px; cursor: pointer; border: 1px solid rgba(255,255,255,0.35); background: transparent; color: var(--white-75); transition: all 0.2s; }
+.attend-btn.sel-yes { background: rgba(255,255,255,0.88); color: var(--darker); border-color: transparent; }
+.attend-btn.sel-no  { background: rgba(220,80,80,0.45); color: var(--white); border-color: transparent; }
+.counter-wrap { display: flex; align-items: center; justify-content: space-between; background: var(--white-10); border: 1px solid rgba(255,255,255,0.28); border-radius: 10px; padding: 0.4rem 0.9rem; margin-bottom: 0.9rem; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+.counter-val { font-family: 'Cormorant SC', serif; color: var(--white); font-size: 24px; font-weight: 400; }
+.counter-btn { background: rgba(255,255,255,0.18); border: none; color: var(--white); width: 34px; height: 34px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.counter-btn:hover { background: rgba(255,255,255,0.32); }
+.rsvp-submit { width: 100%; padding: 0.8rem; font-family: 'Cormorant SC', serif; font-size: clamp(14px, 4vw, 16px); letter-spacing: 0.08em; background: rgba(255,255,255,0.88); color: var(--darker); border: none; border-radius: 10px; cursor: pointer; transition: background 0.2s; }
+.rsvp-submit:hover { background: var(--white); }
+.rsvp-submit:disabled { opacity: 0.6; cursor: default; }
+
+/* ── COUNTDOWN ── */
+.countdown-box { margin: 1.5rem 0; text-align: center; }
+.countdown-title { font-family: 'Cormorant SC', serif; color: var(--white); font-size: 22px; margin-bottom: 0.8rem; }
+.countdown { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.cd-item { min-width: 64px; padding: 10px 8px; border-radius: 10px; background: var(--white-10); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(4px); }
+.cd-item span { display: block; font-family: 'Cormorant SC', serif; color: var(--white); font-size: 28px; line-height: 1; }
+.cd-item small { font-family: 'Cormorant SC', serif; color: var(--white-55); font-size: 12px; letter-spacing: 0.08em; }
+
+/* ── GRACIAS ── */
+.thanks-icon { font-size: 52px; margin-bottom: 0.8rem; }
+.thanks-title { font-family: 'Cormorant SC', serif; color: var(--white); font-size: 30px; margin-bottom: 0.5rem; }
+.thanks-text { font-family: 'Cormorant SC', serif; color: var(--white-75); font-size: 16px; line-height: 1.7; }
+
+/* ── TOAST ── */
+.toast { position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%); background: rgba(20,55,65,0.95); color: var(--white); border-radius: 10px; padding: 0.75rem 1.5rem; font-family: 'Cormorant SC', serif; font-size: 14px; z-index: 300; display: none; white-space: nowrap; backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.15); }
+
+/* ── FADE IN ── */
+.fade-in { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <p class="loading-logo">invite<span>me</span></p>
+  <div class="loading-spinner"></div>
+</div>
+
+<!-- ERROR -->
+<div id="error-view">
+  <div class="error-icon">💌</div>
+  <p class="error-title">Invitación no encontrada</p>
+  <p class="error-text">El link que usaste no es válido.<br>Solicita uno nuevo al organizador.</p>
+</div>
+
+<!-- FONDO -->
+<div class="bg-fixed" id="bg-fixed"></div>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-photo" id="splash-photo"></div>
+  <div class="splash-content">
+    <p class="splash-title" id="splash-title">...</p>
+    <p class="splash-sub" id="splash-sub"></p>
+    <div class="splash-pulse"></div>
+    <button class="splash-btn" onclick="startInvitation()">✦ Abrir invitación ✦</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="fixed-header" id="fixed-header" style="display:none">
+  <div class="header-top">
+    <p class="header-names" id="header-names"></p>
+  </div>
+  <div class="photo-strip" id="photo-strip"></div>
+</header>
+
+<!-- DOTS -->
+<div class="progress-dots" id="progress-dots" style="display:none"></div>
+
+<!-- MUSIC -->
+<div id="music-toggle" style="display:none">🔇</div>
+<iframe id="music" width="0" height="0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+
+<!-- CONTENIDO -->
+<div class="content" id="main-content" style="display:none">
+
+  <!-- S0: PORTADA -->
+  <section id="s0">
+    <p class="tagline fade-in" id="s-tagline"></p>
+    <div class="date-row fade-in">
+      <div class="date-col"><span class="lbl" id="d-weekday"></span><span class="val" id="d-day"></span></div>
+      <div class="date-col"><span class="lbl" id="d-month"></span><span class="val" id="d-year"></span></div>
+      <div class="date-col"><span class="lbl">Hora</span><span class="val" id="d-time"></span></div>
+    </div>
+    <p class="venue-name fade-in" id="s-venue"></p>
+    <p class="venue-address fade-in" id="s-address"></p>
+    <div class="guest-box fade-in">
+      <p class="gname" id="inv-gname">Cargando...</p>
+      <p class="gseats" id="inv-gseats"></p>
+    </div>
+  </section>
+
+  <!-- S1: ITINERARIO -->
+  <section id="s1">
+    <div class="itinerary fade-in" id="itinerary-list"></div>
+  </section>
+
+  <!-- S2: DRESS CODE -->
+  <section id="s2" style="display:none">
+    <p class="dress-title fade-in" id="s-dress-title">Código de Vestimenta</p>
+    <p class="dress-subtitle fade-in" id="s-dress-code"></p>
+    <div class="dress-icons fade-in" id="s-dress-icons"></div>
+    <div class="divider fade-in"></div>
+    <p class="dress-note fade-in" id="s-dress-note"></p>
+    <p class="dress-note fade-in" id="s-bank-info" style="margin-top:1rem"></p>
+  </section>
+
+  <!-- S3: RSVP -->
+  <section id="s3">
+    <div id="rsvp-form-wrap" style="width:100%;display:flex;flex-direction:column;align-items:center">
+      <p class="rsvp-title fade-in">Confirmar Asistencia</p>
+      <p class="rsvp-sub fade-in" id="rsvp-sub-lbl"></p>
+      <div class="fade-in" style="width:100%;max-width:400px;text-align:left">
+        <label class="rsvp-lbl">¿Asistirás?</label>
+        <div class="attend-btns">
+          <button class="attend-btn" id="btn-yes" onclick="selectAttend('yes')">Sí, asistiré</button>
+          <button class="attend-btn" id="btn-no"  onclick="selectAttend('no')">No podré ir</button>
+        </div>
+        <div id="count-section">
+          <label class="rsvp-lbl">¿Cuántos asistirán? (máx. <span id="max-lbl">0</span>)</label>
+          <div class="counter-wrap">
+            <button class="counter-btn" onclick="chgCount(-1)">−</button>
+            <span class="counter-val" id="cnt-val">1</span>
+            <button class="counter-btn" onclick="chgCount(1)">+</button>
+          </div>
+        </div>
+        <label class="rsvp-lbl">Mensaje para los anfitriones (opcional)</label>
+        <textarea class="rsvp-input" rows="3" id="rsvp-msg" placeholder="Un mensaje de felicitación..."></textarea>
+        <button class="rsvp-submit" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia</button>
+      </div>
+    </div>
+    <div id="thanks-wrap" style="display:none;width:100%;max-width:400px;text-align:center;margin:0 auto">
+      <div class="thanks-icon" id="thanks-icon">🎉</div>
+      <p class="thanks-title">¡Gracias!</p>
+      <p class="thanks-text" id="thanks-txt"></p>
+      <div id="location-btn-wrap" style="display:none;margin-top:2rem">
+        <a id="maps-link" href="#" target="_blank" rel="noopener"
+          style="display:inline-flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.35);color:var(--white);font-family:'Cormorant SC',serif;font-size:16px;letter-spacing:0.06em;padding:0.85rem 1.75rem;border-radius:10px;text-decoration:none;backdrop-filter:blur(4px)">
+          📍 Ver ubicación en Maps
+        </a>
+      </div>
+    </div>
+    <div class="countdown-box fade-in">
+      <p class="countdown-title">Faltan</p>
+      <div class="countdown">
+        <div class="cd-item"><span id="cd-days">0</span><small>Días</small></div>
+        <div class="cd-item"><span id="cd-hours">0</span><small>Horas</small></div>
+        <div class="cd-item"><span id="cd-minutes">0</span><small>Min</small></div>
+        <div class="cd-item"><span id="cd-seconds">0</span><small>Seg</small></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPA_URL = 'https://jlakoulrsnptdsslerte.supabase.co';
+const SUPA_KEY = 'sb_publishable_lW75yG4gMJUC6kLkCABx9A_NihDmEEa';
+
+let eventData    = null;
+let activeGuest  = null;
+let attendChoice = null;
+let guestCount   = 1;
+let maxSeats     = 2;
+let currentSection = 0;
+let userScrolled   = false;
+let playing        = false;
+let sections       = ['s0','s1','s3']; // s2 (dress) added dynamically if needed
+let embedURL       = '';
+let photoPool      = [];
+let totalPhotos    = 0;
+
+/* ── Supabase ── */
+async function api(path, opts = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=representation', ...(opts.headers||{}) }, ...opts
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+
+/* ── Toast ── */
+function showToast(msg, dur=2800) {
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',dur);
+}
+
+/* ── Event type helpers ── */
+function buildHeaderTitle(ev) {
+  switch(ev.event_type) {
+    case 'wedding':    return (ev.protagonist_1||'') + ' & ' + (ev.protagonist_2||'');
+    case 'xv':         return 'Los XV de ' + (ev.protagonist_1||'');
+    case 'birthday':   return ev.protagonist_2
+                         ? (ev.protagonist_1||'') + ' & ' + (ev.protagonist_2||'')
+                         : ev.protagonist_1 || '';
+    case 'corporate':  return ev.protagonist_1 || ev.title || '';
+    case 'graduation': return 'Graduación · ' + (ev.protagonist_1||'');
+    case 'baptism':    return 'Bautizo de ' + (ev.protagonist_1||'');
+    case 'babyshower': return 'Baby Shower · ' + (ev.protagonist_1||'');
+    default:           return ev.title || ev.protagonist_1 || '';
+  }
+}
+
+function buildSplashTitle(ev) {
+  switch(ev.event_type) {
+    case 'wedding':    return (ev.protagonist_1||'') + '\n&\n' + (ev.protagonist_2||'');
+    case 'xv':         return 'XV\n' + (ev.protagonist_1||'');
+    case 'birthday':   return ev.protagonist_2
+                         ? (ev.protagonist_1||'') + '\n&\n' + (ev.protagonist_2||'')
+                         : ev.protagonist_1||'';
+    case 'corporate':  return ev.protagonist_1 || ev.title || '';
+    case 'graduation': return (ev.protagonist_1||'') + '\nGraduación';
+    case 'baptism':    return 'Bautizo\n' + (ev.protagonist_1||'');
+    case 'babyshower': return 'Baby Shower\n' + (ev.protagonist_1||'');
+    default:           return ev.title || ev.protagonist_1 || '';
+  }
+}
+
+function getThanksIcon(ev) {
+  const icons = { wedding:'💍', xv:'👑', birthday:'🎂', corporate:'🎊', graduation:'🎓', baptism:'👼', babyshower:'🍼', other:'🎉' };
+  return icons[ev.event_type] || '🎉';
+}
+
+function getThanksText(ev, confirmed) {
+  const date = ev.event_date ? new Date(ev.event_date+'T12:00:00').toLocaleDateString('es-MX',{day:'numeric',month:'long'}) : '';
+  if (!confirmed) return 'Lamentamos que no puedas asistir.<br>Gracias por avisarnos.';
+  return 'Tu confirmación ha sido registrada.<br>¡Te esperamos el <strong>' + date + '</strong>!';
+}
+
+/* ── Render event data ── */
+function renderEvent(ev) {
+  // Theme color
+  if (ev.theme_color) {
+    document.documentElement.style.setProperty('--primary', ev.theme_color);
+    document.getElementById('bg-fixed').style.backgroundImage = "url('/e/fondo-" + (ev.event_type||'wedding') + ".jpg')";
+  }
+
+  // Header
+  const headerTitle = buildHeaderTitle(ev);
+  const headerEl = document.getElementById('header-names');
+  if (ev.event_type === 'wedding' || (ev.event_type === 'birthday' && ev.protagonist_2)) {
+    headerEl.innerHTML = (ev.protagonist_1||'') + ' <span class="header-amp">&amp;</span> ' + (ev.protagonist_2||'');
+  } else {
+    headerEl.textContent = headerTitle;
+  }
+
+  // Splash
+  const splashLines = buildSplashTitle(ev).split('\n');
+  document.getElementById('splash-title').innerHTML = splashLines.join('<br>');
+  if (ev.event_date) {
+    const d = new Date(ev.event_date+'T12:00:00');
+    document.getElementById('splash-sub').textContent =
+      d.toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'}).toUpperCase();
+  }
+
+  // Date
+  if (ev.event_date) {
+    const d = new Date(ev.event_date+'T12:00:00');
+    const weekdays = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const months   = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    document.getElementById('d-weekday').textContent = weekdays[d.getDay()];
+    document.getElementById('d-day').textContent     = d.getDate();
+    document.getElementById('d-month').textContent   = months[d.getMonth()];
+    document.getElementById('d-year').textContent    = d.getFullYear();
+  }
+  document.getElementById('d-time').textContent = ev.event_time || '';
+  document.getElementById('s-tagline').textContent  = ev.tagline || '';
+  document.getElementById('s-venue').textContent    = ev.venue || '';
+  document.getElementById('s-address').textContent  = ev.event_address || '';
+
+  // Itinerary
+  if (ev.itinerary && ev.itinerary.length) {
+    const basePath = '/e/' + ev.slug + '/img/';
+    document.getElementById('itinerary-list').innerHTML = ev.itinerary.map(item => `
+      <div class="it-item">
+        <div class="it-icon-wrap"><img src="${basePath}${item.icon}" alt="${item.name}" onerror="this.style.display='none'"></div>
+        <span class="it-name">${item.name}</span>
+        <span class="it-time">${item.time||'&nbsp;'}</span>
+      </div>`).join('');
+  }
+
+  // Dress code
+  if (ev.dress_code) {
+    document.getElementById('s2').style.display = '';
+    document.getElementById('s-dress-code').textContent = ev.dress_code;
+    document.getElementById('s-dress-note').textContent = ev.dress_note || '';
+    document.getElementById('s-bank-info').textContent  = ev.bank_info || '';
+    // Dress icons — generic fallback
+    document.getElementById('s-dress-icons').innerHTML = `
+      <div class="dress-icon-wrap"><img src="/e/${ev.slug}/img/CodigoMujer.png" onerror="this.parentElement.style.display='none'"><span class="dress-lbl">Damas</span></div>
+      <div class="dress-icon-wrap"><img src="/e/${ev.slug}/img/CodigoHombre.png" onerror="this.parentElement.style.display='none'"><span class="dress-lbl">Caballeros</span></div>`;
+    sections = ['s0','s1','s2','s3'];
+  }
+
+  // Maps link
+  if (ev.maps_url) document.getElementById('maps-link').href = ev.maps_url;
+
+  // Thanks icon
+  document.getElementById('thanks-icon').textContent = getThanksIcon(ev);
+
+  // Music
+  if (ev.music_yt_id) {
+    embedURL = 'https://www.youtube.com/embed/' + ev.music_yt_id + '?autoplay=1&loop=1&playlist=' + ev.music_yt_id + '&controls=0&rel=0&modestbranding=1';
+    document.getElementById('music-toggle').style.display = 'flex';
+    document.getElementById('music-toggle').addEventListener('click', () => {
+      const frame = document.getElementById('music');
+      if (playing) { frame.src=''; document.getElementById('music-toggle').textContent='🔇'; playing=false; }
+      else { frame.src=embedURL; document.getElementById('music-toggle').textContent='🔊'; playing=true; }
+    });
+  }
+
+  // Countdown
+  if (ev.event_date && ev.event_time) {
+    const target = new Date(ev.event_date + 'T' + ev.event_time + ':00').getTime();
+    setInterval(() => {
+      const dist = target - Date.now();
+      if (dist <= 0) { document.getElementById('cd-days').textContent='🎉'; return; }
+      document.getElementById('cd-days').textContent    = Math.floor(dist/(1000*60*60*24));
+      document.getElementById('cd-hours').textContent   = Math.floor((dist%(1000*60*60*24))/(1000*60*60));
+      document.getElementById('cd-minutes').textContent = Math.floor((dist%(1000*60*60))/(1000*60));
+      document.getElementById('cd-seconds').textContent = Math.floor((dist%(1000*60))/1000);
+    }, 1000);
+  }
+
+  // Photos carousel
+  totalPhotos = ev.total_photos || 0;
+  if (totalPhotos > 0) {
+    // Build 5 strip slots
+    const strip = document.getElementById('photo-strip');
+    strip.innerHTML = Array.from({length:5},(_,i) => `
+      <div class="strip-slot" id="strip${i}">
+        <img src="/e/${ev.slug}/img/${i+1}.jpg" class="visible" alt="" onerror="this.style.display='none'">
+      </div>`).join('');
+    // Splash photo
+    const num = Math.floor(Math.random()*totalPhotos)+1;
+    document.getElementById('splash-photo').style.backgroundImage = "url('/e/" + ev.slug + "/img/" + num + ".jpg')";
+    startCarousel(ev.slug);
+  }
+
+  // Build progress dots
+  const dotsEl = document.getElementById('progress-dots');
+  dotsEl.innerHTML = sections.map((_,i) => `<button class="pdot${i===0?' active':''}" onclick="scrollToSection(${i})"></button>`).join('');
+  dotsEl.style.display = 'flex';
+
+  // Show UI
+  document.getElementById('fixed-header').style.display = 'flex';
+  document.getElementById('main-content').style.display = 'block';
+  document.getElementById('loading').style.display = 'none';
+}
+
+/* ── Carousel ── */
+function getNextPhoto() {
+  if (!photoPool.length) {
+    photoPool = Array.from({length:totalPhotos},(_,i)=>i+1);
+    for(let i=photoPool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[photoPool[i],photoPool[j]]=[photoPool[j],photoPool[i]];}
+  }
+  return photoPool.pop();
+}
+
+function changeStripPhoto(idx, slug) {
+  const slot = document.getElementById('strip'+idx); if(!slot)return;
+  const oldImg = slot.querySelector('img');
+  const newImg = document.createElement('img');
+  newImg.alt=''; newImg.className='hidden';
+  let attempts=0;
+  function tryLoad() { newImg.src='/e/'+slug+'/img/'+getNextPhoto()+'.jpg'; attempts++; }
+  newImg.onerror=()=>{ if(attempts<5) tryLoad(); };
+  newImg.onload=()=>{
+    slot.appendChild(newImg);
+    requestAnimationFrame(()=>{
+      newImg.classList.remove('hidden'); newImg.classList.add('visible');
+      if(oldImg){oldImg.classList.remove('visible');oldImg.classList.add('hidden');setTimeout(()=>{if(oldImg.parentNode)oldImg.parentNode.removeChild(oldImg);},1100);}
+    });
+  };
+  tryLoad();
+}
+
+function startCarousel(slug) {
+  setInterval(()=>changeStripPhoto(0,slug),3200);
+  setInterval(()=>changeStripPhoto(1,slug),4100);
+  setInterval(()=>changeStripPhoto(2,slug),5000);
+  setInterval(()=>changeStripPhoto(3,slug),3700);
+  setInterval(()=>changeStripPhoto(4,slug),4500);
+}
+
+/* ── Scroll ── */
+function scrollToSection(idx) {
+  if(idx<0||idx>=sections.length) return;
+  currentSection=idx;
+  document.getElementById(sections[idx]).scrollIntoView({behavior:'smooth'});
+  updateDots();
+}
+function updateDots() {
+  document.querySelectorAll('.pdot').forEach((d,i)=>d.classList.toggle('active',i===currentSection));
+}
+
+let autoScrollTimer=null;
+function startAutoScroll() {
+  const sectionTimes=[4500,5000,8000,null];
+  function scheduleNext() {
+    if(userScrolled||currentSection>=sections.length-1) return;
+    const delay=sectionTimes[currentSection]||4500;
+    setTimeout(()=>{
+      if(!userScrolled&&currentSection<sections.length-1){
+        currentSection++; scrollToSection(currentSection); scheduleNext();
+      }
+    },delay);
+  }
+  scheduleNext();
+  autoScrollTimer=true;
+}
+
+let scrollTimeout;
+window.addEventListener('scroll',()=>{
+  if(autoScrollTimer) userScrolled=true;
+  clearTimeout(scrollTimeout);
+  scrollTimeout=setTimeout(()=>{
+    sections.forEach((id,i)=>{
+      const rect=document.getElementById(id).getBoundingClientRect();
+      if(rect.top>=-100&&rect.top<window.innerHeight/2){currentSection=i;updateDots();}
+    });
+  },80);
+},{passive:true});
+
+/* ── Splash ── */
+function startInvitation() {
+  if(embedURL){ document.getElementById('music').src=embedURL; document.getElementById('music-toggle').textContent='🔊'; playing=true; }
+  const splash=document.getElementById('splash');
+  splash.style.opacity='0'; splash.style.transition='opacity 0.8s ease';
+  setTimeout(()=>splash.style.display='none',850);
+  setTimeout(startAutoScroll,4000);
+}
+
+/* ── Guest UI ── */
+function setGuestUI(g) {
+  document.getElementById('inv-gname').textContent=g.name;
+  document.getElementById('inv-gseats').textContent='Lugares asignados: '+g.seats;
+  document.getElementById('rsvp-sub-lbl').textContent=g.name+' · '+g.seats+' lugar'+(g.seats!==1?'es':'')+' asignado'+(g.seats!==1?'s':'');
+  document.getElementById('max-lbl').textContent=g.seats;
+  maxSeats=g.seats;
+}
+
+function showAlreadyReplied(g) {
+  document.querySelectorAll('section').forEach(s=>s.style.display='none');
+  document.getElementById('s3').style.display='flex';
+  document.getElementById('rsvp-form-wrap').style.display='none';
+  document.getElementById('thanks-wrap').style.display='block';
+  document.getElementById('thanks-txt').innerHTML=getThanksText(eventData, g.status==='confirmed');
+  if(g.status==='confirmed'&&eventData&&eventData.maps_url){
+    document.getElementById('location-btn-wrap').style.display='block';
+  }
+  document.querySelectorAll('.pdot').forEach((d,i)=>d.classList.toggle('active',i===sections.length-1));
+}
+
+/* ── RSVP ── */
+function selectAttend(c) {
+  attendChoice=c;
+  document.getElementById('btn-yes').className='attend-btn'+(c==='yes'?' sel-yes':'');
+  document.getElementById('btn-no').className ='attend-btn'+(c==='no' ?' sel-no' :'');
+  document.getElementById('count-section').style.display=c==='yes'?'block':'none';
+}
+function chgCount(d) {
+  guestCount=Math.max(1,Math.min(maxSeats,guestCount+d));
+  document.getElementById('cnt-val').textContent=guestCount;
+}
+
+async function submitRSVP() {
+  if(!attendChoice){showToast('Por favor indica si asistirás');return;}
+  if(!activeGuest){showToast('No se pudo identificar al invitado');return;}
+  const btn=document.getElementById('rsvp-btn');
+  btn.disabled=true; btn.textContent='Guardando...';
+  const update={status:attendChoice==='yes'?'confirmed':'declined',confirmed:attendChoice==='yes'?guestCount:0,msg:document.getElementById('rsvp-msg').value};
+  try {
+    await api('guests?id=eq.'+activeGuest.id+'&id_event=eq.'+eventData.id_event,{method:'PATCH',body:JSON.stringify(update)});
+    document.getElementById('thanks-txt').innerHTML=getThanksText(eventData,attendChoice==='yes');
+    document.getElementById('rsvp-form-wrap').style.display='none';
+    document.getElementById('thanks-wrap').style.display='block';
+    if(attendChoice==='yes'&&eventData.maps_url) document.getElementById('location-btn-wrap').style.display='block';
+  } catch(e){btn.disabled=false;btn.textContent='Confirmar asistencia';showToast('Error: '+e.message);}
+}
+
+/* ── Fade in ── */
+const fadeObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
+
+/* ── INIT ── */
+(async()=>{
+  const params=new URLSearchParams(window.location.search);
+  const slug=params.get('slug');
+  const gid =params.get('id');
+
+  if(!slug){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('error-view').style.display='flex';
+    return;
+  }
+
+  try {
+    // Load event by slug
+    const evRes=await api('event_config?slug=eq.'+slug);
+    if(!evRes||!evRes[0]){
+      document.getElementById('loading').style.display='none';
+      document.getElementById('error-view').style.display='flex';
+      return;
+    }
+    eventData=evRes[0];
+    renderEvent(eventData);
+
+    // Load guest
+    if(gid){
+      const gRes=await api('guests?id=eq.'+gid+'&id_event=eq.'+eventData.id_event);
+      if(gRes&&gRes[0]){
+        activeGuest=gRes[0];
+        setGuestUI(gRes[0]);
+        if(gRes[0].status==='confirmed'||gRes[0].status==='declined') showAlreadyReplied(gRes[0]);
+      } else {
+        document.getElementById('inv-gname').textContent='Invitado no encontrado';
+      }
+    } else {
+      document.getElementById('inv-gname').textContent='Bienvenido';
+      document.getElementById('inv-gseats').textContent='';
+      document.getElementById('rsvp-sub-lbl').textContent='Ingresa con tu link personalizado';
+    }
+  } catch(e){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('error-view').style.display='flex';
+  }
+})();
+</script>
+</body>
+</html>
