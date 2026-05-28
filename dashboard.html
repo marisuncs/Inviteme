@@ -592,6 +592,25 @@ function copyLink(id_event, slug) {
 function openNewEvent()  { document.getElementById('new-event-modal').classList.add('open'); }
 function closeNewEvent() { document.getElementById('new-event-modal').classList.remove('open'); }
 
+function updateProtagonistLabels() {
+  const type = document.getElementById('ne-type').value;
+  const labels = {
+    wedding:    ['Novio', 'Novia'],
+    xv:         ['Nombre de la quinceañera', null],
+    birthday:   ['Nombre 1', 'Nombre 2 (opcional)'],
+    corporate:  ['Nombre de la empresa/evento', null],
+    graduation: ['Nombre del graduado', null],
+    baptism:    ['Nombre del bebé', null],
+    babyshower: ['Nombre del bebé', null],
+    other:      ['Nombre', null]
+  };
+  const [l1, l2] = labels[type] || ['Nombre', null];
+  document.getElementById('ne-p1-label').textContent = l1;
+  const p2field = document.getElementById('ne-p2-field');
+  if (l2) { p2field.style.display=''; document.getElementById('ne-p2-label').textContent=l2; }
+  else { p2field.style.display='none'; document.getElementById('ne-p2').value=''; }
+}
+
 function selectTheme(el) {
   document.querySelectorAll('.theme-opt').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
@@ -599,42 +618,79 @@ function selectTheme(el) {
 }
 
 async function createNewEvent() {
-  const title   = document.getElementById('ne-title').value.trim();
-  const date    = document.getElementById('ne-date').value;
-  const cap     = parseInt(document.getElementById('ne-cap').value) || 150;
-  const venue   = document.getElementById('ne-venue').value.trim();
-  const address = document.getElementById('ne-address').value.trim();
-  if (!title) { showToast('Escribe el nombre del evento'); return; }
+  const type      = document.getElementById('ne-type').value;
+  const p1        = document.getElementById('ne-p1').value.trim();
+  const p2        = document.getElementById('ne-p2').value.trim();
+  const tagline   = document.getElementById('ne-tagline').value.trim();
+  const date      = document.getElementById('ne-date').value;
+  const time      = document.getElementById('ne-time').value;
+  const cap       = parseInt(document.getElementById('ne-cap').value) || 150;
+  const venue     = document.getElementById('ne-venue').value.trim();
+  const address   = document.getElementById('ne-address').value.trim();
+  const dress     = document.getElementById('ne-dress').value.trim();
+  const dressNote = document.getElementById('ne-dress-note').value.trim();
+  const yt        = document.getElementById('ne-yt').value.trim();
+  const maps      = document.getElementById('ne-maps').value.trim();
+  const pass      = document.getElementById('ne-pass').value;
+  const photos    = parseInt(document.getElementById('ne-photos').value) || 0;
 
-  const slug = title.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').slice(0, 40)
-    + '-' + Date.now().toString(36);
+  if (!p1) { showToast('Escribe el nombre del protagonista'); return; }
+  if (!pass || pass.length < 6) { showToast('La contraseña del admin debe tener mínimo 6 caracteres'); return; }
 
-  const wa = '¡Hola! Te invitamos a ' + title + '. Confirma tu asistencia aquí: ' + window.location.origin + '/e/?slug=' + slug + '&id={ID}';
+  const titleMap = {
+    wedding: p1+(p2?' & '+p2:''), xv:'XV · '+p1,
+    birthday: p2?p1+' & '+p2:p1, corporate:p1,
+    graduation:'Graduación · '+p1, baptism:'Bautizo · '+p1,
+    babyshower:'Baby Shower · '+p1, other:p1
+  };
+  const title = titleMap[type] || p1;
+
+  const slug = (p1+(p2?'-'+p2:'')+(date?'-'+date.slice(0,4):''))
+    .toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').slice(0,40)
+    +'-'+Date.now().toString(36).slice(-4);
+
+  const wa = '¡Hola! Te invitamos a '+title+'.\nConfirma tu asistencia aquí: https://inviteme.fun/e/?slug='+slug+'&id={ID}';
 
   try {
     const res = await api('event_config', {
       method: 'POST',
       body: JSON.stringify({
-        "organizer_id": currentOrganizer.id,
+        organizer_id: currentOrganizer.id,
         slug, title,
-        event_date: date || null,
-        venue: venue || null,
-        address: address || null,
-        max_capacity: cap,
-        theme: selectedTheme,
-        wa_template: wa
+        event_type:    type,
+        protagonist_1: p1,
+        protagonist_2: p2||null,
+        tagline:       tagline||null,
+        event_date:    date||null,
+        event_time:    time||null,
+        venue:         venue||null,
+        event_address: address||null,
+        max_capacity:  cap,
+        theme_color:   selectedTheme,
+        dress_code:    dress||null,
+        dress_note:    dressNote||null,
+        music_yt_id:   yt||null,
+        maps_url:      maps||null,
+        total_photos:  photos,
+        wa_template:   wa
       })
     });
+    if (res && res[0]) {
+      await apiRPC('update_event_password', { p_id_event: res[0].id_event, p_password: pass });
+    }
     closeNewEvent();
-    showToast('✓ Evento "' + title + '" creado');
+    showToast('✓ Evento "'+title+'" creado');
     await loadEvents();
-    // Clear form
-    ['ne-title','ne-venue','ne-address'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('ne-date').value = '';
-    document.getElementById('ne-cap').value = '150';
-  } catch(e) { showToast('Error: ' + e.message); }
+    ['ne-p1','ne-p2','ne-tagline','ne-venue','ne-address','ne-dress','ne-dress-note','ne-yt','ne-maps','ne-pass']
+      .forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+    document.getElementById('ne-date').value='';
+    document.getElementById('ne-time').value='19:00';
+    document.getElementById('ne-cap').value='150';
+    document.getElementById('ne-photos').value='0';
+    document.getElementById('ne-type').value='wedding';
+    updateProtagonistLabels();
+  } catch(e) { showToast('Error: '+e.message); }
 }
 
 /* ── Init ── */
