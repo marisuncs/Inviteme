@@ -234,6 +234,14 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 .it-icon-wrapNoBkg img {
   width: 70px; height: 70px; object-fit: contain;
 }
+/* Darth Vader centrado en thanks */
+.thanks-darth {
+  display: flex; justify-content: center; align-items: center;
+  width: 100%; margin-bottom: 1rem;
+}
+.thanks-darth img {
+  width: 120px; height: 120px; object-fit: contain;
+}
 .it-time {
   grid-column: 2; grid-row: 2;
   font-family: 'FelixTitling', serif; color: var(--white-55);
@@ -584,7 +592,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     <div id="thanks-wrap" style="display:none;width:100%;max-width:400px;text-align:center;margin:0 auto">
    <!--   <div class="thanks-icon">💍</div>-->
       <!--   <div class="it-icon-wrap"><img src="img/darth-vader.svg" alt="Que la fuerza te acompañe"></div> -->
-      <div class="it-icon-wrapNoBkg"><img src="img/darth-vader.png" alt="Que la fuerza te acompañe"></div>
+      <div class="thanks-darth"><img src="img/darth-vader.png" alt="Que la fuerza te acompañe"></div>
       <p class="thanks-title">¡Gracias!</p>
       <p class="thanks-text" id="thanks-txt"></p>
       <div id="location-btn-wrap" style="display:none;margin-top:2rem">
