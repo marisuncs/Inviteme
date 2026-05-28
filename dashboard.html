@@ -391,7 +391,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 
     <div class="modal-footer">
       <button class="modal-btn" onclick="closeNewEvent()">Cancelar</button>
-      <button class="modal-btn primary" onclick="createEvent()">Crear evento</button>
+      <button class="modal-btn primary" onclick="createNewEvent()">Crear evento</button>
     </div>
   </div>
 </div>
@@ -598,7 +598,7 @@ function selectTheme(el) {
   selectedTheme = el.dataset.theme;
 }
 
-async function createEvent() {
+async function createNewEvent() {
   const title   = document.getElementById('ne-title').value.trim();
   const date    = document.getElementById('ne-date').value;
   const cap     = parseInt(document.getElementById('ne-cap').value) || 150;
