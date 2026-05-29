@@ -569,16 +569,33 @@ async function saveGuest() {
 }
 
 /* ── WhatsApp & links ── */
-function sendWA(id) {
+async function sendWA(id) {
   const g=guests.find(x=>x.id===id);
   if(!g||!g.phone){showToast('Sin teléfono registrado');return;}
-  const tpl=document.getElementById('wa-tpl').value||waTemplate;
-  window.open('https://wa.me/'+g.phone+'?text='+encodeURIComponent(tpl.replace('{ID}',id)),'_blank');
+  showToast('Generando link...');
+  try {
+    // Generate short URL
+    const code = await apiRPC('generate_short_url', { p_guest_id: id, p_id_event: eventData.id_event });
+    const shortLink = 'https://inviteme.fun/i/?c=' + code;
+    const tpl = document.getElementById('wa-tpl').value || waTemplate;
+    const msg = tpl.replace('{ID}', id).replace('{LINK}', shortLink).replace(/https:\/\/inviteme\.fun\/e\/\?slug=[^&]+&id=[a-f0-9-]+/g, shortLink);
+    window.open('https://wa.me/'+g.phone+'?text='+encodeURIComponent(msg),'_blank');
+  } catch(e) {
+    // Fallback to full URL if short URL fails
+    const tpl=document.getElementById('wa-tpl').value||waTemplate;
+    window.open('https://wa.me/'+g.phone+'?text='+encodeURIComponent(tpl.replace('{ID}',id)),'_blank');
+  }
 }
 
-function copyGuestLink(id) {
-  const url=BASE_URL+'/e/?slug='+slug+'&id='+id;
-  navigator.clipboard.writeText(url).then(()=>showToast('✓ Link copiado'));
+async function copyGuestLink(id) {
+  try {
+    const code = await apiRPC('generate_short_url', { p_guest_id: id, p_id_event: eventData.id_event });
+    const shortLink = 'https://inviteme.fun/i/?c=' + code;
+    navigator.clipboard.writeText(shortLink).then(()=>showToast('✓ Link corto copiado: ' + shortLink));
+  } catch(e) {
+    const url=BASE_URL+'/e/?slug='+slug+'&id='+id;
+    navigator.clipboard.writeText(url).then(()=>showToast('✓ Link copiado'));
+  }
 }
 
 function copyLink(type) {
