@@ -465,12 +465,20 @@ async function deleteGuest(id) {
 }
 
 /* ── WhatsApp & link ── */
-function sendWA(id) {
+async function sendWA(id) {
   const g = guests.find(x => x.id === id);
   if (!g || !g.phone) { showToast('Este invitado no tiene teléfono'); return; }
-  const tpl = document.getElementById('wa-tpl').value || waTemplate;
-  const msg = tpl.replace('{ID}', id);
-  window.open('https://wa.me/' + g.phone + '?text=' + encodeURIComponent(msg), '_blank');
+  showToast('Generando link...');
+  try {
+    const code = await apiRPC('generate_short_url', { p_guest_id: id, p_id_event: ID_EVENT });
+    const shortLink = 'https://inviteme.fun/i/?c=' + code;
+    const tpl = document.getElementById('wa-tpl').value || waTemplate;
+    const msg = tpl.replace('{ID}', id).replace('{LINK}', shortLink);
+    window.open('https://wa.me/' + g.phone + '?text=' + encodeURIComponent(msg), '_blank');
+  } catch(e) {
+    const tpl = document.getElementById('wa-tpl').value || waTemplate;
+    window.open('https://wa.me/' + g.phone + '?text=' + encodeURIComponent(tpl.replace('{ID}', id)), '_blank');
+  }
 }
 
 function copyGuestLink(id) {
