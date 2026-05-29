@@ -705,13 +705,35 @@ const STORAGE_PUBLIC = SUPA_URL + '/storage/v1/object/public/events/';
 
 async function uploadFile(path, file, statusEl) {
   if (statusEl) statusEl.textContent = 'Subiendo...';
-  const res = await fetch(STORAGE_URL + path, {
+  // Try upsert first, if fails try regular upload
+  const res = await fetch(SUPA_URL + '/storage/v1/object/events/' + path, {
     method: 'POST',
-    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
-      'Content-Type': file.type, 'x-upsert': 'true' },
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': file.type,
+      'x-upsert': 'true',
+      'Cache-Control': '3600'
+    },
     body: file
   });
-  if (!res.ok) throw new Error(await res.text());
+  if (!res.ok) {
+    const errText = await res.text();
+    // If already exists, try PUT to update
+    if (errText.includes('already exists') || res.status === 409) {
+      const res2 = await fetch(SUPA_URL + '/storage/v1/object/events/' + path, {
+        method: 'PUT',
+        headers: {
+          'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
+          'Content-Type': file.type, 'x-upsert': 'true'
+        },
+        body: file
+      });
+      if (!res2.ok) throw new Error(await res2.text());
+    } else {
+      throw new Error(errText);
+    }
+  }
   if (statusEl) statusEl.textContent = '✓ Subido correctamente';
   return STORAGE_PUBLIC + path;
 }
@@ -786,10 +808,10 @@ async function uploadPhotos() {
 async function loadIconsGrid() {
   // List files in slug/img/ folder
   try {
-    const res = await fetch(SUPA_URL + '/storage/v1/object/list/events/' + slug + '/img', {
+    const res = await fetch(SUPA_URL + '/storage/v1/object/list/events', {
       method: 'POST',
       headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ limit: 100, offset: 0 })
+      body: JSON.stringify({ limit: 100, offset: 0, prefix: slug + '/img/' })
     });
     const files = await res.json();
     const icons = (files || []).filter(f => f.name && f.name.match(/\.(png|svg)$/i) && !f.name.match(/^\d/));
