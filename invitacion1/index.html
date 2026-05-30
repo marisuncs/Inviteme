@@ -638,6 +638,20 @@ let activeGuest = null, attendChoice = null, guestCount = 1, maxSeats = 2;
 let currentSection = 0, autoScrollTimer = null, userScrolled = false;
 const sections = ['s0','s1','s2','s3'];
 
+
+/* ── NOTIFY ORGANIZER ── */
+async function notifyOrganizer(guestId, idEvent) {
+  try {
+    const res = await apiRPC('notify_organizer_data', { p_guest_id: guestId, p_id_event: idEvent });
+    if (!res || !res[0]) return;
+    const { organizer_phone, message } = res[0];
+    if (!organizer_phone || !message) return;
+    const waUrl = 'https://wa.me/' + organizer_phone + '?text=' + encodeURIComponent(message);
+    const win = window.open(waUrl, '_blank');
+    if (win) setTimeout(() => { try { win.close(); } catch(e){} }, 3000);
+  } catch(e) { console.log('Notification skipped:', e.message); }
+}
+
 /* ── CARRUSEL ── */
 let photoPool = [];
 function getNextPhoto() {
@@ -788,6 +802,16 @@ setInterval(() => {
 }, 1000);
 
 /* ── SUPABASE ── */
+async function apiRPC(fn, params = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+
 async function api(path, opts={}) {
   const res = await fetch(SUPA_URL+'/rest/v1/'+path, {
     headers: { 'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,
@@ -837,6 +861,7 @@ async function submitRSVP() {
     document.getElementById('rsvp-form-wrap').style.display='none';
     document.getElementById('thanks-wrap').style.display='block';
     if(attendChoice==='yes') document.getElementById('location-btn-wrap').style.display='block';
+    notifyOrganizer(activeGuest.id, ID_EVENT);
   } catch(e) {
     btn.disabled=false; btn.textContent='Confirmar asistencia';
     showToast('Error: '+e.message);
