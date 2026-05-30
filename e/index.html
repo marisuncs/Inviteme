@@ -325,6 +325,16 @@ let photoPool      = [];
 let totalPhotos    = 0;
 
 /* ── Supabase ── */
+async function apiRPC(fn, params = {}) {
+  const res = await fetch(SUPA_URL + '/rest/v1/rpc/' + fn, {
+    method: 'POST',
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify(params)
+  });
+  if (!res.ok) throw new Error(await res.text());
+  const t = await res.text(); return t ? JSON.parse(t) : null;
+}
+
 async function api(path, opts = {}) {
   const res = await fetch(SUPA_URL + '/rest/v1/' + path, {
     headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY,
@@ -627,6 +637,8 @@ async function submitRSVP() {
     document.getElementById('rsvp-form-wrap').style.display='none';
     document.getElementById('thanks-wrap').style.display='block';
     if(attendChoice==='yes'&&eventData.maps_url) document.getElementById('location-btn-wrap').style.display='block';
+    // Notify organizer via WhatsApp
+    notifyOrganizer(activeGuest.id, eventData.id_event);
   } catch(e){btn.disabled=false;btn.textContent='Confirmar asistencia';showToast('Error: '+e.message);}
 }
 
@@ -635,6 +647,22 @@ const fadeObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});
 },{threshold:0.1});
 document.querySelectorAll('.fade-in').forEach(el=>fadeObs.observe(el));
+
+
+/* ── NOTIFY ORGANIZER ── */
+async function notifyOrganizer(guestId, idEvent) {
+  try {
+    const res = await apiRPC('notify_organizer_data', { p_guest_id: guestId, p_id_event: idEvent });
+    if (!res || !res[0]) return;
+    const { organizer_phone, message } = res[0];
+    if (!organizer_phone || !message) return;
+    // Open WhatsApp with notification — opens in background tab
+    const waUrl = 'https://wa.me/' + organizer_phone + '?text=' + encodeURIComponent(message);
+    const win = window.open(waUrl, '_blank');
+    // Close after 3s if possible
+    if (win) setTimeout(() => { try { win.close(); } catch(e){} }, 3000);
+  } catch(e) { console.log('Notification skipped:', e.message); }
+}
 
 /* ── INIT ── */
 (async()=>{

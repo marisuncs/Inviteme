@@ -276,6 +276,14 @@ tbody tr:hover td { background: var(--cream); }
         </div>
       </div>
       <div class="set-card">
+        <p class="set-title">Teléfono de notificaciones</p>
+        <p class="set-note">Recibirás un WhatsApp cuando un invitado confirme o decline.</p>
+        <div class="set-row">
+          <input type="tel" id="notify-phone" placeholder="521XXXXXXXXXX" class="modal-input" style="margin-bottom:0;flex:1">
+          <button class="g-btn primary" onclick="saveNotifyPhone()">Guardar</button>
+        </div>
+      </div>
+      <div class="set-card">
         <p class="set-title">Cambiar contraseña del admin</p>
         <div class="set-row">
           <input type="password" id="new-pass" placeholder="Nueva contraseña" class="modal-input" style="margin-bottom:0">
@@ -421,6 +429,7 @@ async function initAdmin() {
   waTemplate = eventData.wa_template  || defaultTemplate();
   document.getElementById('cap-inp').value = maxCap;
   document.getElementById('wa-tpl').value  = waTemplate;
+  if (eventData.notify_phone) document.getElementById('notify-phone').value = eventData.notify_phone;
   // Links
   const pubLink   = BASE_URL + '/e/?slug=' + slug;
   const adminLink = BASE_URL + '/e/admin.html?slug=' + slug;
@@ -613,6 +622,18 @@ async function saveWATpl() {
   waTemplate=document.getElementById('wa-tpl').value;
   await api('event_config?id_event=eq.'+eventData.id_event,{method:'PATCH',body:JSON.stringify({wa_template:waTemplate})});
   showToast('✓ Plantilla guardada');
+}
+
+async function saveNotifyPhone() {
+  const phone = document.getElementById('notify-phone').value.trim();
+  if (!phone) { showToast('Escribe un número de teléfono'); return; }
+  try {
+    await api('event_config?id_event=eq.' + eventData.id_event, {
+      method: 'PATCH', body: JSON.stringify({ notify_phone: phone })
+    });
+    eventData.notify_phone = phone;
+    showToast('✓ Teléfono de notificaciones guardado');
+  } catch(e) { showToast('Error: ' + e.message); }
 }
 
 async function changePassword() {
