@@ -378,15 +378,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
     </div>
 
     <div class="modal-field">
-      <label class="modal-label">Color del tema</label>
-      <div class="theme-picker">
-        <div class="theme-opt selected" data-theme="#3a7d8c" onclick="selectTheme(this)" style="background:#3a7d8c"></div>
-        <div class="theme-opt" data-theme="#8b5e8b" onclick="selectTheme(this)" style="background:#8b5e8b"></div>
-        <div class="theme-opt" data-theme="#c17840" onclick="selectTheme(this)" style="background:#c17840"></div>
-        <div class="theme-opt" data-theme="#b05070" onclick="selectTheme(this)" style="background:#b05070"></div>
-        <div class="theme-opt" data-theme="#4a5568" onclick="selectTheme(this)" style="background:#4a5568"></div>
-        <div class="theme-opt" data-theme="#2d6a4f" onclick="selectTheme(this)" style="background:#2d6a4f"></div>
-      </div>
+      <label class="modal-label">Plantilla</label>
+      <div id="template-picker" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0.6rem;margin-top:0.2rem"></div>
     </div>
 
     <div class="modal-footer">
@@ -589,8 +582,13 @@ function copyLink(id_event, slug) {
 }
 
 /* ── New Event Modal ── */
-function openNewEvent()  { document.getElementById('new-event-modal').classList.add('open'); }
+function openNewEvent() {
+  document.getElementById('new-event-modal').classList.add('open');
+  loadTemplatesForType('wedding');
+}
 function closeNewEvent() { document.getElementById('new-event-modal').classList.remove('open'); }
+
+let selectedTemplate = '';
 
 function updateProtagonistLabels() {
   const type = document.getElementById('ne-type').value;
@@ -609,6 +607,50 @@ function updateProtagonistLabels() {
   const p2field = document.getElementById('ne-p2-field');
   if (l2) { p2field.style.display=''; document.getElementById('ne-p2-label').textContent=l2; }
   else { p2field.style.display='none'; document.getElementById('ne-p2').value=''; }
+  loadTemplatesForType(type);
+}
+
+async function loadTemplatesForType(type) {
+  const picker = document.getElementById('template-picker');
+  picker.innerHTML = '<p style="font-size:12px;color:var(--muted)">Cargando plantillas...</p>';
+  try {
+    const templates = await api('templates?event_type=eq.' + type + '&active=eq.true');
+    if (!templates || !templates.length) {
+      picker.innerHTML = '<p style="font-size:12px;color:var(--muted)">Sin plantillas disponibles</p>';
+      return;
+    }
+    selectedTemplate = templates[0].id;
+    picker.innerHTML = templates.map((t, i) => `
+      <div class="tpl-opt ${i===0?'selected':''}" data-id="${t.id}" onclick="selectTemplate(this)"
+        style="background:${t.secondary_color};border:2px solid ${i===0?t.primary_color:'transparent'};
+               border-radius:10px;padding:0.75rem;cursor:pointer;transition:all 0.2s;text-align:center">
+        <div style="font-size:24px;margin-bottom:0.3rem">${t.preview_emoji||'✨'}</div>
+        <div style="width:100%;height:6px;border-radius:3px;background:${t.primary_color};margin-bottom:0.4rem"></div>
+        <div style="width:60%;height:4px;border-radius:2px;background:${t.accent_color};margin:0 auto 0.4rem"></div>
+        <p style="font-size:12px;font-weight:500;color:${t.primary_color}">${t.name}</p>
+        <p style="font-size:10px;color:${t.primary_color};opacity:0.7;margin-top:2px">${t.description||''}</p>
+      </div>`).join('');
+  } catch(e) {
+    picker.innerHTML = '<p style="font-size:12px;color:var(--muted)">Error cargando plantillas</p>';
+  }
+}
+
+function selectTemplate(el) {
+  document.querySelectorAll('.tpl-opt').forEach(o => {
+    o.style.borderColor = 'transparent';
+    o.classList.remove('selected');
+  });
+  el.classList.add('selected');
+  selectedTemplate = el.dataset.id;
+  // Get primary color from template
+  const picker = document.getElementById('template-picker');
+  const allTpls = picker.querySelectorAll('.tpl-opt');
+  allTpls.forEach(o => {
+    if(o.dataset.id === selectedTemplate) {
+      const bar = o.querySelector('div[style*="height:6px"]');
+      if(bar) o.style.borderColor = bar.style.background;
+    }
+  });
 }
 
 function selectTheme(el) {
@@ -619,6 +661,7 @@ function selectTheme(el) {
 
 async function createNewEvent() {
   const type      = document.getElementById('ne-type').value;
+  if (!selectedTemplate) { showToast('Selecciona una plantilla'); return; }
   const p1        = document.getElementById('ne-p1').value.trim();
   const p2        = document.getElementById('ne-p2').value.trim();
   const tagline   = document.getElementById('ne-tagline').value.trim();
@@ -667,6 +710,7 @@ async function createNewEvent() {
         venue:         venue||null,
         event_address: address||null,
         max_capacity:  cap,
+        template:      selectedTemplate,
         theme_color:   selectedTheme,
         dress_code:    dress||null,
         dress_note:    dressNote||null,
