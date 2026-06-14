@@ -234,14 +234,6 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
 .it-icon-wrapNoBkg img {
   width: 70px; height: 70px; object-fit: contain;
 }
-/* Darth Vader centrado en thanks */
-.thanks-darth {
-  display: flex; justify-content: center; align-items: center;
-  width: 100%; margin-bottom: 1rem;
-}
-.thanks-darth img {
-  width: 120px; height: 120px; object-fit: contain;
-}
 .it-time {
   grid-column: 2; grid-row: 2;
   font-family: 'FelixTitling', serif; color: var(--white-55);
@@ -447,6 +439,27 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   50% { transform: scale(1.6); opacity: 1; }
 }
 
+
+/* ── MENÚ ── */
+.menu-section { width: 100%; max-width: 340px; }
+.menu-title-section {
+  font-family: 'FelixTitling', serif; color: var(--white);
+  font-size: clamp(18px, 4vw, 22px); letter-spacing: 0.08em;
+  text-align: center; margin-bottom: 1.5rem;
+}
+.menu-item { margin-bottom: 1.4rem; padding-bottom: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.menu-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.menu-item-name {
+  font-family: 'FelixTitling', serif; color: var(--white);
+  font-size: clamp(14px, 3.5vw, 17px); letter-spacing: 0.06em;
+  margin-bottom: 0.35rem; display: block;
+}
+.menu-item-desc {
+  font-family: 'FelixTitling', serif; color: var(--white-55);
+  font-size: clamp(11px, 2.8vw, 13px); letter-spacing: 0.03em;
+  line-height: 1.65;
+}
+
 </style>
 </head>
 <body>
@@ -486,6 +499,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
   <button class="pdot" onclick="scrollToSection(1)"></button>
   <button class="pdot" onclick="scrollToSection(2)"></button>
   <button class="pdot" onclick="scrollToSection(3)"></button>
+  <button class="pdot" onclick="scrollToSection(4)"></button>
 </div>
 
 <!-- MUSIC -->
@@ -565,6 +579,41 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     <p class="venue fade-in">BBVA CLABE 012180015079889317</p>
   </section>
 
+
+  <!-- ═══ MENU ═══ -->
+  <section id="s4">
+    <div class="section-names fade-in">
+      <span class="sn1" style="font-size:clamp(38px,9vw,52px)">Gabo</span>
+      <span class="samp" style="font-size:clamp(18px,4vw,26px)">&amp;</span>
+      <span class="sn2" style="font-size:clamp(38px,9vw,52px)">Miya</span>
+    </div>
+    <div class="menu-section fade-in">
+      <p class="menu-title-section">Menú</p>
+      <div class="menu-item">
+        <span class="menu-item-name">Ensalada Española</span>
+        <span class="menu-item-desc">Cama de lechuga francesa, con rodajas de jitomate escalfado, rodajas de queso manchego y tiras de jamón serrano, bañada con vinagreta española.</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-name">Sopa Minestrone</span>
+        <span class="menu-item-desc">Con carne de res molida, zanahoria y fusili.</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-name">Fettuccine Angus</span>
+        <span class="menu-item-desc">Blanco con trozos de pollo.</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-name">Pollo en Salsa de Almendras</span>
+        <span class="menu-item-desc">Rollo de pechuga rellena de queso con chipotle en salsa de almendras blanca.</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-name">Verduras a la Mantequilla</span>
+      </div>
+      <div class="menu-item">
+        <span class="menu-item-name">Puré de Papa con Salsa de Filete</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ 4: RSVP + COUNTDOWN ═══ -->
   <section id="s3">
     <div id="rsvp-form-wrap" style="width:100%;display:flex;flex-direction:column;align-items:center;">
@@ -592,7 +641,7 @@ section + section { border-top: 1px solid rgba(255,255,255,0.1); }
     <div id="thanks-wrap" style="display:none;width:100%;max-width:400px;text-align:center;margin:0 auto">
    <!--   <div class="thanks-icon">💍</div>-->
       <!--   <div class="it-icon-wrap"><img src="img/darth-vader.svg" alt="Que la fuerza te acompañe"></div> -->
-      <div class="thanks-darth"><img src="img/darth-vader.png" alt="Que la fuerza te acompañe"></div>
+      <div class="it-icon-wrapNoBkg"><img src="img/darth-vader.png" alt="Que la fuerza te acompañe"></div>
       <p class="thanks-title">¡Gracias!</p>
       <p class="thanks-text" id="thanks-txt"></p>
       <div id="location-btn-wrap" style="display:none;margin-top:2rem">
@@ -636,21 +685,7 @@ const TOTAL_PHOTOS = 84;
 
 let activeGuest = null, attendChoice = null, guestCount = 1, maxSeats = 2;
 let currentSection = 0, autoScrollTimer = null, userScrolled = false;
-const sections = ['s0','s1','s2','s3'];
-
-
-/* ── NOTIFY ORGANIZER ── */
-async function notifyOrganizer(guestId, idEvent) {
-  try {
-    const res = await apiRPC('notify_organizer_data', { p_guest_id: guestId, p_id_event: idEvent });
-    if (!res || !res[0]) return;
-    const { organizer_phone, message } = res[0];
-    if (!organizer_phone || !message) return;
-    const waUrl = 'https://wa.me/' + organizer_phone + '?text=' + encodeURIComponent(message);
-    const win = window.open(waUrl, '_blank');
-    if (win) setTimeout(() => { try { win.close(); } catch(e){} }, 3000);
-  } catch(e) { console.log('Notification skipped:', e.message); }
-}
+const sections = ['s0','s1','s2','s4','s3'];
 
 /* ── CARRUSEL ── */
 let photoPool = [];
@@ -709,7 +744,7 @@ function updateDots() {
 
   function startAutoScroll() {
   // Tiempos por sección: portada(4.5s) → itinerario(5s) → vestimenta(8s) → stop
-  const sectionTimes = [4500, 5000, 8000];
+  const sectionTimes = [7000, 8000, 9000, 9000];
   function scheduleNext() {
     if (userScrolled || currentSection >= sections.length - 1) return;
     const delay = sectionTimes[currentSection] || 4500;
@@ -769,9 +804,7 @@ function startInvitation() {
 }
 
 function showAlreadyReplied(g) {
-  document.querySelectorAll('section').forEach(s => { s.style.display = 'none'; });
-  const s3 = document.getElementById('s3');
-  s3.style.display = 'flex';
+  // Pre-fill thanks state but let user browse all sections
   document.getElementById('rsvp-form-wrap').style.display = 'none';
   document.getElementById('thanks-wrap').style.display = 'block';
   document.getElementById('thanks-txt').innerHTML = g.status === 'confirmed'
@@ -780,7 +813,8 @@ function showAlreadyReplied(g) {
   if (g.status === 'confirmed') {
     document.getElementById('location-btn-wrap').style.display = 'block';
   }
-  document.querySelectorAll('.pdot').forEach((d, i) => d.classList.toggle('active', i === 3));
+  // Start from beginning so user can browse the full invitation
+  scrollToSection(0);
 }
 
 /* ── MÚSICA ── */
@@ -802,16 +836,6 @@ setInterval(() => {
 }, 1000);
 
 /* ── SUPABASE ── */
-async function apiRPC(fn, params = {}) {
-  const res = await fetch(SUPA_URL + '/rest/v1/rpc/' + fn, {
-    method: 'POST',
-    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify(params)
-  });
-  if (!res.ok) throw new Error(await res.text());
-  const t = await res.text(); return t ? JSON.parse(t) : null;
-}
-
 async function api(path, opts={}) {
   const res = await fetch(SUPA_URL+'/rest/v1/'+path, {
     headers: { 'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,
@@ -861,7 +885,6 @@ async function submitRSVP() {
     document.getElementById('rsvp-form-wrap').style.display='none';
     document.getElementById('thanks-wrap').style.display='block';
     if(attendChoice==='yes') document.getElementById('location-btn-wrap').style.display='block';
-    notifyOrganizer(activeGuest.id, ID_EVENT);
   } catch(e) {
     btn.disabled=false; btn.textContent='Confirmar asistencia';
     showToast('Error: '+e.message);
